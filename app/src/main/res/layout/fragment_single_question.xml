@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".QuestionFragment.SingleQuestionFragment"
+    android:orientation="vertical">
+
+
+    <TextView
+        android:id="@+id/tv_question"
+        android:layout_gravity="center|top"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:maxLines="5"
+        android:text="Question displays here \n abcdef"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center">
+        <TextView
+            android:id="@+id/answerA"
+            android:maxLines="2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="answer A"
+            android:layout_marginRight="20dp"/>
+
+        <TextView
+            android:id="@+id/answerB"
+            android:maxLines="2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/answerA"
+            android:text="answer B"/>
+
+        <TextView
+            android:id="@+id/answerC"
+            android:maxLines="2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/answerA"
+            android:layout_marginRight="20dp"
+            android:text="answer C"/>
+
+        <TextView
+            android:id="@+id/answerD"
+            android:maxLines="2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/answerC"
+            android:layout_below="@id/answerB"
+            android:text="answer D"/>
+    </RelativeLayout>
+
+
+</LinearLayout>
