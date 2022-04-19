@@ -16,7 +16,7 @@
     <FrameLayout
         android:id="@+id/question_content"
         android:layout_width="match_parent"
-        android:layout_height="400dp"/>
+        android:layout_height="wrap_content"/>
 
     <TableLayout
         android:layout_width="wrap_content"

@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">English Learning</string>
     <string name="title_activity_note">NoteActivity</string>
+    <string name="margin_default">5dp</string>
     <string name="large_text">
         "Material is the metaphor.\n\n"
 

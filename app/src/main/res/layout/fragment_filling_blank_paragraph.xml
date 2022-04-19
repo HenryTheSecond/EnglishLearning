@@ -2,18 +2,17 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    tools:context=".QuestionFragment.SingleQuestionFragment"
+    android:layout_height="match_parent"
+    tools:context=".QuestionFragment.FillingBlankParagraphFragment"
     android:orientation="vertical">
 
-
     <TextView
-        android:id="@+id/tv_question"
-        android:layout_gravity="center|top"
-        android:layout_width="wrap_content"
+        android:id="@+id/tv_paragraph"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:maxLines="5"
-        android:text="Question displays here \n abcdef"/>
+        android:maxLines="20"
+        android:text="paragraph_displays_here \n\n\n\n\n\n\n\n\n\n\n\n"
+        android:layout_marginBottom="@dimen/text_margin"/>
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -53,5 +52,7 @@
             android:layout_below="@id/answer_b"
             android:text="answer D"/>
     </RelativeLayout>
+
+
 
 </LinearLayout>

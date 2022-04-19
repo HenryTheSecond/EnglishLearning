@@ -2,18 +2,23 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    tools:context=".QuestionFragment.SingleQuestionFragment"
+    android:layout_height="match_parent"
+    tools:context=".QuestionFragment.ListeningFragment"
     android:orientation="vertical">
 
 
+    <SeekBar
+        android:id="@+id/seek_bar_timer"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
     <TextView
         android:id="@+id/tv_question"
-        android:layout_gravity="center|top"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:maxLines="5"
-        android:text="Question displays here \n abcdef"/>
+        android:text="Question display here"/>
 
     <RelativeLayout
         android:layout_width="match_parent"
