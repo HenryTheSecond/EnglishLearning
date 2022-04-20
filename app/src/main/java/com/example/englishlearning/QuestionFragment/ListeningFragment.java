@@ -10,20 +10,21 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.example.englishlearning.R;
 
 
-public class SingleQuestionFragment extends Fragment {
-
+public class ListeningFragment extends Fragment {
+    private SeekBar timer;
     private TextView tvQuestion;
     private Button answerA;
     private Button answerB;
     private Button answerC;
     private Button answerD;
 
-    public SingleQuestionFragment() {
+    public ListeningFragment() {
         // Required empty public constructor
     }
 
@@ -32,7 +33,7 @@ public class SingleQuestionFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_single_question, container, false);
+        return inflater.inflate(R.layout.fragment_listening, container, false);
     }
 
     @Override
@@ -40,6 +41,7 @@ public class SingleQuestionFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         //Binding
+        timer = getView().findViewById(R.id.seek_bar_timer);
         tvQuestion = getView().findViewById(R.id.tv_question);
         answerA = getView().findViewById(R.id.answer_a);
         answerB = getView().findViewById(R.id.answer_b);
