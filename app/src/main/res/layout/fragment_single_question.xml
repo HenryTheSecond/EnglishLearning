@@ -9,50 +9,66 @@
 
     <TextView
         android:id="@+id/tv_question"
-        android:layout_gravity="center|top"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:maxLines="5"
-        android:text="Question displays here \n abcdef"/>
-
-    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center">
-        <TextView
-            android:id="@+id/answerA"
-            android:maxLines="2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="answer A"
-            android:layout_marginRight="20dp"/>
+        android:maxLines="5"
+        android:layout_margin="10dp"
+        android:text="Question displays here \n abcdef"/>
 
-        <TextView
-            android:id="@+id/answerB"
-            android:maxLines="2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toEndOf="@id/answerA"
-            android:text="answer B"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:weightSum="2"
+        >
 
-        <TextView
-            android:id="@+id/answerC"
-            android:maxLines="2"
-            android:layout_width="wrap_content"
+        <Button
+            android:id="@+id/answer_a"
+            android:backgroundTint="@color/blue"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/answerA"
-            android:layout_marginRight="20dp"
-            android:text="answer C"/>
+            android:layout_margin="10dp"
+            android:layout_weight="1"
+            android:maxLines="3"
+            android:text="A.answer a"
+            />
 
-        <TextView
-            android:id="@+id/answerD"
-            android:maxLines="2"
-            android:layout_width="wrap_content"
+        <Button
+            android:id="@+id/answer_b"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_toEndOf="@id/answerC"
-            android:layout_below="@id/answerB"
-            android:text="answer D"/>
-    </RelativeLayout>
+            android:layout_margin="10dp"
+            android:layout_weight="1"
+            android:text="A.answer a"
+            android:textColor="@color/white"
+            android:backgroundTint="@color/blue"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:weightSum="2"
+        >
+
+        <Button
+            android:id="@+id/answer_c"
+            android:layout_width="match_parent"
+            android:backgroundTint="@color/blue"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:layout_weight="1"
+            android:text="A.answer a"/>
+
+        <Button
+            android:id="@+id/answer_d"
+            android:layout_width="match_parent"
+            android:backgroundTint="@color/blue"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:layout_weight="1"
+            android:text="A.answer a"/>
+    </LinearLayout>
 
 
 </LinearLayout>

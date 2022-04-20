@@ -40,9 +40,9 @@ public class SingleQuestionFragment extends Fragment {
 
         //Binding
         tvQuestion = getView().findViewById(R.id.tv_question);
-        answerA = getView().findViewById(R.id.answerA);
-        answerB = getView().findViewById(R.id.answerB);
-        answerC = getView().findViewById(R.id.answerC);
-        answerD = getView().findViewById(R.id.answerD);
+        answerA = getView().findViewById(R.id.answer_a);
+        answerB = getView().findViewById(R.id.answer_b);
+        answerC = getView().findViewById(R.id.answer_c);
+        answerD = getView().findViewById(R.id.answer_d);
     }
 }
