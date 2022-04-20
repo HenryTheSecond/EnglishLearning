@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.englishlearning.AnswerButtonOnClickListener;
 import com.example.englishlearning.R;
 
 
@@ -45,5 +46,11 @@ public class SingleQuestionFragment extends Fragment {
         answerB = getView().findViewById(R.id.answer_b);
         answerC = getView().findViewById(R.id.answer_c);
         answerD = getView().findViewById(R.id.answer_d);
+
+        View.OnClickListener buttonOnClickListenr = new AnswerButtonOnClickListener(answerA, answerB, answerC, answerD);
+        answerA.setOnClickListener(buttonOnClickListenr);
+        answerB.setOnClickListener(buttonOnClickListenr);
+        answerC.setOnClickListener(buttonOnClickListenr);
+        answerD.setOnClickListener(buttonOnClickListenr);
     }
 }
