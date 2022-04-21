@@ -9,19 +9,20 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.englishlearning.R;
 
 
-public class WritingFragment extends Fragment {
+public class WritingFragment extends GeneralQuestionFragment {
 
     EditText etAnswer;
     TextView tvParagraph;
 
-    public WritingFragment() {
-        // Required empty public constructor
+    public WritingFragment(Button btnQuestion) {
+        super(btnQuestion);
     }
 
 

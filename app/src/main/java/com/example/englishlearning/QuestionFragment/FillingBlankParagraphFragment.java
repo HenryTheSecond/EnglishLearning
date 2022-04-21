@@ -15,15 +15,15 @@ import android.widget.TextView;
 import com.example.englishlearning.R;
 
 
-public class FillingBlankParagraphFragment extends Fragment {
+public class FillingBlankParagraphFragment extends GeneralQuestionFragment {
     private TextView tvParagraph;
     private Button answerA;
     private Button answerB;
     private Button answerC;
     private Button answerD;
 
-    public FillingBlankParagraphFragment() {
-        // Required empty public constructor
+    public FillingBlankParagraphFragment(Button btnQuestion) {
+        super(btnQuestion);
     }
 
 

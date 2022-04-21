@@ -15,7 +15,7 @@ import android.widget.TextView;
 import com.example.englishlearning.R;
 
 
-public class ReadingParagraphFragment extends Fragment {
+public class ReadingParagraphFragment extends GeneralQuestionFragment {
 
     private TextView tvParagraph;
     private TextView tvQuestion;
@@ -24,8 +24,8 @@ public class ReadingParagraphFragment extends Fragment {
     private Button answerC;
     private Button answerD;
 
-    public ReadingParagraphFragment() {
-        // Required empty public constructor
+    public ReadingParagraphFragment(Button btnQuestion) {
+        super(btnQuestion);
     }
 
     @Override

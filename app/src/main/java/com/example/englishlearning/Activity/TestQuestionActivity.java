@@ -1,4 +1,4 @@
-package com.example.englishlearning;
+package com.example.englishlearning.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -17,6 +17,8 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.example.englishlearning.QuestionFragment.SingleQuestionFragment;
+import com.example.englishlearning.R;
+import com.example.englishlearning.Utils;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -38,23 +40,10 @@ public class TestQuestionActivity extends AppCompatActivity {
         questionContent = findViewById(R.id.question_content);
 
 
-
-        MediaPlayer mediaPlayer = new MediaPlayer();
-        try{
-            //MediaPlayer mediaPlayer = new MediaPlayer();
-            AssetFileDescriptor afd = getAssets().openFd("ListeningFiles/test.mp3");
-            mediaPlayer.setDataSource(afd.getFileDescriptor(), afd.getStartOffset(), afd.getLength());
-            afd.close();
-            mediaPlayer.prepare();
-        }catch (IOException e) {
-            System.out.println("MEDIA Error");
-            e.printStackTrace();
-        }
+        MediaPlayer mediaPlayer = Utils.playListeningAudio(this, "test.mp3");
         mediaPlayer.start();
 
-
-
-        addFragment(new SingleQuestionFragment());
+        addFragment(new SingleQuestionFragment( findViewById(R.id.q_2) ));
         startTimer();
     }
 

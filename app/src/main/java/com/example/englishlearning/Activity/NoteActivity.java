@@ -1,4 +1,4 @@
-package com.example.englishlearning;
+package com.example.englishlearning.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -11,6 +11,8 @@ import android.widget.Button;
 import android.widget.Spinner;
 
 import com.example.englishlearning.Model.NotedWord;
+import com.example.englishlearning.NoteAdapter;
+import com.example.englishlearning.R;
 
 import java.util.ArrayList;
 import java.util.Date;
