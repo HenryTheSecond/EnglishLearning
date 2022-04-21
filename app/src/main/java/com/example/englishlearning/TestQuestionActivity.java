@@ -5,12 +5,21 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.res.AssetFileDescriptor;
+import android.content.res.AssetManager;
+import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.provider.MediaStore;
+import android.util.Log;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.example.englishlearning.QuestionFragment.SingleQuestionFragment;
+
+import java.io.IOException;
+import java.io.InputStream;
 
 public class TestQuestionActivity extends AppCompatActivity {
     private CountDownTimer countDownTimer;
@@ -28,6 +37,23 @@ public class TestQuestionActivity extends AppCompatActivity {
         tvCountDownTimer = findViewById(R.id.tv_countdown_timer);
         questionContent = findViewById(R.id.question_content);
 
+
+
+        MediaPlayer mediaPlayer = new MediaPlayer();
+        try{
+            //MediaPlayer mediaPlayer = new MediaPlayer();
+            AssetFileDescriptor afd = getAssets().openFd("ListeningFiles/test.mp3");
+            mediaPlayer.setDataSource(afd.getFileDescriptor(), afd.getStartOffset(), afd.getLength());
+            afd.close();
+            mediaPlayer.prepare();
+        }catch (IOException e) {
+            System.out.println("MEDIA Error");
+            e.printStackTrace();
+        }
+        mediaPlayer.start();
+
+
+
         addFragment(new SingleQuestionFragment());
         startTimer();
     }
@@ -38,7 +64,8 @@ public class TestQuestionActivity extends AppCompatActivity {
         countDownTimer = new CountDownTimer(1000*60*2, 1000) {
             @Override
             public void onTick(long l) {
-                tvCountDownTimer.setText(String.valueOf(l/1000/60) + ":" + String.valueOf( (l/1000)%60 ));
+                String second = String.format("%02d", (l/1000)%60);
+                tvCountDownTimer.setText(String.valueOf(l/1000/60) + ":" + second );
             }
 
             @Override
