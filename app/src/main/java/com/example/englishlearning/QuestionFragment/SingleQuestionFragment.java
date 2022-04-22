@@ -13,7 +13,9 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.englishlearning.AnswerButtonOnClickListener;
+import com.example.englishlearning.MULTIPLE_CHOICE_ANSWER;
 import com.example.englishlearning.R;
+import com.example.englishlearning.Utils;
 
 
 public class SingleQuestionFragment extends GeneralQuestionFragment {
@@ -23,6 +25,7 @@ public class SingleQuestionFragment extends GeneralQuestionFragment {
     private Button answerB;
     private Button answerC;
     private Button answerD;
+    private MULTIPLE_CHOICE_ANSWER answer;
 
     public SingleQuestionFragment(Button btnQuestion) {
         super(btnQuestion);
@@ -46,11 +49,45 @@ public class SingleQuestionFragment extends GeneralQuestionFragment {
         answerB = getView().findViewById(R.id.answer_b);
         answerC = getView().findViewById(R.id.answer_c);
         answerD = getView().findViewById(R.id.answer_d);
+        answer = Utils.getMultipleChoiceAnswer(getContext(), Integer.parseInt(btnQuestion.getText().toString()));
 
-        View.OnClickListener buttonOnClickListenr = new AnswerButtonOnClickListener(answerA, answerB, answerC, answerD, btnQuestion);
+        System.out.println("created");
+        System.out.println(answer);
+        colorAnswer();
+
+        View.OnClickListener buttonOnClickListenr = new AnswerButtonOnClickListener(answerA, answerB, answerC, answerD, btnQuestion, answer);
         answerA.setOnClickListener(buttonOnClickListenr);
         answerB.setOnClickListener(buttonOnClickListenr);
         answerC.setOnClickListener(buttonOnClickListenr);
         answerD.setOnClickListener(buttonOnClickListenr);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        int questionNumber = Integer.parseInt(btnQuestion.getText().toString());
+
+        Utils.setMultipleChoiceAnswer(getContext(), questionNumber, answer);
+    }
+
+    private void colorAnswer(){
+        switch (answer){
+            case answerA:{
+                answerA.setBackgroundTintList(getContext().getResources().getColorStateList(R.color.teal_200));
+                break;
+            }
+            case answerB:{
+                answerB.setBackgroundTintList(getContext().getResources().getColorStateList(R.color.teal_200));
+                break;
+            }
+            case answerC:{
+                answerC.setBackgroundTintList(getContext().getResources().getColorStateList(R.color.teal_200));
+                break;
+            }
+            case answerD:{
+                answerD.setBackgroundTintList(getContext().getResources().getColorStateList(R.color.teal_200));
+                break;
+            }
+        }
     }
 }
