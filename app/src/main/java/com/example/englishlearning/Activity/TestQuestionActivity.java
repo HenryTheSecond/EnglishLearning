@@ -18,6 +18,8 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
+import com.example.englishlearning.AnswerStore.AnswerStore;
+import com.example.englishlearning.AnswerStore.WritingStore;
 import com.example.englishlearning.QuestionFragment.SingleQuestionFragment;
 import com.example.englishlearning.QuestionFragment.WritingFragment;
 import com.example.englishlearning.R;
@@ -32,11 +34,11 @@ public class TestQuestionActivity extends AppCompatActivity {
     private FrameLayout questionContent;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test_question);
+        Utils.clearAnswerStoreFile(this);
 
         //Binding
         tvCountDownTimer = findViewById(R.id.tv_countdown_timer);
@@ -55,17 +57,18 @@ public class TestQuestionActivity extends AppCompatActivity {
     private void runTest() {
         Button q2 = findViewById(R.id.q_2);
         Button q3 = findViewById(R.id.q_3);
-        q2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                addFragment(new WritingFragment( (Button)view ));
-            }
-        });
 
         q2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                addFragment(new WritingFragment( (Button)view ));
+                addFragment(new SingleQuestionFragment( (Button)view));
+            }
+        });
+
+        q3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                addFragment(new SingleQuestionFragment( (Button)view));
             }
         });
     }

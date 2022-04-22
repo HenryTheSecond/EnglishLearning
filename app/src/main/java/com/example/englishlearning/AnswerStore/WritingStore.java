@@ -9,6 +9,11 @@ public class WritingStore extends AnswerStore {
         this.answer = answer;
     }
 
+    public WritingStore(int idBtnQuestion){
+        super(idBtnQuestion);
+        answer = "";
+    }
+
     public String getAnswer() {
         return answer;
     }

@@ -39,7 +39,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:layout_weight="1"
-            android:text="A.answer a"
+            android:text="B.answer a"
             android:textColor="@color/white"
             android:backgroundTint="@color/blue"/>
     </LinearLayout>
@@ -58,7 +58,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:layout_weight="1"
-            android:text="A.answer a"/>
+            android:text="C.answer a"/>
 
         <Button
             android:id="@+id/answer_d"
@@ -67,6 +67,6 @@
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:layout_weight="1"
-            android:text="A.answer a"/>
+            android:text="D.answer a"/>
     </LinearLayout>
 </LinearLayout>

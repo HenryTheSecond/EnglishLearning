@@ -15,13 +15,17 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.example.englishlearning.AnswerStore.AnswerStore;
+import com.example.englishlearning.AnswerStore.WritingStore;
 import com.example.englishlearning.R;
+import com.example.englishlearning.Utils;
 
 
 public class WritingFragment extends GeneralQuestionFragment {
 
     EditText etAnswer;
     TextView tvParagraph;
+
 
     public WritingFragment(Button btnQuestion) {
         super(btnQuestion);
@@ -41,6 +45,9 @@ public class WritingFragment extends GeneralQuestionFragment {
         super.onViewCreated(view, savedInstanceState);
         etAnswer = getView().findViewById(R.id.et_answer);
         tvParagraph = getView().findViewById(R.id.tv_paragraph);
+
+
+        etAnswer.setText( Utils.getWritingAnswer(getContext(), Integer.parseInt(btnQuestion.getText().toString())) );
 
         etAnswer.addTextChangedListener(new TextWatcher() {
             @Override
@@ -62,4 +69,12 @@ public class WritingFragment extends GeneralQuestionFragment {
             }
         });
     }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        int questionNumber = Integer.parseInt(btnQuestion.getText().toString());
+        Utils.setWritingAnswer(getContext(), questionNumber, etAnswer.getText().toString());
+    }
+
 }
