@@ -43,11 +43,12 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         NotedWord item = list.get(position);
 
-        holder.getEtContent().setText(item.getContent());
-        holder.getEtMeaning().setText(item.getMeaning());
+        holder.getTvContent().setText(item.getContent());
+        holder.getTvMeaning().setText(item.getMeaning());
+        holder.getTvType().setText(item.getType().toString());
 
-        int typePosition = holder.getAdapter().getPosition(item.getType());
-        holder.getSpinnerType().setSelection(typePosition);
+//        int typePosition = holder.getAdapter().getPosition(item.getType());
+//        holder.getSpinnerType().setSelection(typePosition);
     }
 
     @Override
@@ -57,32 +58,32 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
 
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        private EditText etContent;
-        private Spinner spinnerType;
-        private EditText etMeaning;
+        private TextView tvContent;
+        private TextView tvMeaning;
+        private TextView tvType;
         private ArrayAdapter<NotedWord.Type> adapter;
 
         public ViewHolder(View view) {
             super(view);
 
-            etContent = view.findViewById(R.id.et_content);
-            spinnerType = view.findViewById(R.id.spinner_type);
-            etMeaning = view.findViewById(R.id.et_meaning);
+            tvContent = view.findViewById(R.id.tv_content);
+            tvMeaning = view.findViewById(R.id.tv_meaning);
+            tvType = view.findViewById(R.id.tv_type);
 
-            adapter = new ArrayAdapter<NotedWord.Type>(view.getContext(), android.R.layout.simple_list_item_1, NotedWord.Type.values());
-            spinnerType.setAdapter(adapter);
+//            adapter = new ArrayAdapter<NotedWord.Type>(view.getContext(), android.R.layout.simple_list_item_1, NotedWord.Type.values());
+//            spinnerType.setAdapter(adapter);
         }
 
-        public EditText getEtContent() {
-            return etContent;
+        public TextView getTvContent() {
+            return tvContent;
         }
 
-        public Spinner getSpinnerType() {
-            return spinnerType;
+        public TextView getTvMeaning() {
+            return tvMeaning;
         }
 
-        public EditText getEtMeaning() {
-            return etMeaning;
+        public TextView getTvType() {
+            return tvType;
         }
 
         public ArrayAdapter<NotedWord.Type> getAdapter() {

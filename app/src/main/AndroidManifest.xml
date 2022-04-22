@@ -9,14 +9,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.EnglishLearning">
-
         <activity
             android:name=".Activity.NoteActivity"
-            android:exported="false" />
-
-<!--        <activity-->
-<!--            android:name=".TestQuestionActivity"-->
-<!--            android:exported="false" />-->
+            android:exported="false" /> <!-- <activity -->
+        <!-- android:name=".TestQuestionActivity" -->
+        <!-- android:exported="false" /> -->
         <activity
             android:name=".Activity.TestQuestionActivity"
             android:exported="true">

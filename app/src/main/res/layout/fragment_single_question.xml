@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:maxLines="5"
-        android:layout_margin="10dp"
+        android:layout_margin="@dimen/defalult_margin"
         android:text="Question displays here \n abcdef"/>
 
     <LinearLayout
@@ -27,7 +27,7 @@
             android:backgroundTint="@color/blue"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
+            android:layout_margin="@dimen/defalult_margin"
             android:layout_weight="1"
             android:maxLines="3"
             android:text="A.answer a"
@@ -37,7 +37,7 @@
             android:id="@+id/answer_b"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
+            android:layout_margin="@dimen/defalult_margin"
             android:layout_weight="1"
             android:text="A.answer a"
             android:textColor="@color/white"
@@ -56,7 +56,7 @@
             android:layout_width="match_parent"
             android:backgroundTint="@color/blue"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
+            android:layout_margin="@dimen/defalult_margin"
             android:layout_weight="1"
             android:text="A.answer a"/>
 
@@ -65,7 +65,7 @@
             android:layout_width="match_parent"
             android:backgroundTint="@color/blue"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
+            android:layout_margin="@dimen/defalult_margin"
             android:layout_weight="1"
             android:text="A.answer a"/>
     </LinearLayout>

@@ -6,16 +6,37 @@
     android:layout_height="match_parent"
     tools:context=".Activity.NoteActivity"
     android:orientation="vertical">
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_item"
             android:layout_width="match_parent"
-            android:layout_height="450dp"/>
+            android:layout_height="625dp" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="bottom"
+            android:background="@color/light_blue"
+            android:weightSum="2">
 
-        <Button
-            android:id="@+id/btn_add"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Add"/>
+                <Button
+                    android:id="@+id/btn_add"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/defalult_margin"
+                    android:text="Add"
+                    android:textAlignment="center"
+                    android:backgroundTint="@color/blue"
+                    android:layout_weight="1"/>
 
+                <Button
+                    android:id="@+id/btn_edit"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/defalult_margin"
+                    android:text="Edit"
+                    android:textAlignment="center"
+                    android:backgroundTint="@color/blue"
+                    android:layout_weight="1"/>
+        </LinearLayout>
 
 </LinearLayout>

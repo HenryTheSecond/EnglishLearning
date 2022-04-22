@@ -11,11 +11,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:maxLines="5"
-        android:text="Question displays here \n\n\n\n\n\n\n\n\n"/>
+        android:text="Question displays here \n\n\n\n\n\n\n\n\n"
+        android:layout_margin="@dimen/defalult_margin"/>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/defalult_margin">
 
         <TextView
             android:layout_width="wrap_content"

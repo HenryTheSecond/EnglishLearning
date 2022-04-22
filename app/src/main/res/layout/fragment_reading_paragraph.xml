@@ -12,55 +12,68 @@
         android:layout_height="wrap_content"
         android:maxLines="20"
         android:text="paragraph_displays_here \n\n\n\n\n\n\n\n\n\n\n\n"
-        android:layout_marginBottom="@dimen/text_margin"/>
+        android:layout_marginBottom="@dimen/text_margin"
+        android:layout_margin="@dimen/defalult_margin"/>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:maxLines="5"
+        android:layout_margin="@dimen/defalult_margin"
         android:text="Question displays here"/>
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center">
+        android:gravity="center"
+        android:weightSum="2"
+        >
+
         <Button
             android:id="@+id/answer_a"
-            android:maxLines="2"
-            android:layout_width="wrap_content"
+            android:backgroundTint="@color/blue"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="answer A"
-            android:layout_marginRight="20dp"/>
+            android:layout_margin="@dimen/defalult_margin"
+            android:layout_weight="1"
+            android:maxLines="3"
+            android:text="A.answer a"
+            />
 
         <Button
             android:id="@+id/answer_b"
-            android:maxLines="2"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_toEndOf="@id/answer_a"
-            android:text="answer B"/>
+            android:layout_margin="@dimen/defalult_margin"
+            android:layout_weight="1"
+            android:text="A.answer a"
+            android:textColor="@color/white"
+            android:backgroundTint="@color/blue"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:weightSum="2"
+        >
 
         <Button
             android:id="@+id/answer_c"
-            android:maxLines="2"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
+            android:backgroundTint="@color/blue"
             android:layout_height="wrap_content"
-            android:layout_below="@id/answer_a"
-            android:layout_marginRight="20dp"
-            android:text="answer C"/>
+            android:layout_margin="@dimen/defalult_margin"
+            android:layout_weight="1"
+            android:text="A.answer a"/>
 
         <Button
             android:id="@+id/answer_d"
-            android:maxLines="2"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
+            android:backgroundTint="@color/blue"
             android:layout_height="wrap_content"
-            android:layout_toEndOf="@id/answer_c"
-            android:layout_below="@id/answer_b"
-            android:text="answer D"/>
-    </RelativeLayout>
-
-
-
-
-
+            android:layout_margin="@dimen/defalult_margin"
+            android:layout_weight="1"
+            android:text="A.answer a"/>
+    </LinearLayout>
 </LinearLayout>
