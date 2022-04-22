@@ -13,10 +13,13 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.example.englishlearning.QuestionFragment.SingleQuestionFragment;
+import com.example.englishlearning.QuestionFragment.WritingFragment;
 import com.example.englishlearning.R;
 import com.example.englishlearning.Utils;
 
@@ -43,10 +46,29 @@ public class TestQuestionActivity extends AppCompatActivity {
         MediaPlayer mediaPlayer = Utils.playListeningAudio(this, "test.mp3");
         mediaPlayer.start();
 
-        addFragment(new SingleQuestionFragment( findViewById(R.id.q_2) ));
+
+
+        runTest();
         startTimer();
     }
 
+    private void runTest() {
+        Button q2 = findViewById(R.id.q_2);
+        Button q3 = findViewById(R.id.q_3);
+        q2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                addFragment(new WritingFragment( (Button)view ));
+            }
+        });
+
+        q2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                addFragment(new WritingFragment( (Button)view ));
+            }
+        });
+    }
 
 
     private void startTimer(){

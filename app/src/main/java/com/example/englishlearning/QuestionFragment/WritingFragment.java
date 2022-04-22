@@ -6,6 +6,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,5 +41,25 @@ public class WritingFragment extends GeneralQuestionFragment {
         super.onViewCreated(view, savedInstanceState);
         etAnswer = getView().findViewById(R.id.et_answer);
         tvParagraph = getView().findViewById(R.id.tv_paragraph);
+
+        etAnswer.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                if(!charSequence.toString().equals("")){
+                    btnQuestion.setBackgroundTintList(view.getContext().getResources().getColorStateList(android.R.color.holo_green_dark));
+                }else
+                    btnQuestion.setBackgroundTintList(view.getContext().getResources().getColorStateList(android.R.color.holo_purple));
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
     }
 }
