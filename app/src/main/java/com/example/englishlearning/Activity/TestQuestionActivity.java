@@ -20,6 +20,8 @@ import android.widget.TextView;
 
 import com.example.englishlearning.AnswerStore.AnswerStore;
 import com.example.englishlearning.AnswerStore.WritingStore;
+import com.example.englishlearning.QuestionFragment.FillingBlankParagraphFragment;
+import com.example.englishlearning.QuestionFragment.ReadingParagraphFragment;
 import com.example.englishlearning.QuestionFragment.SingleQuestionFragment;
 import com.example.englishlearning.QuestionFragment.WritingFragment;
 import com.example.englishlearning.R;
@@ -38,6 +40,7 @@ public class TestQuestionActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test_question);
+
         Utils.clearAnswerStoreFile(this);
 
         //Binding
@@ -47,7 +50,6 @@ public class TestQuestionActivity extends AppCompatActivity {
 
         MediaPlayer mediaPlayer = Utils.playListeningAudio(this, "test.mp3");
         mediaPlayer.start();
-
 
 
         runTest();
@@ -61,14 +63,14 @@ public class TestQuestionActivity extends AppCompatActivity {
         q2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                addFragment(new SingleQuestionFragment( (Button)view));
+                addFragment(new WritingFragment( (Button)view));
             }
         });
 
         q3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                addFragment(new SingleQuestionFragment( (Button)view));
+                addFragment(new WritingFragment( (Button)view));
             }
         });
     }

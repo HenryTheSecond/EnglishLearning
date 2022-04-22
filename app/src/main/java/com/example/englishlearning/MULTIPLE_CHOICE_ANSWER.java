@@ -13,6 +13,6 @@ public enum MULTIPLE_CHOICE_ANSWER {
             case answerC: return "C";
             case answerD: return "D";
         }
-        return "";
+        return "None";
     }
 }

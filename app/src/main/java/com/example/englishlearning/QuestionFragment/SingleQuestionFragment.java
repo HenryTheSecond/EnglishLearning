@@ -21,11 +21,6 @@ import com.example.englishlearning.Utils;
 public class SingleQuestionFragment extends GeneralQuestionFragment {
 
     private TextView tvQuestion;
-    private Button answerA;
-    private Button answerB;
-    private Button answerC;
-    private Button answerD;
-    private MULTIPLE_CHOICE_ANSWER answer;
 
     public SingleQuestionFragment(Button btnQuestion) {
         super(btnQuestion);
@@ -45,49 +40,9 @@ public class SingleQuestionFragment extends GeneralQuestionFragment {
 
         //Binding
         tvQuestion = getView().findViewById(R.id.tv_question);
-        answerA = getView().findViewById(R.id.answer_a);
-        answerB = getView().findViewById(R.id.answer_b);
-        answerC = getView().findViewById(R.id.answer_c);
-        answerD = getView().findViewById(R.id.answer_d);
-        answer = Utils.getMultipleChoiceAnswer(getContext(), Integer.parseInt(btnQuestion.getText().toString()));
-
-        System.out.println("created");
-        System.out.println(answer);
-        colorAnswer();
-
-        View.OnClickListener buttonOnClickListenr = new AnswerButtonOnClickListener(answerA, answerB, answerC, answerD, btnQuestion, answer);
-        answerA.setOnClickListener(buttonOnClickListenr);
-        answerB.setOnClickListener(buttonOnClickListenr);
-        answerC.setOnClickListener(buttonOnClickListenr);
-        answerD.setOnClickListener(buttonOnClickListenr);
     }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        int questionNumber = Integer.parseInt(btnQuestion.getText().toString());
 
-        Utils.setMultipleChoiceAnswer(getContext(), questionNumber, answer);
-    }
 
-    private void colorAnswer(){
-        switch (answer){
-            case answerA:{
-                answerA.setBackgroundTintList(getContext().getResources().getColorStateList(R.color.teal_200));
-                break;
-            }
-            case answerB:{
-                answerB.setBackgroundTintList(getContext().getResources().getColorStateList(R.color.teal_200));
-                break;
-            }
-            case answerC:{
-                answerC.setBackgroundTintList(getContext().getResources().getColorStateList(R.color.teal_200));
-                break;
-            }
-            case answerD:{
-                answerD.setBackgroundTintList(getContext().getResources().getColorStateList(R.color.teal_200));
-                break;
-            }
-        }
-    }
+
 }

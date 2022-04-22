@@ -21,14 +21,15 @@ import com.example.englishlearning.R;
 import com.example.englishlearning.Utils;
 
 
-public class WritingFragment extends GeneralQuestionFragment {
+public class WritingFragment extends Fragment {
 
     EditText etAnswer;
     TextView tvParagraph;
+    Button btnQuestion;
 
 
     public WritingFragment(Button btnQuestion) {
-        super(btnQuestion);
+        this.btnQuestion = btnQuestion;
     }
 
 

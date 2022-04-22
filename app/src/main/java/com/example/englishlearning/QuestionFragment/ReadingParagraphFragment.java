@@ -19,10 +19,6 @@ public class ReadingParagraphFragment extends GeneralQuestionFragment {
 
     private TextView tvParagraph;
     private TextView tvQuestion;
-    private Button answerA;
-    private Button answerB;
-    private Button answerC;
-    private Button answerD;
 
     public ReadingParagraphFragment(Button btnQuestion) {
         super(btnQuestion);
@@ -42,9 +38,5 @@ public class ReadingParagraphFragment extends GeneralQuestionFragment {
         //Binding
         tvParagraph = getView().findViewById(R.id.tv_paragraph);
         tvQuestion = getView().findViewById(R.id.tv_question);
-        answerA = getView().findViewById(R.id.answer_a);
-        answerB = getView().findViewById(R.id.answer_b);
-        answerC = getView().findViewById(R.id.answer_c);
-        answerD = getView().findViewById(R.id.answer_d);
     }
 }

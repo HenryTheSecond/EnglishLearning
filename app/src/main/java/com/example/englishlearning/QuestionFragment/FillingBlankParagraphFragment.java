@@ -17,10 +17,7 @@ import com.example.englishlearning.R;
 
 public class FillingBlankParagraphFragment extends GeneralQuestionFragment {
     private TextView tvParagraph;
-    private Button answerA;
-    private Button answerB;
-    private Button answerC;
-    private Button answerD;
+
 
     public FillingBlankParagraphFragment(Button btnQuestion) {
         super(btnQuestion);
@@ -39,9 +36,5 @@ public class FillingBlankParagraphFragment extends GeneralQuestionFragment {
         super.onViewCreated(view, savedInstanceState);
 
         tvParagraph = getView().findViewById(R.id.tv_paragraph);
-        answerA = getView().findViewById(R.id.answer_a);
-        answerB = getView().findViewById(R.id.answer_b);
-        answerC = getView().findViewById(R.id.answer_c);
-        answerD = getView().findViewById(R.id.answer_d);
     }
 }

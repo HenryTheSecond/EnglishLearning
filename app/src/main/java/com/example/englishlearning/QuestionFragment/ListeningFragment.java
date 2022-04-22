@@ -19,10 +19,7 @@ import com.example.englishlearning.R;
 public class ListeningFragment extends GeneralQuestionFragment {
     private SeekBar timer;
     private TextView tvQuestion;
-    private Button answerA;
-    private Button answerB;
-    private Button answerC;
-    private Button answerD;
+
 
     public ListeningFragment(Button btnQuestion) {
         super(btnQuestion);
@@ -43,9 +40,5 @@ public class ListeningFragment extends GeneralQuestionFragment {
         //Binding
         timer = getView().findViewById(R.id.seek_bar_timer);
         tvQuestion = getView().findViewById(R.id.tv_question);
-        answerA = getView().findViewById(R.id.answer_a);
-        answerB = getView().findViewById(R.id.answer_b);
-        answerC = getView().findViewById(R.id.answer_c);
-        answerD = getView().findViewById(R.id.answer_d);
     }
 }

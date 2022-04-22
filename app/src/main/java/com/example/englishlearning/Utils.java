@@ -46,8 +46,8 @@ public class Utils {
         SharedPreferences sharedPreferences = context.getSharedPreferences(FILE_NAME_ANSWER_STORE_TEMP, Context.MODE_PRIVATE);
 
         String answer = sharedPreferences.getString(QUESTION_KEY + String.valueOf(questionNumber), "");
-        System.out.println("get");
-        System.out.println(answer);
+
+        System.out.println("Get " + answer.toString());
         switch(answer){
             case "A": return MULTIPLE_CHOICE_ANSWER.answerA;
             case "B": return MULTIPLE_CHOICE_ANSWER.answerB;
@@ -58,8 +58,7 @@ public class Utils {
     }
 
     public static void setMultipleChoiceAnswer(Context context, int questionNumber, MULTIPLE_CHOICE_ANSWER answer){
-        System.out.println("set");
-        System.out.println(answer);
+        System.out.println("Saved " + answer.toString());
         SharedPreferences sharedPreferences = context.getSharedPreferences(FILE_NAME_ANSWER_STORE_TEMP, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString(QUESTION_KEY + String.valueOf(questionNumber), answer.toString());
