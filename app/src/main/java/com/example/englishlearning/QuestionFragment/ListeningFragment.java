@@ -16,7 +16,7 @@ import android.widget.TextView;
 import com.example.englishlearning.R;
 
 
-public class ListeningFragment extends Fragment {
+public class ListeningFragment extends GeneralQuestionFragment {
     private SeekBar timer;
     private TextView tvQuestion;
     private Button answerA;
@@ -24,8 +24,8 @@ public class ListeningFragment extends Fragment {
     private Button answerC;
     private Button answerD;
 
-    public ListeningFragment() {
-        // Required empty public constructor
+    public ListeningFragment(Button btnQuestion) {
+        super(btnQuestion);
     }
 
 

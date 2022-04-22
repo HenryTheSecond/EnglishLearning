@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".TestQuestionActivity"
+    tools:context=".Activity.TestQuestionActivity"
     android:orientation="vertical">
 
     <TextView
@@ -26,6 +26,7 @@
             android:layout_gravity="center_horizontal"
             android:paddingHorizontal="20dp">
             <Button
+                android:id="@+id/q_1"
                 android:layout_height="50dp"
                 android:text="1"
                 android:layout_marginRight="10dp"
@@ -33,24 +34,28 @@
                 android:layout_weight="1"/>
 
             <Button
+                android:id="@+id/q_2"
                 android:layout_height="50dp"
                 android:layout_marginRight="10dp"
                 android:text="2"
                 android:layout_weight="1"/>
 
             <Button
+                android:id="@+id/q_3"
                 android:layout_height="50dp"
                 android:text="3"
                 android:layout_marginRight="10dp"
                 android:layout_weight="1"/>
 
             <Button
+                android:id="@+id/q_4"
                 android:layout_height="50dp"
                 android:text="4"
                 android:layout_marginRight="10dp"
                 android:layout_weight="1"/>
 
             <Button
+                android:id="@+id/q_5"
                 android:layout_height="50dp"
                 android:text="5"
                 android:layout_weight="1"/>

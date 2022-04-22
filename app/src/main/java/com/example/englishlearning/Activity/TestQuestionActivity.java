@@ -1,16 +1,30 @@
-package com.example.englishlearning;
+package com.example.englishlearning.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.res.AssetFileDescriptor;
+import android.content.res.AssetManager;
+import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.provider.MediaStore;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.example.englishlearning.QuestionFragment.SingleQuestionFragment;
+import com.example.englishlearning.QuestionFragment.WritingFragment;
+import com.example.englishlearning.R;
+import com.example.englishlearning.Utils;
+
+import java.io.IOException;
+import java.io.InputStream;
 
 public class TestQuestionActivity extends AppCompatActivity {
     private CountDownTimer countDownTimer;
@@ -28,17 +42,41 @@ public class TestQuestionActivity extends AppCompatActivity {
         tvCountDownTimer = findViewById(R.id.tv_countdown_timer);
         questionContent = findViewById(R.id.question_content);
 
-        addFragment(new SingleQuestionFragment());
+
+        MediaPlayer mediaPlayer = Utils.playListeningAudio(this, "test.mp3");
+        mediaPlayer.start();
+
+
+
+        runTest();
         startTimer();
     }
 
+    private void runTest() {
+        Button q2 = findViewById(R.id.q_2);
+        Button q3 = findViewById(R.id.q_3);
+        q2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                addFragment(new WritingFragment( (Button)view ));
+            }
+        });
+
+        q2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                addFragment(new WritingFragment( (Button)view ));
+            }
+        });
+    }
 
 
     private void startTimer(){
         countDownTimer = new CountDownTimer(1000*60*2, 1000) {
             @Override
             public void onTick(long l) {
-                tvCountDownTimer.setText(String.valueOf(l/1000/60) + ":" + String.valueOf( (l/1000)%60 ));
+                String second = String.format("%02d", (l/1000)%60);
+                tvCountDownTimer.setText(String.valueOf(l/1000/60) + ":" + second );
             }
 
             @Override

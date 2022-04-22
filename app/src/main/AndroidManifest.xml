@@ -11,14 +11,14 @@
         android:theme="@style/Theme.EnglishLearning">
 
         <activity
-            android:name=".NoteActivity"
+            android:name=".Activity.NoteActivity"
             android:exported="false" />
 
 <!--        <activity-->
 <!--            android:name=".TestQuestionActivity"-->
 <!--            android:exported="false" />-->
         <activity
-            android:name=".TestQuestionActivity"
+            android:name=".Activity.TestQuestionActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
