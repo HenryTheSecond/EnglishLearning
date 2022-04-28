@@ -37,11 +37,11 @@ public class GeneralQuestionFragment extends Fragment {
 
         colorAnswer();
 
-        View.OnClickListener buttonOnClickListenr = new AnswerButtonOnClickListener(this);
+        /*View.OnClickListener buttonOnClickListenr = new AnswerButtonOnClickListener(this);
         answerA.setOnClickListener(buttonOnClickListenr);
         answerB.setOnClickListener(buttonOnClickListenr);
         answerC.setOnClickListener(buttonOnClickListenr);
-        answerD.setOnClickListener(buttonOnClickListenr);
+        answerD.setOnClickListener(buttonOnClickListenr);*/
     }
 
     @Override

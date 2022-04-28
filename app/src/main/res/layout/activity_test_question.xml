@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Activity.TestQuestionActivity"
-    android:orientation="vertical">
+    tools:context=".Activity.TestQuestionActivity">
 
     <TextView
         android:id="@+id/tv_countdown_timer"
@@ -14,18 +13,21 @@
         android:text="20:00"
         android:textSize="30dp"
         android:textStyle="bold"
-        android:layout_margin="@dimen/defalult_margin"
-        />
+        android:layout_margin="@dimen/defalult_margin" />
 
     <FrameLayout
         android:id="@+id/question_content"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:layout_above="@id/table_question"
+        android:layout_below="@id/tv_countdown_timer" />
 
     <LinearLayout
+        android:id="@+id/layout_arrow"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_horizontal">
+        android:gravity="center_horizontal"
+        android:layout_alignParentBottom="true">
 
         <Button
             android:layout_width="wrap_content"
@@ -35,55 +37,107 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/ic_arrow_next"/>
+            android:background="@drawable/ic_arrow_next" />
     </LinearLayout>
+
     <TableLayout
+        android:id="@+id/table_question"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_above="@id/layout_arrow">
+
+        <TableRow
+            android:layout_gravity="center_horizontal"
+            android:paddingHorizontal="20dp"
+            android:layout_height="5dp">
+            <Button
+                android:id="@+id/q_1"
+                android:text="1"
+                android:layout_marginEnd="@dimen/defalult_margin"
+                android:backgroundTint="@color/uncheck"
+                android:onClick="btnQuestionClick"
+                android:layout_weight="1"/>
+
+            <Button
+                android:id="@+id/q_2"
+
+                android:layout_marginEnd="@dimen/defalult_margin"
+                android:text="2"
+                android:backgroundTint="@color/uncheck"
+                android:onClick="btnQuestionClick"
+                android:layout_weight="1"/>
+
+            <Button
+                android:id="@+id/q_3"
+
+                android:text="3"
+                android:layout_marginEnd="@dimen/defalult_margin"
+                android:backgroundTint="@color/uncheck"
+                android:onClick="btnQuestionClick"
+                android:layout_weight="1"/>
+
+            <Button
+                android:id="@+id/q_4"
+
+                android:text="4"
+                android:layout_marginEnd="@dimen/defalult_margin"
+                android:backgroundTint="@color/uncheck"
+                android:onClick="btnQuestionClick"
+                android:layout_weight="1"/>
+
+            <Button
+                android:id="@+id/q_5"
+
+                android:text="5"
+                android:layout_marginEnd="@dimen/defalult_margin"
+                android:backgroundTint="@color/uncheck"
+                android:onClick="btnQuestionClick"
+                android:layout_weight="1"/>
+        </TableRow>
 
         <TableRow
             android:layout_gravity="center_horizontal"
             android:paddingHorizontal="20dp">
             <Button
-                android:id="@+id/q_1"
-                android:layout_height="50dp"
-                android:text="1"
+
+                android:text="6"
                 android:layout_marginEnd="@dimen/defalult_margin"
                 android:backgroundTint="@color/uncheck"
+                android:onClick="btnQuestionClick"
                 android:layout_weight="1"/>
 
             <Button
-                android:id="@+id/q_2"
-                android:layout_height="50dp"
+
                 android:layout_marginEnd="@dimen/defalult_margin"
-                android:text="2"
+                android:text="7"
                 android:backgroundTint="@color/uncheck"
+                android:onClick="btnQuestionClick"
                 android:layout_weight="1"/>
 
             <Button
-                android:id="@+id/q_3"
-                android:layout_height="50dp"
-                android:text="3"
+
+                android:text="8"
                 android:layout_marginEnd="@dimen/defalult_margin"
                 android:backgroundTint="@color/uncheck"
+                android:onClick="btnQuestionClick"
                 android:layout_weight="1"/>
 
             <Button
-                android:id="@+id/q_4"
-                android:layout_height="50dp"
-                android:text="4"
+
+                android:text="9"
                 android:layout_marginEnd="@dimen/defalult_margin"
                 android:backgroundTint="@color/uncheck"
+                android:onClick="btnQuestionClick"
                 android:layout_weight="1"/>
 
             <Button
-                android:id="@+id/q_5"
-                android:layout_height="50dp"
-                android:text="5"
+
+                android:text="10"
                 android:layout_marginEnd="@dimen/defalult_margin"
                 android:backgroundTint="@color/uncheck"
+                android:onClick="btnQuestionClick"
                 android:layout_weight="1"/>
         </TableRow>
     </TableLayout>
 
-</LinearLayout>
+</RelativeLayout>

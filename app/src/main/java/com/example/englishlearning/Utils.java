@@ -69,4 +69,33 @@ public class Utils {
         SharedPreferences sharedPreferences = context.getSharedPreferences(FILE_NAME_ANSWER_STORE_TEMP, Context.MODE_PRIVATE);
         sharedPreferences.edit().clear().commit();
     }
+
+    public static void colorAnswer(MultipleChoice multipleChoice){
+        switch (multipleChoice.getAnswer()){
+            case answerA:{
+                multipleChoice.getMultipleChoice().findViewById(R.id.answer_a).setBackgroundTintList(multipleChoice.getMultipleChoice().getContext().getResources().getColorStateList(R.color.teal_200));
+                break;
+            }
+            case answerB:{
+                multipleChoice.getMultipleChoice().findViewById(R.id.answer_b).setBackgroundTintList(multipleChoice.getMultipleChoice().getContext().getResources().getColorStateList(R.color.teal_200));
+                break;
+            }
+            case answerC:{
+                multipleChoice.getMultipleChoice().findViewById(R.id.answer_c).setBackgroundTintList(multipleChoice.getMultipleChoice().getContext().getResources().getColorStateList(R.color.teal_200));
+                break;
+            }
+            case answerD:{
+                multipleChoice.getMultipleChoice().findViewById(R.id.answer_d).setBackgroundTintList(multipleChoice.getMultipleChoice().getContext().getResources().getColorStateList(R.color.teal_200));
+                break;
+            }
+        }
+    }
+
+    public static void setOnClickListener(MultipleChoice multipleChoice){
+        View.OnClickListener buttonOnClickListenr = new AnswerButtonOnClickListener(multipleChoice);
+        multipleChoice.getMultipleChoice().findViewById(R.id.answer_a).setOnClickListener(buttonOnClickListenr);
+        multipleChoice.getMultipleChoice().findViewById(R.id.answer_b).setOnClickListener(buttonOnClickListenr);
+        multipleChoice.getMultipleChoice().findViewById(R.id.answer_c).setOnClickListener(buttonOnClickListenr);
+        multipleChoice.getMultipleChoice().findViewById(R.id.answer_d).setOnClickListener(buttonOnClickListenr);
+    }
 }

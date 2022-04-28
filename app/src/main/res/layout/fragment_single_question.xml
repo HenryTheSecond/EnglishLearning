@@ -15,58 +15,7 @@
         android:layout_margin="@dimen/defalult_margin"
         android:text="Question displays here \n abcdef"/>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:weightSum="2"
-        >
-
-        <Button
-            android:id="@+id/answer_a"
-            android:backgroundTint="@color/blue"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/defalult_margin"
-            android:layout_weight="1"
-            android:maxLines="3"
-            android:text="A.answer a"
-            />
-
-        <Button
-            android:id="@+id/answer_b"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/defalult_margin"
-            android:layout_weight="1"
-            android:text="B.answer a"
-            android:textColor="@color/white"
-            android:backgroundTint="@color/blue"/>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:weightSum="2"
-        >
-
-        <Button
-            android:id="@+id/answer_c"
-            android:layout_width="match_parent"
-            android:backgroundTint="@color/blue"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/defalult_margin"
-            android:layout_weight="1"
-            android:text="C.answer a"/>
-
-        <Button
-            android:id="@+id/answer_d"
-            android:layout_width="match_parent"
-            android:backgroundTint="@color/blue"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/defalult_margin"
-            android:layout_weight="1"
-            android:text="D.answer a"/>
-    </LinearLayout>
+    <include
+        android:id="@+id/multiple_choice"
+        layout="@layout/item_multiple_choice_answer"/>
 </LinearLayout>

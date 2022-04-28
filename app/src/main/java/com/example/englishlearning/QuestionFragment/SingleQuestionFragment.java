@@ -14,16 +14,19 @@ import android.widget.TextView;
 
 import com.example.englishlearning.AnswerButtonOnClickListener;
 import com.example.englishlearning.MULTIPLE_CHOICE_ANSWER;
+import com.example.englishlearning.MultipleChoice;
 import com.example.englishlearning.R;
 import com.example.englishlearning.Utils;
 
 
-public class SingleQuestionFragment extends GeneralQuestionFragment {
+public class SingleQuestionFragment extends Fragment {
 
     private TextView tvQuestion;
+    private MultipleChoice multipleChoice;
 
     public SingleQuestionFragment(Button btnQuestion) {
-        super(btnQuestion);
+        this.multipleChoice = new MultipleChoice();
+        this.multipleChoice.setBtnQuestion(btnQuestion);
     }
 
 
@@ -40,9 +43,15 @@ public class SingleQuestionFragment extends GeneralQuestionFragment {
 
         //Binding
         tvQuestion = getView().findViewById(R.id.tv_question);
+        multipleChoice.setMultipleChoice( getView().findViewById(R.id.multiple_choice) );
+        multipleChoice.setAnswer( Utils.getMultipleChoiceAnswer(getContext(), Integer.parseInt(multipleChoice.getBtnQuestion().getText().toString())));
+
+        Utils.colorAnswer(multipleChoice);
+        View.OnClickListener buttonOnClickListenr = new AnswerButtonOnClickListener(multipleChoice);
+        multipleChoice.getMultipleChoice().findViewById(R.id.answer_a).setOnClickListener(buttonOnClickListenr);
+        multipleChoice.getMultipleChoice().findViewById(R.id.answer_b).setOnClickListener(buttonOnClickListenr);
+        multipleChoice.getMultipleChoice().findViewById(R.id.answer_c).setOnClickListener(buttonOnClickListenr);
+        multipleChoice.getMultipleChoice().findViewById(R.id.answer_d).setOnClickListener(buttonOnClickListenr);
     }
-
-
-
 
 }
