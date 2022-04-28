@@ -126,11 +126,17 @@ public class ListeningFragment extends Fragment {
                     player.pause();
                     countDownTimer.cancel();
                     savedTimer = player.getDuration() - player.getCurrentPosition(); // Save Time;
-                }else{
+                }else if(player.getCurrentPosition() < player.getDuration()){ // Player is not done yet
                     btnPlayAudio.setBackgroundResource(R.drawable.ic_pause_audio);
                     player.start();
                     createCountDownTimer(savedTimer);
                     countDownTimer.start();
+                }else{ //Player finishes, play again
+                    btnPlayAudio.setBackgroundResource(R.drawable.ic_pause_audio);
+                    timer.setProgress(0, true);
+                    createCountDownTimer(player.getDuration());
+                    player.seekTo(0);
+                    player.start();
                 }
             }
         });
@@ -143,12 +149,13 @@ public class ListeningFragment extends Fragment {
         countDownTimer = new CountDownTimer(duration, 1000) {
             @Override
             public void onTick(long l) {
+                btnPlayAudio.setBackgroundResource(R.drawable.ic_pause_audio);
                 timer.setProgress((int) (player.getDuration()-l));
             }
 
             @Override
             public void onFinish() {
-
+                btnPlayAudio.setBackgroundResource(R.drawable.ic_play_audio);
             }
         };
         countDownTimer.start();
@@ -157,6 +164,8 @@ public class ListeningFragment extends Fragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        player.stop();
+
+        if(player != null)
+            player.stop();
     }
 }

@@ -15,65 +15,42 @@
         android:layout_marginBottom="@dimen/text_margin"
         android:layout_margin="@dimen/defalult_margin"/>
 
-    <TextView
+
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:maxLines="5"
-        android:layout_margin="@dimen/defalult_margin"
-        android:text="Question displays here"/>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:weightSum="2"
-        >
-
-        <Button
-            android:id="@+id/answer_a"
-            android:backgroundTint="@color/blue"
+        android:layout_height="wrap_content">
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/defalult_margin"
-            android:layout_weight="1"
-            android:maxLines="3"
-            android:text="A.answer a"
-            />
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/tv_question1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxLines="2"
+                android:text="Question number 1"/>
+            <include layout="@layout/item_multiple_choice_answer"
+                android:id="@+id/multiple_choice1"/>
 
-        <Button
-            android:id="@+id/answer_b"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/defalult_margin"
-            android:layout_weight="1"
-            android:text="B.answer a"
-            android:textColor="@color/white"
-            android:backgroundTint="@color/blue"/>
-    </LinearLayout>
+            <TextView
+                android:id="@+id/tv_question2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxLines="2"
+                android:text="Question number 2"/>
+            <include layout="@layout/item_multiple_choice_answer"
+                android:id="@+id/multiple_choice2"/>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:weightSum="2"
-        >
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxLines="2"
+                android:text="Question number 3"
+                android:id="@+id/tv_question3"/>
+            <include layout="@layout/item_multiple_choice_answer"
+                android:id="@+id/multiple_choice3"/>
 
-        <Button
-            android:id="@+id/answer_c"
-            android:layout_width="match_parent"
-            android:backgroundTint="@color/blue"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/defalult_margin"
-            android:layout_weight="1"
-            android:text="C.answer a"/>
+        </LinearLayout>
+    </ScrollView>
 
-        <Button
-            android:id="@+id/answer_d"
-            android:layout_width="match_parent"
-            android:backgroundTint="@color/blue"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/defalult_margin"
-            android:layout_weight="1"
-            android:text="D.answer a"/>
-    </LinearLayout>
 </LinearLayout>

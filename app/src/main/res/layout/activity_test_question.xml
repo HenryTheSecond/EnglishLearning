@@ -138,6 +138,50 @@
                 android:onClick="btnQuestionClick"
                 android:layout_weight="1"/>
         </TableRow>
+
+        <TableRow
+            android:layout_gravity="center_horizontal"
+            android:paddingHorizontal="20dp">
+            <Button
+
+                android:text="11"
+                android:layout_marginEnd="@dimen/defalult_margin"
+                android:backgroundTint="@color/uncheck"
+                android:onClick="btnQuestionClick"
+                android:layout_weight="1"/>
+
+            <Button
+
+                android:layout_marginEnd="@dimen/defalult_margin"
+                android:text="12"
+                android:backgroundTint="@color/uncheck"
+                android:onClick="btnQuestionClick"
+                android:layout_weight="1"/>
+
+            <Button
+
+                android:text="13"
+                android:layout_marginEnd="@dimen/defalult_margin"
+                android:backgroundTint="@color/uncheck"
+                android:onClick="btnQuestionClick"
+                android:layout_weight="1"/>
+
+            <Button
+
+                android:text="14"
+                android:layout_marginEnd="@dimen/defalult_margin"
+                android:backgroundTint="@color/uncheck"
+                android:onClick="btnQuestionClick"
+                android:layout_weight="1"/>
+
+            <Button
+
+                android:text="15"
+                android:layout_marginEnd="@dimen/defalult_margin"
+                android:backgroundTint="@color/uncheck"
+                android:onClick="btnQuestionClick"
+                android:layout_weight="1"/>
+        </TableRow>
     </TableLayout>
 
 </RelativeLayout>
