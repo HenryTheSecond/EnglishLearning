@@ -5,13 +5,13 @@ import android.widget.Button;
 
 public class MultipleChoice {
     private View multipleChoice;
-    private MULTIPLE_CHOICE_ANSWER answer;
+    private MULTIPLE_CHOICE_ANSWER_ENUM answer;
     private Button btnQuestion;
 
     public MultipleChoice() {
     }
 
-    public MultipleChoice(View multipleChoice, MULTIPLE_CHOICE_ANSWER answer, Button btnQuestion) {
+    public MultipleChoice(View multipleChoice, MULTIPLE_CHOICE_ANSWER_ENUM answer, Button btnQuestion) {
         this.multipleChoice = multipleChoice;
         this.answer = answer;
         this.btnQuestion = btnQuestion;
@@ -25,11 +25,11 @@ public class MultipleChoice {
         this.multipleChoice = multipleChoice;
     }
 
-    public MULTIPLE_CHOICE_ANSWER getAnswer() {
+    public MULTIPLE_CHOICE_ANSWER_ENUM getAnswer() {
         return answer;
     }
 
-    public void setAnswer(MULTIPLE_CHOICE_ANSWER answer) {
+    public void setAnswer(MULTIPLE_CHOICE_ANSWER_ENUM answer) {
         this.answer = answer;
     }
 

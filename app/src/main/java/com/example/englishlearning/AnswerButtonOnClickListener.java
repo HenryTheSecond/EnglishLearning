@@ -4,9 +4,6 @@ package com.example.englishlearning;
 import android.view.View;
 import android.widget.Button;
 
-import com.example.englishlearning.QuestionFragment.GeneralQuestionFragment;
-import com.example.englishlearning.QuestionFragment.SingleQuestionFragment;
-
 public class AnswerButtonOnClickListener implements View.OnClickListener {
     private MultipleChoice multipleChoice;
 
@@ -15,7 +12,7 @@ public class AnswerButtonOnClickListener implements View.OnClickListener {
 
     public AnswerButtonOnClickListener(MultipleChoice multipleChoice) {
         this.multipleChoice = multipleChoice;
-        if(multipleChoice.getAnswer() == MULTIPLE_CHOICE_ANSWER.None)
+        if(multipleChoice.getAnswer() == MULTIPLE_CHOICE_ANSWER_ENUM.None)
             isAnswered = false;
         else
             isAnswered = true;
@@ -33,23 +30,23 @@ public class AnswerButtonOnClickListener implements View.OnClickListener {
         Button btn = (Button) view;
         switch (btn.getText().charAt(0)){
             case 'A': {
-                multipleChoice.setAnswer(MULTIPLE_CHOICE_ANSWER.answerA);
+                multipleChoice.setAnswer(MULTIPLE_CHOICE_ANSWER_ENUM.answerA);
                 break;
             }
             case 'B':{
-                multipleChoice.setAnswer(MULTIPLE_CHOICE_ANSWER.answerB);
+                multipleChoice.setAnswer(MULTIPLE_CHOICE_ANSWER_ENUM.answerB);
                 break;
             }
             case 'C':{
-                multipleChoice.setAnswer(MULTIPLE_CHOICE_ANSWER.answerC);
+                multipleChoice.setAnswer(MULTIPLE_CHOICE_ANSWER_ENUM.answerC);
                 break;
             }
             case 'D':{
-                multipleChoice.setAnswer(MULTIPLE_CHOICE_ANSWER.answerD);
+                multipleChoice.setAnswer(MULTIPLE_CHOICE_ANSWER_ENUM.answerD);
                 break;
             }
             default: {
-                multipleChoice.setAnswer(MULTIPLE_CHOICE_ANSWER.None);
+                multipleChoice.setAnswer(MULTIPLE_CHOICE_ANSWER_ENUM.None);
                 break;
             }
         }

@@ -2,7 +2,7 @@ package com.example.englishlearning;
 
 import androidx.annotation.NonNull;
 
-public enum MULTIPLE_CHOICE_ANSWER {
+public enum MULTIPLE_CHOICE_ANSWER_ENUM {
     answerA, answerB, answerC, answerD, None;
     @NonNull
     @Override
