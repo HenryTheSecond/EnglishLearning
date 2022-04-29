@@ -6,8 +6,6 @@ import android.content.res.AssetFileDescriptor;
 import android.media.MediaPlayer;
 import android.view.View;
 
-import androidx.annotation.NonNull;
-
 import java.io.IOException;
 
 public class Utils {
@@ -42,22 +40,22 @@ public class Utils {
         editor.commit();
     }
 
-    public static MULTIPLE_CHOICE_ANSWER getMultipleChoiceAnswer(Context context ,int questionNumber){
+    public static MULTIPLE_CHOICE_ANSWER_ENUM getMultipleChoiceAnswer(Context context , int questionNumber){
         SharedPreferences sharedPreferences = context.getSharedPreferences(FILE_NAME_ANSWER_STORE_TEMP, Context.MODE_PRIVATE);
 
         String answer = sharedPreferences.getString(QUESTION_KEY + String.valueOf(questionNumber), "");
 
         System.out.println("Get " + answer.toString());
         switch(answer){
-            case "A": return MULTIPLE_CHOICE_ANSWER.answerA;
-            case "B": return MULTIPLE_CHOICE_ANSWER.answerB;
-            case "C": return MULTIPLE_CHOICE_ANSWER.answerC;
-            case "D": return MULTIPLE_CHOICE_ANSWER.answerD;
+            case "A": return MULTIPLE_CHOICE_ANSWER_ENUM.answerA;
+            case "B": return MULTIPLE_CHOICE_ANSWER_ENUM.answerB;
+            case "C": return MULTIPLE_CHOICE_ANSWER_ENUM.answerC;
+            case "D": return MULTIPLE_CHOICE_ANSWER_ENUM.answerD;
         }
-        return MULTIPLE_CHOICE_ANSWER.None;
+        return MULTIPLE_CHOICE_ANSWER_ENUM.None;
     }
 
-    public static void setMultipleChoiceAnswer(Context context, int questionNumber, MULTIPLE_CHOICE_ANSWER answer){
+    public static void setMultipleChoiceAnswer(Context context, int questionNumber, MULTIPLE_CHOICE_ANSWER_ENUM answer){
         System.out.println("Saved " + answer.toString());
         SharedPreferences sharedPreferences = context.getSharedPreferences(FILE_NAME_ANSWER_STORE_TEMP, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();

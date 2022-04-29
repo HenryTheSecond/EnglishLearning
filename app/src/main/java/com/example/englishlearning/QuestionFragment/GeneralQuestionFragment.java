@@ -8,8 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.example.englishlearning.AnswerButtonOnClickListener;
-import com.example.englishlearning.MULTIPLE_CHOICE_ANSWER;
+import com.example.englishlearning.MULTIPLE_CHOICE_ANSWER_ENUM;
 import com.example.englishlearning.R;
 import com.example.englishlearning.Utils;
 
@@ -19,7 +18,7 @@ public class GeneralQuestionFragment extends Fragment {
     protected Button answerB;
     protected Button answerC;
     protected Button answerD;
-    protected MULTIPLE_CHOICE_ANSWER answer;
+    protected MULTIPLE_CHOICE_ANSWER_ENUM answer;
 
 
     public GeneralQuestionFragment(Button btnQuestion){
@@ -104,11 +103,11 @@ public class GeneralQuestionFragment extends Fragment {
         this.answerD = answerD;
     }
 
-    public MULTIPLE_CHOICE_ANSWER getAnswer() {
+    public MULTIPLE_CHOICE_ANSWER_ENUM getAnswer() {
         return answer;
     }
 
-    public void setAnswer(MULTIPLE_CHOICE_ANSWER answer) {
+    public void setAnswer(MULTIPLE_CHOICE_ANSWER_ENUM answer) {
         this.answer = answer;
     }
 

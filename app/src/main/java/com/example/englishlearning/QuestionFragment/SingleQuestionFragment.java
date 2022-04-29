@@ -13,7 +13,6 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.englishlearning.AnswerButtonOnClickListener;
-import com.example.englishlearning.MULTIPLE_CHOICE_ANSWER;
 import com.example.englishlearning.MultipleChoice;
 import com.example.englishlearning.R;
 import com.example.englishlearning.Utils;
