@@ -4,12 +4,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.FragmentManager;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 
+import com.example.englishlearning.ErrorDialogFragment;
 import com.example.englishlearning.Model.NotedWord;
 import com.example.englishlearning.NoteAdapter;
 import com.example.englishlearning.R;
@@ -27,7 +30,7 @@ public class NoteActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_note);
-
+        FragmentManager fragmentManager = getFragmentManager();
 
         //Binding view
         recyclerView = findViewById(R.id.recycler_item);
@@ -41,14 +44,22 @@ public class NoteActivity extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-
         //Add Listener
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                NotedWord item = new NotedWord();
-                adapter.getListItem().add(item);
-                recyclerView.setAdapter(adapter);
+//                NotedWord item = new NotedWord();
+//                adapter.getListItem().add(item);
+//                recyclerView.setAdapter(adapter);
+
+                ErrorDialogFragment.newInstance(
+                       "dasds",
+                        "asdasd",
+                        "sfdf",
+                        "fsdfsdf",
+                        view1 -> {},
+                        view1 -> {}
+                ).show(fragmentManager, ErrorDialogFragment.class.getSimpleName());
             }
         });
     }

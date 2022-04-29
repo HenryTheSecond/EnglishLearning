@@ -6,14 +6,28 @@
     android:layout_height="match_parent"
     tools:context=".Activity.TestQuestionActivity">
 
+    <include layout="@layout/back_header"/>
     <TextView
         android:id="@+id/tv_countdown_timer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/defalult_margin"
+        android:layout_marginTop="60dp"
+        android:layout_marginEnd="@dimen/defalult_margin"
+        android:layout_marginBottom="@dimen/defalult_margin"
         android:text="20:00"
         android:textSize="30dp"
-        android:textStyle="bold"
-        android:layout_margin="@dimen/defalult_margin" />
+        android:textStyle="bold" />
+
+    <Button
+        android:id="@+id/btn_question_number"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="55dp"
+        android:backgroundTint="@color/blue"
+        android:text="1"
+        android:textStyle="bold" />
 
     <FrameLayout
         android:id="@+id/question_content"
@@ -44,7 +58,8 @@
         android:id="@+id/table_question"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@id/layout_arrow">
+        android:layout_above="@id/layout_arrow"
+        android:visibility="gone">
 
         <TableRow
             android:layout_gravity="center_horizontal"

@@ -7,11 +7,14 @@
         android:id="@+id/tv_content"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/defalult_margin"
+        android:layout_marginStart="@dimen/defalult_margin"
+        android:layout_marginTop="@dimen/defalult_margin"
+        android:layout_marginEnd="@dimen/defalult_margin"
+        android:layout_marginBottom="@dimen/defalult_margin"
+        android:maxWidth="250dp"
         android:maxLines="3"
         android:text="Word"
         android:textColor="@color/black"
-        android:maxWidth="250dp"
         android:textSize="20dp" />
 
     <TextView
@@ -32,4 +35,11 @@
         android:maxLines="5"
         android:text="mean"
         android:visibility="gone" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@id/tv_meaning"
+        android:background="@color/blue">
+    </LinearLayout>
 </RelativeLayout>

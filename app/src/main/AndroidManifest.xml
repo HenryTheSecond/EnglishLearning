@@ -10,12 +10,18 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.EnglishLearning">
         <activity
-            android:name=".Activity.NoteActivity"
-            android:exported="false" /> <!-- <activity -->
+            android:name=".ReviewResult"
+            android:exported="false" />
+        <activity
+            android:name=".DashBoard"
+            android:exported="false" />
+<!--        <activity-->
+<!--            android:name=".Activity.NoteActivity"-->
+<!--            android:exported="false" /> &lt;!&ndash; <activity &ndash;&gt;-->
         <!-- android:name=".TestQuestionActivity" -->
         <!-- android:exported="false" /> -->
         <activity
-            android:name=".Activity.TestQuestionActivity"
+            android:name=".Activity.NoteActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

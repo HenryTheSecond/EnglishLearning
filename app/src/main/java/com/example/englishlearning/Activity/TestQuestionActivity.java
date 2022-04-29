@@ -9,6 +9,7 @@ import android.content.res.AssetFileDescriptor;
 import android.content.res.AssetManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
+import android.opengl.Visibility;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.provider.MediaStore;
@@ -17,6 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.TableLayout;
 import android.widget.TextView;
 
 import com.example.englishlearning.AnswerStore.AnswerStore;
@@ -38,6 +40,8 @@ public class TestQuestionActivity extends AppCompatActivity {
     private CountDownTimer countDownTimer;
     private TextView tvCountDownTimer;
     private FrameLayout questionContent;
+    private Button btnQuestionNumber;
+    private TableLayout tableQuestion;
 
     private List<Button> listBtnQuestion;
     private int currentQuestion;
@@ -54,9 +58,19 @@ public class TestQuestionActivity extends AppCompatActivity {
         //Binding
         tvCountDownTimer = findViewById(R.id.tv_countdown_timer);
         questionContent = findViewById(R.id.question_content);
+        btnQuestionNumber = findViewById(R.id.btn_question_number);
+        tableQuestion = findViewById(R.id.table_question);
 
         listBtnQuestion = new ArrayList<>();
-
+        btnQuestionNumber.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(tableQuestion.getVisibility() == View.GONE)
+                    tableQuestion.setVisibility(View.VISIBLE);
+                else
+                    tableQuestion.setVisibility(View.GONE);
+            }
+        });
 
         //MediaPlayer mediaPlayer = Utils.playListeningAudio(this, "test.mp3");
         //mediaPlayer.start();

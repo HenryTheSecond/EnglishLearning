@@ -69,7 +69,16 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
             tvContent = view.findViewById(R.id.tv_content);
             tvMeaning = view.findViewById(R.id.tv_meaning);
             tvType = view.findViewById(R.id.tv_type);
-
+            view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if(tvMeaning.getVisibility() == View.GONE){
+                        tvMeaning.setVisibility(View.VISIBLE);
+                    } else {
+                        tvMeaning.setVisibility(View.GONE);
+                    }
+                }
+            });
 //            adapter = new ArrayAdapter<NotedWord.Type>(view.getContext(), android.R.layout.simple_list_item_1, NotedWord.Type.values());
 //            spinnerType.setAdapter(adapter);
         }

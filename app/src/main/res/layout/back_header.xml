@@ -3,9 +3,11 @@
     android:layout_width="match_parent"
     android:layout_height="50dp"
     android:orientation="horizontal"
-    android:weightSum="7">
+    android:weightSum="7"
+    android:background="@color/light_blue">
 
     <Button
+        android:id="@+id/btn_back"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="3"
