@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.englishlearning.AnswerButtonOnClickListener;
+import com.example.englishlearning.Model.FillingBlank;
 import com.example.englishlearning.MultipleChoice;
 import com.example.englishlearning.R;
 import com.example.englishlearning.Utils;
@@ -30,8 +31,9 @@ public class FillingBlankParagraphFragment extends Fragment {
     private TextView tvQuestion4;
     private MultipleChoice multipleChoice4;
 
+    private FillingBlank fillingBlank;
 
-    public FillingBlankParagraphFragment(Button btnQuestion1, Button btnQuestion2, Button btnQuestion3, Button btnQuestion4) {
+    public FillingBlankParagraphFragment(FillingBlank fillingBlank, Button btnQuestion1, Button btnQuestion2, Button btnQuestion3, Button btnQuestion4) {
         multipleChoice1 = new MultipleChoice();
         multipleChoice1.setBtnQuestion(btnQuestion1);
 
@@ -43,6 +45,8 @@ public class FillingBlankParagraphFragment extends Fragment {
 
         multipleChoice4 = new MultipleChoice();
         multipleChoice4.setBtnQuestion(btnQuestion4);
+
+        this.fillingBlank = fillingBlank;
     }
 
 
@@ -78,6 +82,18 @@ public class FillingBlankParagraphFragment extends Fragment {
         Utils.colorAnswer(multipleChoice1); Utils.colorAnswer(multipleChoice2); Utils.colorAnswer(multipleChoice3); Utils.colorAnswer(multipleChoice4);
 
         Utils.setOnClickListener(multipleChoice1); Utils.setOnClickListener(multipleChoice2); Utils.setOnClickListener(multipleChoice3); Utils.setOnClickListener(multipleChoice4);
+
+
+        tvParagraph.setText( fillingBlank.getParagraph() );
+        tvQuestion1.setText( multipleChoice1.getBtnQuestion().getText().toString());
+        tvQuestion2.setText( multipleChoice2.getBtnQuestion().getText().toString());
+        tvQuestion3.setText( multipleChoice3.getBtnQuestion().getText().toString());
+        tvQuestion4.setText( multipleChoice4.getBtnQuestion().getText().toString());
+
+        Utils.setTextForMultipleChoice( multipleChoice1.getMultipleChoice(), fillingBlank.getListQuestions().get(0).getListChoice() );
+        Utils.setTextForMultipleChoice( multipleChoice2.getMultipleChoice(), fillingBlank.getListQuestions().get(1).getListChoice() );
+        Utils.setTextForMultipleChoice( multipleChoice3.getMultipleChoice(), fillingBlank.getListQuestions().get(2).getListChoice() );
+        Utils.setTextForMultipleChoice( multipleChoice4.getMultipleChoice(), fillingBlank.getListQuestions().get(3).getListChoice() );
     }
 
 

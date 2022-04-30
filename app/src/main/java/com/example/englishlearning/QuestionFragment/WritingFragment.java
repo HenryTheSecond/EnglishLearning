@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import com.example.englishlearning.AnswerStore.AnswerStore;
 import com.example.englishlearning.AnswerStore.WritingStore;
+import com.example.englishlearning.Model.Writing;
 import com.example.englishlearning.R;
 import com.example.englishlearning.Utils;
 
@@ -27,9 +28,12 @@ public class WritingFragment extends Fragment {
     TextView tvParagraph;
     Button btnQuestion;
 
+    private Writing writing;
 
-    public WritingFragment(Button btnQuestion) {
+
+    public WritingFragment(Writing writing, Button btnQuestion) {
         this.btnQuestion = btnQuestion;
+        this.writing = writing;
     }
 
 
@@ -69,6 +73,9 @@ public class WritingFragment extends Fragment {
 
             }
         });
+
+        tvParagraph.setText(writing.getQuestion());
+
     }
 
     @Override

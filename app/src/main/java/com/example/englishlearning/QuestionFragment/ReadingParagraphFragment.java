@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.englishlearning.Model.Reading;
 import com.example.englishlearning.MultipleChoice;
 import com.example.englishlearning.R;
 import com.example.englishlearning.Utils;
@@ -28,7 +29,9 @@ public class ReadingParagraphFragment extends Fragment {
     private TextView tvQuestion3;
     private MultipleChoice multipleChoice3;
 
-    public ReadingParagraphFragment(Button btnQuestion1, Button btnQuestion2, Button btnQuestion3) {
+    private Reading reading;
+
+    public ReadingParagraphFragment(Reading reading, Button btnQuestion1, Button btnQuestion2, Button btnQuestion3) {
         multipleChoice1 = new MultipleChoice();
         multipleChoice1.setBtnQuestion(btnQuestion1);
 
@@ -37,6 +40,8 @@ public class ReadingParagraphFragment extends Fragment {
 
         multipleChoice3 = new MultipleChoice();
         multipleChoice3.setBtnQuestion(btnQuestion3);
+
+        this.reading = reading;
     }
 
     @Override
@@ -68,5 +73,15 @@ public class ReadingParagraphFragment extends Fragment {
         Utils.colorAnswer(multipleChoice1); Utils.colorAnswer(multipleChoice2); Utils.colorAnswer(multipleChoice3);
 
         Utils.setOnClickListener(multipleChoice1); Utils.setOnClickListener(multipleChoice2); Utils.setOnClickListener(multipleChoice3);
+
+
+        tvParagraph.setText( reading.getParagraph() );
+        tvQuestion1.setText( multipleChoice1.getBtnQuestion().getText().toString() + " " + reading.getListQuestions().get(0).getQuestion());
+        tvQuestion2.setText( multipleChoice2.getBtnQuestion().getText().toString() + " " + reading.getListQuestions().get(1).getQuestion());
+        tvQuestion3.setText( multipleChoice3.getBtnQuestion().getText().toString() + " " + reading.getListQuestions().get(2).getQuestion());
+
+        Utils.setTextForMultipleChoice( multipleChoice1.getMultipleChoice(), reading.getListQuestions().get(0).getListChoice() );
+        Utils.setTextForMultipleChoice( multipleChoice2.getMultipleChoice(), reading.getListQuestions().get(1).getListChoice() );
+        Utils.setTextForMultipleChoice( multipleChoice3.getMultipleChoice(), reading.getListQuestions().get(2).getListChoice() );
     }
 }

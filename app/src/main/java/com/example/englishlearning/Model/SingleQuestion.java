@@ -38,6 +38,55 @@ public class SingleQuestion {
         }
 
     }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getQuestion() {
+        return question;
+    }
+
+    public void setQuestion(String question) {
+        this.question = question;
+    }
+
+    public String getRawIdMultipleChoice() {
+        return rawIdMultipleChoice;
+    }
+
+    public void setRawIdMultipleChoice(String rawIdMultipleChoice) {
+        this.rawIdMultipleChoice = rawIdMultipleChoice;
+    }
+
+    public int getIdAnswer() {
+        return idAnswer;
+    }
+
+    public void setIdAnswer(int idAnswer) {
+        this.idAnswer = idAnswer;
+    }
+
+    public int getLevel() {
+        return level;
+    }
+
+    public void setLevel(int level) {
+        this.level = level;
+    }
+
+    public List<MultipleChoiceAnswer> getListChoice() {
+        return listChoice;
+    }
+
+    public void setListChoice(List<MultipleChoiceAnswer> listChoice) {
+        this.listChoice = listChoice;
+    }
+
     public static SingleQuestion getSingleQuestionById(int id){
         EnglishHelper helper = new EnglishHelper(MyApplication.getAppContext());
         SQLiteDatabase database = helper.getReadableDatabase();

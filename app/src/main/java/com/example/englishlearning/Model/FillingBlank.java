@@ -35,6 +35,46 @@ public class FillingBlank {
         }
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public String getParagraph() {
+        return paragraph;
+    }
+
+    public int getLevel() {
+        return level;
+    }
+
+    public List<FillingBlankQuestion> getListQuestions() {
+        return listQuestions;
+    }
+
+    public String getRawIdQuestions() {
+        return rawIdQuestions;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setParagraph(String paragraph) {
+        this.paragraph = paragraph;
+    }
+
+    public void setRawIdQuestions(String rawIdQuestions) {
+        this.rawIdQuestions = rawIdQuestions;
+    }
+
+    public void setLevel(int level) {
+        this.level = level;
+    }
+
+    public void setListQuestions(List<FillingBlankQuestion> listQuestions) {
+        this.listQuestions = listQuestions;
+    }
+
     public static FillingBlank getFillingBlankById(int id){
         EnglishHelper helper = new EnglishHelper(MyApplication.getAppContext());
         SQLiteDatabase database = helper.getReadableDatabase();
@@ -44,6 +84,7 @@ public class FillingBlank {
         }
         return null;
     }
+
 
 
     //-------------------------------------------------------------
@@ -72,6 +113,38 @@ public class FillingBlank {
             }
         }
 
+
+        public int getId() {
+            return id;
+        }
+
+        public void setId(int id) {
+            this.id = id;
+        }
+
+        public String getRawIdMultipleChoice() {
+            return rawIdMultipleChoice;
+        }
+
+        public void setRawIdMultipleChoice(String rawIdMultipleChoice) {
+            this.rawIdMultipleChoice = rawIdMultipleChoice;
+        }
+
+        public int getIdAnswer() {
+            return idAnswer;
+        }
+
+        public void setIdAnswer(int idAnswer) {
+            this.idAnswer = idAnswer;
+        }
+
+        public List<MultipleChoiceAnswer> getListChoice() {
+            return listChoice;
+        }
+
+        public void setListChoice(List<MultipleChoiceAnswer> listChoice) {
+            this.listChoice = listChoice;
+        }
 
         public static FillingBlankQuestion getFillingBlankQuestionById(int id){
             EnglishHelper helper = new EnglishHelper(MyApplication.getAppContext());

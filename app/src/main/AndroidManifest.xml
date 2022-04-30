@@ -22,7 +22,7 @@
         <!-- android:name=".TestQuestionActivity" -->
         <!-- android:exported="false" /> -->
         <activity
-            android:name=".Activity.NoteActivity"
+            android:name=".Activity.TestQuestionActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

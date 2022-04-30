@@ -7,6 +7,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.content.res.AssetFileDescriptor;
 import android.content.res.AssetManager;
+import android.database.Cursor;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.opengl.Visibility;
@@ -23,6 +24,11 @@ import android.widget.TextView;
 
 import com.example.englishlearning.AnswerStore.AnswerStore;
 import com.example.englishlearning.AnswerStore.WritingStore;
+import com.example.englishlearning.Model.FillingBlank;
+import com.example.englishlearning.Model.Listening;
+import com.example.englishlearning.Model.Reading;
+import com.example.englishlearning.Model.SingleQuestion;
+import com.example.englishlearning.Model.Writing;
 import com.example.englishlearning.QuestionFragment.FillingBlankParagraphFragment;
 import com.example.englishlearning.QuestionFragment.ListeningFragment;
 import com.example.englishlearning.QuestionFragment.ReadingParagraphFragment;
@@ -45,6 +51,14 @@ public class TestQuestionActivity extends AppCompatActivity {
 
     private List<Button> listBtnQuestion;
     private int currentQuestion;
+
+    //Questions
+    List<Listening> listenings;
+    FillingBlank fillingBlank;
+    Reading reading;
+    List<SingleQuestion> singleQuestions;
+    List<Writing> writings;
+
 
 
     @Override
@@ -72,11 +86,11 @@ public class TestQuestionActivity extends AppCompatActivity {
             }
         });
 
-        //MediaPlayer mediaPlayer = Utils.playListeningAudio(this, "test.mp3");
-        //mediaPlayer.start();
 
         findAllQuestionButtons();
-        runTest();
+
+        getQuestions(1);
+
         startTimer();
     }
 
@@ -90,15 +104,41 @@ public class TestQuestionActivity extends AppCompatActivity {
         }
     }
 
-    private void runTest() {
-        Button q2 = findViewById(R.id.q_2);
-        Button q3 = findViewById(R.id.q_3);
+    private void getQuestions(int level){
+        listenings = new ArrayList<>();
+        singleQuestions = new ArrayList<>();
+        writings = new ArrayList<>();
 
+        Cursor cursor = Utils.getRandomQuestions("listening", 2);
+        while(cursor.moveToNext()){
+            listenings.add(new Listening(cursor.getInt(0), cursor.getString(1), cursor.getString(2),
+                                        cursor.getString(3), cursor.getInt(4)));
+        }
+
+        cursor = Utils.getRandomQuestions("filling_blank", 1);
+        while (cursor.moveToNext()){
+            fillingBlank = new FillingBlank( cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getInt(3) );
+        }
+
+        cursor = Utils.getRandomQuestions("reading", 1);
+        while (cursor.moveToNext()){
+            reading = new Reading(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getInt(3));
+        }
+
+        cursor = Utils.getRandomQuestions("single_question", 4);
+        while (cursor.moveToNext()){
+            singleQuestions.add( new SingleQuestion( cursor.getInt(0), cursor.getString(1), cursor.getString(2),
+                                                     cursor.getInt(3), cursor.getInt(4)) );
+        }
+
+        cursor = Utils.getRandomQuestions("writing", 3);
+        while (cursor.moveToNext()){
+            writings.add( new Writing(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getInt(3)) );
+        }
     }
 
-
     private void startTimer(){
-        countDownTimer = new CountDownTimer(1000*60*2, 1000) {
+        countDownTimer = new CountDownTimer(1000*60*35, 1000) {
             @Override
             public void onTick(long l) {
                 String second = String.format("%02d", (l/1000)%60);
@@ -114,7 +154,13 @@ public class TestQuestionActivity extends AppCompatActivity {
     }
 
 
-    private void addFragment(Fragment fragment){
+    private void addFragment(int[] group,   Fragment fragment){
+        //If current question is one of the member of group question, we don't add fragment
+        for(int item: group){
+            if(currentQuestion == item)
+                return;
+        }
+
         if (fragment != null) {
             FragmentManager fmgr = getSupportFragmentManager();
             FragmentTransaction ft = fmgr.beginTransaction();
@@ -128,35 +174,69 @@ public class TestQuestionActivity extends AppCompatActivity {
         Button btn = (Button)view;
         int number = Integer.parseInt( btn.getText().toString() );
         switch(number){
+            //Listening
             case 1:
             case 2:
-            case 3:
-            case 4:{
-                if(currentQuestion == 1 || currentQuestion == 2 || currentQuestion ==3 || currentQuestion == 4)
-                    break;
-                addFragment(new FillingBlankParagraphFragment(listBtnQuestion.get(0), listBtnQuestion.get(1),
-                                                            listBtnQuestion.get(2), listBtnQuestion.get(3)));
+            case 3:{
+                addFragment(new int[]{1,2,3}, new ListeningFragment(listenings.get(0), listBtnQuestion.get(0), listBtnQuestion.get(1),
+                                                                    listBtnQuestion.get(2)));
                 break;
             }
-            case 5:{
-                addFragment(new SingleQuestionFragment((Button) view));
+            case 4:
+            case 5:
+            case 6:{
+                addFragment(new int[]{4,5,6}, new ListeningFragment(listenings.get(1), listBtnQuestion.get(3), listBtnQuestion.get(4),
+                        listBtnQuestion.get(5)));
                 break;
             }
-            case 6:
+
+            //Filling Blank
             case 7:
-            case 8:{
-                if( currentQuestion == 6 || currentQuestion == 7 || currentQuestion == 8 )
-                    break;
-                addFragment(new ListeningFragment("test.mp3", listBtnQuestion.get(5), listBtnQuestion.get(6),
-                                                 listBtnQuestion.get(7)));
+            case 8:
+            case 9:
+            case 10:{
+                addFragment(new int[]{7,8,9,10}, new FillingBlankParagraphFragment(fillingBlank, listBtnQuestion.get(6),
+                        listBtnQuestion.get(7), listBtnQuestion.get(8), listBtnQuestion.get(9)));
                 break;
             }
-            case 9:
-            case 10:
-            case 11:{
-                if( currentQuestion == 9 || currentQuestion == 10 || currentQuestion == 11 )
-                    break;
-                addFragment(new ReadingParagraphFragment(listBtnQuestion.get(8), listBtnQuestion.get(9), listBtnQuestion.get(10)));
+
+            //Reading
+            case 11:
+            case 12:
+            case 13:{
+                addFragment(new int[]{11,12,13}, new ReadingParagraphFragment(reading, listBtnQuestion.get(10), listBtnQuestion.get(11),
+                        listBtnQuestion.get(12)));
+                break;
+            }
+
+            //Single Questions
+            case 14:{
+                addFragment(new int[]{14}, new SingleQuestionFragment(singleQuestions.get(0), listBtnQuestion.get(13)));
+                break;
+            }
+            case 15:{
+                addFragment(new int[]{15}, new SingleQuestionFragment(singleQuestions.get(1), listBtnQuestion.get(14)));
+                break;}
+            case 16:{
+                addFragment(new int[]{16}, new SingleQuestionFragment(singleQuestions.get(2), listBtnQuestion.get(15)));
+                break;
+            }
+            case 17:{
+                addFragment(new int[]{17}, new SingleQuestionFragment(singleQuestions.get(3), listBtnQuestion.get(16)));
+                break;
+            }
+
+            //Writing
+            case 18:{
+                addFragment(new int[]{18}, new WritingFragment(writings.get(0), listBtnQuestion.get(17)));
+                break;
+            }
+            case 19:{
+                addFragment(new int[]{19}, new WritingFragment(writings.get(1), listBtnQuestion.get(18)));
+                break;
+            }
+            case 20:{
+                addFragment(new int[]{20}, new WritingFragment(writings.get(2), listBtnQuestion.get(19)));
                 break;
             }
         }

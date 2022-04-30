@@ -8,6 +8,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.os.CountDownTimer;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,16 +16,19 @@ import android.widget.Button;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+import com.example.englishlearning.Model.Listening;
 import com.example.englishlearning.MultipleChoice;
 import com.example.englishlearning.R;
 import com.example.englishlearning.Utils;
 
 
 public class ListeningFragment extends Fragment {
+
     private SeekBar timer;
-    private CountDownTimer countDownTimer;
     private String fileName;
     private MediaPlayer player;
+    private Handler handler = new Handler();
+    private Runnable runnable;
 
     private Button btnPlayAudio;
 
@@ -35,9 +39,12 @@ public class ListeningFragment extends Fragment {
     private TextView tvQuestion3;
     private MultipleChoice multipleChoice3;
 
+    private Listening listening;
 
-    public ListeningFragment(String fileName, Button btnQuestion1, Button btnQuestion2, Button btnQuestion3) {
-        this.fileName = fileName;
+
+
+    public ListeningFragment(Listening listening, Button btnQuestion1, Button btnQuestion2, Button btnQuestion3) {
+        this.fileName = listening.getFileName();
 
         multipleChoice1 = new MultipleChoice();
         multipleChoice1.setBtnQuestion(btnQuestion1);
@@ -47,6 +54,8 @@ public class ListeningFragment extends Fragment {
 
         multipleChoice3 = new MultipleChoice();
         multipleChoice3.setBtnQuestion(btnQuestion3);
+
+        this.listening = listening;
     }
 
 
@@ -80,7 +89,28 @@ public class ListeningFragment extends Fragment {
         Utils.colorAnswer(multipleChoice1); Utils.colorAnswer(multipleChoice2); Utils.colorAnswer(multipleChoice3);
         Utils.setOnClickListener(multipleChoice1); Utils.setOnClickListener(multipleChoice2); Utils.setOnClickListener(multipleChoice3);
 
+        tvQuestion1.setText( multipleChoice1.getBtnQuestion().getText().toString() + " " + listening.getListQuestions().get(0).getQuestion());
+        tvQuestion2.setText( multipleChoice2.getBtnQuestion().getText().toString() + " " +  listening.getListQuestions().get(1).getQuestion());
+        tvQuestion3.setText( multipleChoice3.getBtnQuestion().getText().toString() + " " +  listening.getListQuestions().get(2).getQuestion());
 
+        Utils.setTextForMultipleChoice( multipleChoice1.getMultipleChoice(), listening.getListQuestions().get(0).getListChoice() );
+        Utils.setTextForMultipleChoice( multipleChoice2.getMultipleChoice(), listening.getListQuestions().get(1).getListChoice() );
+        Utils.setTextForMultipleChoice( multipleChoice3.getMultipleChoice(), listening.getListQuestions().get(2).getListChoice() );
+
+
+
+        //Playing Audio
+        player = Utils.playListeningAudio(getView().getContext(), fileName);
+        System.out.println(fileName); System.out.println(player);
+        timer.setMax(player.getDuration());
+        timer.setProgress(0);
+        runnable = new Runnable() {
+            @Override
+            public void run() {
+                timer.setProgress(player.getCurrentPosition());
+                handler.postDelayed(this, 500);
+            }
+        };
 
         timer.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
@@ -95,9 +125,6 @@ public class ListeningFragment extends Fragment {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                countDownTimer.cancel();
-                int duration = player.getDuration() - seekBar.getProgress();
-                createCountDownTimer(duration);
                 player.seekTo(seekBar.getProgress());
 
                 //When the player finishes, we have to play it again
@@ -107,65 +134,36 @@ public class ListeningFragment extends Fragment {
         });
 
         btnPlayAudio.setOnClickListener(new View.OnClickListener() {
-            int savedTimer; //Save second left for countdown timer when player pauses
-
             @Override
             public void onClick(View view) {
-                if(player == null){
-                    //Set up audio player
+                if(!player.isPlaying()){
                     btnPlayAudio.setBackgroundResource(R.drawable.ic_pause_audio);
-                    player = Utils.playListeningAudio(getView().getContext(), fileName);
-                    timer.setMax(player.getDuration());
-                    timer.setProgress(0);
-
-
-                    createCountDownTimer(player.getDuration());
                     player.start();
-                }else if(player.isPlaying()){
+                    handler.postDelayed(runnable, 0);
+                }else{
                     btnPlayAudio.setBackgroundResource(R.drawable.ic_play_audio);
                     player.pause();
-                    countDownTimer.cancel();
-                    savedTimer = player.getDuration() - player.getCurrentPosition(); // Save Time;
-                }else if(player.getCurrentPosition() < player.getDuration()){ // Player is not done yet
-                    btnPlayAudio.setBackgroundResource(R.drawable.ic_pause_audio);
-                    player.start();
-                    createCountDownTimer(savedTimer);
-                    countDownTimer.start();
-                }else{ //Player finishes, play again
-                    btnPlayAudio.setBackgroundResource(R.drawable.ic_pause_audio);
-                    timer.setProgress(0, true);
-                    createCountDownTimer(player.getDuration());
-                    player.seekTo(0);
-                    player.start();
+                    handler.removeCallbacks(runnable);
                 }
             }
         });
 
-
-
-    }
-    
-    public void createCountDownTimer(int duration){
-        countDownTimer = new CountDownTimer(duration, 1000) {
+        player.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override
-            public void onTick(long l) {
-                btnPlayAudio.setBackgroundResource(R.drawable.ic_pause_audio);
-                timer.setProgress((int) (player.getDuration()-l));
-            }
-
-            @Override
-            public void onFinish() {
+            public void onCompletion(MediaPlayer mediaPlayer) {
                 btnPlayAudio.setBackgroundResource(R.drawable.ic_play_audio);
             }
-        };
-        countDownTimer.start();
+        });
     }
+    
+
 
     @Override
     public void onDestroy() {
         super.onDestroy();
 
-        if(player != null)
+        if(player != null){
             player.stop();
+        }
     }
 }

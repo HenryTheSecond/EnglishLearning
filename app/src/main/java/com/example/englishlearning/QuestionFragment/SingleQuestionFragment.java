@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.englishlearning.AnswerButtonOnClickListener;
+import com.example.englishlearning.Model.SingleQuestion;
 import com.example.englishlearning.MultipleChoice;
 import com.example.englishlearning.R;
 import com.example.englishlearning.Utils;
@@ -23,9 +24,13 @@ public class SingleQuestionFragment extends Fragment {
     private TextView tvQuestion;
     private MultipleChoice multipleChoice;
 
-    public SingleQuestionFragment(Button btnQuestion) {
+    private SingleQuestion singleQuestion;
+
+    public SingleQuestionFragment(SingleQuestion singleQuestion, Button btnQuestion) {
         this.multipleChoice = new MultipleChoice();
         this.multipleChoice.setBtnQuestion(btnQuestion);
+
+        this.singleQuestion = singleQuestion;
     }
 
 
@@ -51,6 +56,9 @@ public class SingleQuestionFragment extends Fragment {
         multipleChoice.getMultipleChoice().findViewById(R.id.answer_b).setOnClickListener(buttonOnClickListenr);
         multipleChoice.getMultipleChoice().findViewById(R.id.answer_c).setOnClickListener(buttonOnClickListenr);
         multipleChoice.getMultipleChoice().findViewById(R.id.answer_d).setOnClickListener(buttonOnClickListenr);
+
+        tvQuestion.setText(singleQuestion.getQuestion());
+        Utils.setTextForMultipleChoice( multipleChoice.getMultipleChoice(), singleQuestion.getListChoice());
     }
 
 }

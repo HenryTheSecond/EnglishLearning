@@ -19,6 +19,38 @@ public class Writing {
         this.level = level;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getQuestion() {
+        return question;
+    }
+
+    public void setQuestion(String question) {
+        this.question = question;
+    }
+
+    public String getAnswer() {
+        return answer;
+    }
+
+    public void setAnswer(String answer) {
+        this.answer = answer;
+    }
+
+    public int getLevel() {
+        return level;
+    }
+
+    public void setLevel(int level) {
+        this.level = level;
+    }
+
     public static Writing getWritingById(int id){
         EnglishHelper helper = new EnglishHelper(MyApplication.getAppContext());
         SQLiteDatabase database = helper.getReadableDatabase();

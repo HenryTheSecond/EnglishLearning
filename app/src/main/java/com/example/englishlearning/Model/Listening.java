@@ -39,6 +39,54 @@ public class Listening {
         }
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getFileName() {
+        return fileName;
+    }
+
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
+    }
+
+    public String getScript() {
+        return script;
+    }
+
+    public void setScript(String script) {
+        this.script = script;
+    }
+
+    public String getRawIdQuestions() {
+        return rawIdQuestions;
+    }
+
+    public void setRawIdQuestions(String rawIdQuestions) {
+        this.rawIdQuestions = rawIdQuestions;
+    }
+
+    public List<ListeningQuestion> getListQuestions() {
+        return listQuestions;
+    }
+
+    public void setListQuestions(List<ListeningQuestion> listQuestions) {
+        this.listQuestions = listQuestions;
+    }
+
+    public int getLevel() {
+        return level;
+    }
+
+    public void setLevel(int level) {
+        this.level = level;
+    }
+
     public static Listening getListeningById(int id){
         EnglishHelper helper = new EnglishHelper(MyApplication.getAppContext());
         SQLiteDatabase database = helper.getReadableDatabase();
@@ -77,6 +125,46 @@ public class Listening {
             for(String id: strIdChoice){
                 listChoice.add(MultipleChoiceAnswer.getMultipleChoiceById( Integer.parseInt(id) ));
             }
+        }
+
+        public int getId() {
+            return id;
+        }
+
+        public void setId(int id) {
+            this.id = id;
+        }
+
+        public String getQuestion() {
+            return question;
+        }
+
+        public void setQuestion(String question) {
+            this.question = question;
+        }
+
+        public String getRawIdMultipleChoice() {
+            return rawIdMultipleChoice;
+        }
+
+        public void setRawIdMultipleChoice(String rawIdMultipleChoice) {
+            this.rawIdMultipleChoice = rawIdMultipleChoice;
+        }
+
+        public List<MultipleChoiceAnswer> getListChoice() {
+            return listChoice;
+        }
+
+        public void setListChoice(List<MultipleChoiceAnswer> listChoice) {
+            this.listChoice = listChoice;
+        }
+
+        public int getIdAnswer() {
+            return idAnswer;
+        }
+
+        public void setIdAnswer(int idAnswer) {
+            this.idAnswer = idAnswer;
         }
 
         public static ListeningQuestion getListeningQuestionById(int id){

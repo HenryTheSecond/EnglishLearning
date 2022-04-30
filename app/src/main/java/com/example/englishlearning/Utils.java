@@ -3,10 +3,17 @@ package com.example.englishlearning;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.AssetFileDescriptor;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.media.MediaPlayer;
 import android.view.View;
+import android.widget.Button;
+
+import com.example.englishlearning.Databases.EnglishHelper;
+import com.example.englishlearning.Model.MultipleChoiceAnswer;
 
 import java.io.IOException;
+import java.util.List;
 
 public class Utils {
     private static final String FILE_NAME_ANSWER_STORE_TEMP = "AnswerStoreTemp";
@@ -95,5 +102,25 @@ public class Utils {
         multipleChoice.getMultipleChoice().findViewById(R.id.answer_b).setOnClickListener(buttonOnClickListenr);
         multipleChoice.getMultipleChoice().findViewById(R.id.answer_c).setOnClickListener(buttonOnClickListenr);
         multipleChoice.getMultipleChoice().findViewById(R.id.answer_d).setOnClickListener(buttonOnClickListenr);
+    }
+
+
+    public static Cursor getRandomQuestions(String tableName, int amount){
+        EnglishHelper helper = new EnglishHelper(MyApplication.getAppContext());
+        SQLiteDatabase database = helper.getReadableDatabase();
+        Cursor cursor = database.rawQuery("Select * from " + tableName + " Order by RANDOM() LIMIT " + amount, null);
+        return cursor;
+    }
+
+    public static void setTextForMultipleChoice(View btnMultiChoiceView, List<MultipleChoiceAnswer> listAnswer){
+        Button btnA = btnMultiChoiceView.findViewById(R.id.answer_a);
+        Button btnB = btnMultiChoiceView.findViewById(R.id.answer_b);
+        Button btnC = btnMultiChoiceView.findViewById(R.id.answer_c);
+        Button btnD = btnMultiChoiceView.findViewById(R.id.answer_d);
+
+        btnA.setText("A." + listAnswer.get(0).getContent());
+        btnB.setText("B." + listAnswer.get(1).getContent());
+        btnC.setText("C." + listAnswer.get(2).getContent());
+        btnD.setText("D." + listAnswer.get(3).getContent());
     }
 }
