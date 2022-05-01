@@ -10,9 +10,16 @@ import android.view.View;
 import android.widget.Button;
 
 import com.example.englishlearning.Databases.EnglishHelper;
+import com.example.englishlearning.Model.FillingBlank;
+import com.example.englishlearning.Model.Listening;
 import com.example.englishlearning.Model.MultipleChoiceAnswer;
+import com.example.englishlearning.Model.Reading;
+import com.example.englishlearning.Model.SingleQuestion;
+import com.example.englishlearning.Model.Writing;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 public class Utils {
@@ -122,5 +129,52 @@ public class Utils {
         btnB.setText("B." + listAnswer.get(1).getContent());
         btnC.setText("C." + listAnswer.get(2).getContent());
         btnD.setText("D." + listAnswer.get(3).getContent());
+    }
+
+    public static String getCurrentTimeString(){
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+        Date date = new Date();
+        String strDate = sdf.format(date);
+        return strDate;
+    }
+
+    public static String getIdAnswer(Context context, int questionNumber, List<MultipleChoiceAnswer> listChoice){
+        String idAnswer = "-1";
+        MULTIPLE_CHOICE_ANSWER_ENUM answer = Utils.getMultipleChoiceAnswer(context, questionNumber);
+        int position = MULTIPLE_CHOICE_ANSWER_ENUM.getPositionOfAnswer(answer);
+        if(position != -1){
+            idAnswer = String.valueOf(listChoice.get(position).getId());
+        }
+        return idAnswer;
+    }
+
+    public static double getPoint(Listening.ListeningQuestion question, int idAnswer){
+        if(question.getIdAnswer() == idAnswer)
+            return 0.5;
+        return 0;
+    }
+
+    public static double getPoint(FillingBlank.FillingBlankQuestion question, int idAnswer){
+        if(question.getIdAnswer() == idAnswer)
+            return 0.5;
+        return 0;
+    }
+
+    public static double getPoint(Reading.ReadingQuestion question, int idAnswer){
+        if(question.getIdAnswer() == idAnswer)
+            return 0.5;
+        return 0;
+    }
+
+    public static double getPoint(SingleQuestion question, int idAnswer){
+        if(question.getIdAnswer() == idAnswer)
+            return 0.5;
+        return 0;
+    }
+
+    public static double getPoint(Writing question, String answer){
+        if(question.getQuestion().trim() == answer.trim())
+            return 0.5;
+        return 0;
     }
 }

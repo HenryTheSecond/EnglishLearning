@@ -15,4 +15,15 @@ public enum MULTIPLE_CHOICE_ANSWER_ENUM {
         }
         return "None";
     }
+
+
+    public static int getPositionOfAnswer(MULTIPLE_CHOICE_ANSWER_ENUM answer){
+        switch(answer){
+            case answerA: return 0;
+            case answerB: return 1;
+            case answerC: return 2;
+            case answerD: return 3;
+        }
+        return -1;
+    }
 }

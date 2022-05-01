@@ -5,16 +5,13 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import android.content.res.AssetFileDescriptor;
-import android.content.res.AssetManager;
+import android.app.AlertDialog;
+import android.content.ContentValues;
+import android.content.DialogInterface;
 import android.database.Cursor;
-import android.media.MediaPlayer;
-import android.net.Uri;
-import android.opengl.Visibility;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.provider.MediaStore;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -22,8 +19,8 @@ import android.widget.FrameLayout;
 import android.widget.TableLayout;
 import android.widget.TextView;
 
-import com.example.englishlearning.AnswerStore.AnswerStore;
-import com.example.englishlearning.AnswerStore.WritingStore;
+import com.example.englishlearning.Databases.TestRecordHelper;
+import com.example.englishlearning.MULTIPLE_CHOICE_ANSWER_ENUM;
 import com.example.englishlearning.Model.FillingBlank;
 import com.example.englishlearning.Model.Listening;
 import com.example.englishlearning.Model.Reading;
@@ -37,8 +34,6 @@ import com.example.englishlearning.QuestionFragment.WritingFragment;
 import com.example.englishlearning.R;
 import com.example.englishlearning.Utils;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -48,6 +43,7 @@ public class TestQuestionActivity extends AppCompatActivity {
     private FrameLayout questionContent;
     private Button btnQuestionNumber;
     private TableLayout tableQuestion;
+    private Button btnSubmit;
 
     private List<Button> listBtnQuestion;
     private int currentQuestion;
@@ -74,6 +70,14 @@ public class TestQuestionActivity extends AppCompatActivity {
         questionContent = findViewById(R.id.question_content);
         btnQuestionNumber = findViewById(R.id.btn_question_number);
         tableQuestion = findViewById(R.id.table_question);
+        btnSubmit = findViewById(R.id.btn_submit);
+
+        btnSubmit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                btnSubmitClicked();
+            }
+        });
 
         listBtnQuestion = new ArrayList<>();
         btnQuestionNumber.setOnClickListener(new View.OnClickListener() {
@@ -137,6 +141,98 @@ public class TestQuestionActivity extends AppCompatActivity {
         }
     }
 
+
+    private void btnSubmitClicked(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(TestQuestionActivity.this);
+        builder.setTitle("Submit")
+                .setMessage("Are you sure to submit?")
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        finishTest();
+                    }
+                })
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                    }
+                });
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
+    private void finishTest(){
+        int questionNumber = 1; // Iterator All Question
+
+        double point = 0;
+        String date = Utils.getCurrentTimeString();
+
+        String idListenings =  "[" + String.valueOf(listenings.get(0).getId()) + "]" + "[" + String.valueOf(listenings.get(1).getId()) + "]";
+        String listeningAnswer = "";
+        for(Listening item: listenings){
+            for( Listening.ListeningQuestion question: item.getListQuestions() ){
+                String idAnswer = Utils.getIdAnswer(this, questionNumber, question.getListChoice());
+                listeningAnswer += "[" + String.valueOf(question.getId())  +  ","  +  idAnswer   + "]";
+                point += Utils.getPoint(question, Integer.parseInt(idAnswer));
+                questionNumber++;
+            }
+            listeningAnswer += "/";
+        }
+
+        String idFillingBlank = String.valueOf(fillingBlank.getId());
+        String fillingBlankAnswer = "";
+        for(FillingBlank.FillingBlankQuestion question: fillingBlank.getListQuestions()){
+            String idAnswer = Utils.getIdAnswer(this, questionNumber, question.getListChoice());
+            fillingBlankAnswer += "[" + String.valueOf(question.getId())  +  ","  +  idAnswer   + "]";
+            point += Utils.getPoint(question, Integer.parseInt(idAnswer));
+            questionNumber++;
+        }
+
+
+        String idReading = String.valueOf(reading.getId());
+        String readingAnswer = "";
+        for(Reading.ReadingQuestion question: reading.getListQuestions()){
+            String idAnswer = Utils.getIdAnswer(this, questionNumber, question.getListChoice());
+            readingAnswer += "[" + String.valueOf(question.getId())  +  ","  +  idAnswer   + "]";
+            point += Utils.getPoint(question, Integer.parseInt(idAnswer));
+            questionNumber++;
+        }
+
+        String singleQuestionAnswer = "";
+        for(SingleQuestion question: singleQuestions){
+            String idAnswer = Utils.getIdAnswer(this, questionNumber, question.getListChoice());
+            singleQuestionAnswer += "[" + String.valueOf(question.getId())  +  ","  +  idAnswer   + "]";
+            point += Utils.getPoint(question, Integer.parseInt(idAnswer));
+            questionNumber++;
+        }
+
+        String writingAnswer = "";
+        for(Writing question: writings){
+            String answer = Utils.getWritingAnswer(this, questionNumber);
+            writingAnswer += "[" + String.valueOf(question.getId()) + "," + answer + "]";
+            point += Utils.getPoint(question, answer);
+            questionNumber++;
+        }
+
+        TestRecordHelper helper = new TestRecordHelper(this);
+        SQLiteDatabase database = helper.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("date_time", date);
+        contentValues.put("point", point);
+        contentValues.put("id_listenings", idListenings);
+        contentValues.put("listening_answer", listeningAnswer);
+        contentValues.put("id_filling_blank", idFillingBlank);
+        contentValues.put("filling_blank_answer", fillingBlankAnswer);
+        contentValues.put("id_reading", idReading);
+        contentValues.put("reading_answer", readingAnswer);
+        contentValues.put("reading_answer", readingAnswer);
+        contentValues.put("single_question", singleQuestionAnswer);
+        contentValues.put("writing", writingAnswer);
+        database.insert("test_record", null, contentValues);
+
+    }
+
     private void startTimer(){
         countDownTimer = new CountDownTimer(1000*60*35, 1000) {
             @Override
@@ -169,6 +265,9 @@ public class TestQuestionActivity extends AppCompatActivity {
             ft.commit();
         }
     }
+
+
+
 
     public void btnQuestionClick(View view) {
         Button btn = (Button)view;
