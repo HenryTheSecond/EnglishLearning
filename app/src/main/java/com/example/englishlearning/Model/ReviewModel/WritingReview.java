@@ -16,4 +16,20 @@ public class WritingReview {
             return true;
         return false;
     }
+
+    public Writing getWriting() {
+        return writing;
+    }
+
+    public void setWriting(Writing writing) {
+        this.writing = writing;
+    }
+
+    public String getAnswer() {
+        return answer;
+    }
+
+    public void setAnswer(String answer) {
+        this.answer = answer;
+    }
 }

@@ -70,7 +70,8 @@ public class WritingFragment extends Fragment {
 
             @Override
             public void afterTextChanged(Editable editable) {
-
+                int questionNumber = Integer.parseInt(btnQuestion.getText().toString());
+                Utils.setWritingAnswer(getContext(), questionNumber, etAnswer.getText().toString());
             }
         });
 
@@ -81,8 +82,6 @@ public class WritingFragment extends Fragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        int questionNumber = Integer.parseInt(btnQuestion.getText().toString());
-        Utils.setWritingAnswer(getContext(), questionNumber, etAnswer.getText().toString());
     }
 
 }

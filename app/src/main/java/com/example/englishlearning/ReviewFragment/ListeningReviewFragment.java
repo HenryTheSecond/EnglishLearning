@@ -1,13 +1,7 @@
-package com.example.englishlearning.QuestionFragment;
+package com.example.englishlearning.ReviewFragment;
 
 import android.media.MediaPlayer;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-
-import android.os.CountDownTimer;
 import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,14 +10,16 @@ import android.widget.Button;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
-import com.example.englishlearning.Model.Listening;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+
+import com.example.englishlearning.Model.ReviewModel.ListeningReview;
 import com.example.englishlearning.MultipleChoice;
 import com.example.englishlearning.R;
 import com.example.englishlearning.Utils;
 
-
-public class ListeningFragment extends Fragment {
-
+public class ListeningReviewFragment extends Fragment {
     private SeekBar timer;
     private String fileName;
     private MediaPlayer player;
@@ -39,13 +35,9 @@ public class ListeningFragment extends Fragment {
     private TextView tvQuestion3;
     private MultipleChoice multipleChoice3;
 
-    private Listening listening;
+    private ListeningReview listeningReview;
 
-
-
-    public ListeningFragment(Listening listening, Button btnQuestion1, Button btnQuestion2, Button btnQuestion3) {
-        this.fileName = listening.getFileName();
-
+    public ListeningReviewFragment(ListeningReview listeningReview, Button btnQuestion1, Button btnQuestion2, Button btnQuestion3){
         multipleChoice1 = new MultipleChoice();
         multipleChoice1.setBtnQuestion(btnQuestion1);
 
@@ -55,14 +47,13 @@ public class ListeningFragment extends Fragment {
         multipleChoice3 = new MultipleChoice();
         multipleChoice3.setBtnQuestion(btnQuestion3);
 
-        this.listening = listening;
+        this.listeningReview = listeningReview;
+        fileName = listeningReview.getListening().getFileName();
     }
 
-
+    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_listening, container, false);
     }
 
@@ -70,34 +61,41 @@ public class ListeningFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        //Binding
         timer = getView().findViewById(R.id.seek_bar_timer);
         btnPlayAudio = getView().findViewById(R.id.btn_play_audio);
 
         tvQuestion1 = getView().findViewById(R.id.tv_question1);
         multipleChoice1.setMultipleChoice( getView().findViewById(R.id.multiple_choice1) );
-        multipleChoice1.setAnswer( Utils.getMultipleChoiceAnswer(getContext(), Integer.parseInt(multipleChoice1.getBtnQuestion().getText().toString())));
+        //multipleChoice1.setAnswer( Utils.getMultipleChoiceAnswer(getContext(), Integer.parseInt(multipleChoice1.getBtnQuestion().getText().toString())));
 
         tvQuestion2 = getView().findViewById(R.id.tv_question2);
         multipleChoice2.setMultipleChoice( getView().findViewById(R.id.multiple_choice2) );
-        multipleChoice2.setAnswer( Utils.getMultipleChoiceAnswer(getContext(), Integer.parseInt(multipleChoice2.getBtnQuestion().getText().toString())));
+        //multipleChoice2.setAnswer( Utils.getMultipleChoiceAnswer(getContext(), Integer.parseInt(multipleChoice2.getBtnQuestion().getText().toString())));
 
         tvQuestion3 = getView().findViewById(R.id.tv_question3);
         multipleChoice3.setMultipleChoice( getView().findViewById(R.id.multiple_choice3) );
-        multipleChoice3.setAnswer( Utils.getMultipleChoiceAnswer(getContext(), Integer.parseInt(multipleChoice3.getBtnQuestion().getText().toString())));
+        //multipleChoice3.setAnswer( Utils.getMultipleChoiceAnswer(getContext(), Integer.parseInt(multipleChoice3.getBtnQuestion().getText().toString())));
 
-        Utils.colorAnswer(multipleChoice1); Utils.colorAnswer(multipleChoice2); Utils.colorAnswer(multipleChoice3);
-        Utils.setOnClickListener(multipleChoice1); Utils.setOnClickListener(multipleChoice2); Utils.setOnClickListener(multipleChoice3);
+        tvQuestion1.setText( multipleChoice1.getBtnQuestion().getText().toString() + " " + listeningReview.getListening().getListQuestions().get(0).getQuestion());
+        tvQuestion2.setText( multipleChoice2.getBtnQuestion().getText().toString() + " " +  listeningReview.getListening().getListQuestions().get(1).getQuestion());
+        tvQuestion3.setText( multipleChoice3.getBtnQuestion().getText().toString() + " " +  listeningReview.getListening().getListQuestions().get(2).getQuestion());
 
-        tvQuestion1.setText( multipleChoice1.getBtnQuestion().getText().toString() + " " + listening.getListQuestions().get(0).getQuestion());
-        tvQuestion2.setText( multipleChoice2.getBtnQuestion().getText().toString() + " " +  listening.getListQuestions().get(1).getQuestion());
-        tvQuestion3.setText( multipleChoice3.getBtnQuestion().getText().toString() + " " +  listening.getListQuestions().get(2).getQuestion());
-
-        Utils.setTextForMultipleChoice( multipleChoice1.getMultipleChoice(), listening.getListQuestions().get(0).getListChoice() );
-        Utils.setTextForMultipleChoice( multipleChoice2.getMultipleChoice(), listening.getListQuestions().get(1).getListChoice() );
-        Utils.setTextForMultipleChoice( multipleChoice3.getMultipleChoice(), listening.getListQuestions().get(2).getListChoice() );
+        Utils.setTextForMultipleChoice( multipleChoice1.getMultipleChoice(), listeningReview.getListening().getListQuestions().get(0).getListChoice() );
+        Utils.setTextForMultipleChoice( multipleChoice2.getMultipleChoice(), listeningReview.getListening().getListQuestions().get(1).getListChoice() );
+        Utils.setTextForMultipleChoice( multipleChoice3.getMultipleChoice(), listeningReview.getListening().getListQuestions().get(2).getListChoice() );
 
 
+        Utils.colorAnswerReview(multipleChoice1, listeningReview.getIdAnswers().get(0),
+                listeningReview.getListening().getListQuestions().get(0).getListChoice(),
+                listeningReview.getListening().getListQuestions().get(0).getIdAnswer());
+
+        Utils.colorAnswerReview(multipleChoice2, listeningReview.getIdAnswers().get(1),
+                listeningReview.getListening().getListQuestions().get(1).getListChoice(),
+                listeningReview.getListening().getListQuestions().get(1).getIdAnswer());
+
+        Utils.colorAnswerReview(multipleChoice3, listeningReview.getIdAnswers().get(2),
+                listeningReview.getListening().getListQuestions().get(2).getListChoice(),
+                listeningReview.getListening().getListQuestions().get(2).getIdAnswer());
 
         //Playing Audio
         player = Utils.playListeningAudio(getView().getContext(), fileName);
@@ -155,13 +153,11 @@ public class ListeningFragment extends Fragment {
             }
         });
     }
-    
 
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-
         if(player != null){
             player.stop();
         }

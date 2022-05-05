@@ -13,7 +13,6 @@ import android.widget.FrameLayout;
 import android.widget.TableLayout;
 import android.widget.TextView;
 
-import com.example.englishlearning.Model.FillingBlank;
 import com.example.englishlearning.Model.ReviewModel.FillingBlankReview;
 import com.example.englishlearning.Model.ReviewModel.ListeningReview;
 import com.example.englishlearning.Model.ReviewModel.RawTestRecord;
@@ -21,8 +20,17 @@ import com.example.englishlearning.Model.ReviewModel.ReadingReview;
 import com.example.englishlearning.Model.ReviewModel.SingleQuestionReview;
 import com.example.englishlearning.Model.ReviewModel.TestRecord;
 import com.example.englishlearning.Model.ReviewModel.WritingReview;
+import com.example.englishlearning.QuestionFragment.FillingBlankParagraphFragment;
+import com.example.englishlearning.QuestionFragment.ListeningFragment;
+import com.example.englishlearning.QuestionFragment.ReadingParagraphFragment;
+import com.example.englishlearning.QuestionFragment.SingleQuestionFragment;
+import com.example.englishlearning.QuestionFragment.WritingFragment;
 import com.example.englishlearning.R;
-import com.example.englishlearning.ReviewFragment.FillingBlankFragment;
+import com.example.englishlearning.ReviewFragment.FillingBlankReviewFragment;
+import com.example.englishlearning.ReviewFragment.ListeningReviewFragment;
+import com.example.englishlearning.ReviewFragment.ReadingReviewFragment;
+import com.example.englishlearning.ReviewFragment.SingleQuestionReviewFragment;
+import com.example.englishlearning.ReviewFragment.WritingReviewFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -68,8 +76,10 @@ public class ReviewResult extends AppCompatActivity {
         changeColorBtnQuestion();
 
         currentQuestion = 0;
-        addFragment(new int[]{1,2,3,4}, new FillingBlankFragment(record.getFillingBlankReview(), listBtnQuestion.get(0),
-                listBtnQuestion.get(1),listBtnQuestion.get(2),listBtnQuestion.get(3)));
+        addFragment(new int[]{1,2,3}, new ListeningReviewFragment(record.getListeningReviews().get(0), listBtnQuestion.get(0), listBtnQuestion.get(1),
+                listBtnQuestion.get(2)));
+        btnQuestionNumber.setText("1-3");
+
     }
 
     private void findAllQuestionButtons() {
@@ -129,6 +139,7 @@ public class ReviewResult extends AppCompatActivity {
         }
     }
 
+
     private void addFragment(int[] group,   Fragment fragment){
         //If current question is one of the member of group question, we don't add fragment
         for(int item: group){
@@ -149,5 +160,83 @@ public class ReviewResult extends AppCompatActivity {
         Button btn = (Button)view;
         int number = Integer.parseInt( btn.getText().toString() );
 
+        switch(number){
+            //Listening
+            case 1:
+            case 2:
+            case 3:{
+                addFragment(new int[]{1,2,3}, new ListeningReviewFragment(record.getListeningReviews().get(0), listBtnQuestion.get(0), listBtnQuestion.get(1),
+                        listBtnQuestion.get(2)));
+                btnQuestionNumber.setText("1-3");
+                break;
+            }
+            case 4:
+            case 5:
+            case 6:{
+                addFragment(new int[]{4,5,6}, new ListeningReviewFragment(record.getListeningReviews().get(1), listBtnQuestion.get(3), listBtnQuestion.get(4),
+                        listBtnQuestion.get(5)));
+                btnQuestionNumber.setText("4-6");
+                break;
+            }
+
+            //Filling Blank
+            case 7:
+            case 8:
+            case 9:
+            case 10:{
+                addFragment(new int[]{7,8,9,10}, new FillingBlankReviewFragment(record.getFillingBlankReview(), listBtnQuestion.get(6),
+                        listBtnQuestion.get(7), listBtnQuestion.get(8), listBtnQuestion.get(9)));
+                btnQuestionNumber.setText("7-10");
+                break;
+            }
+
+            //Reading
+            case 11:
+            case 12:
+            case 13:{
+                addFragment(new int[]{11,12,13}, new ReadingReviewFragment(record.getReadingReview(), listBtnQuestion.get(10), listBtnQuestion.get(11),
+                        listBtnQuestion.get(12)));
+                btnQuestionNumber.setText("11-13");
+                break;
+            }
+
+            //Single Questions
+            case 14:{
+                addFragment(new int[]{14}, new SingleQuestionReviewFragment(record.getSingleQuestionReviews().get(0), listBtnQuestion.get(13)));
+                break;
+            }
+            case 15:{
+                addFragment(new int[]{15}, new SingleQuestionReviewFragment(record.getSingleQuestionReviews().get(1), listBtnQuestion.get(14)));
+                btnQuestionNumber.setText("15");
+                break;}
+            case 16:{
+                addFragment(new int[]{16}, new SingleQuestionReviewFragment(record.getSingleQuestionReviews().get(2), listBtnQuestion.get(15)));
+                btnQuestionNumber.setText("16");
+                break;
+            }
+            case 17:{
+                addFragment(new int[]{17}, new SingleQuestionReviewFragment(record.getSingleQuestionReviews().get(3), listBtnQuestion.get(16)));
+                btnQuestionNumber.setText("17");
+                break;
+            }
+
+            //Writing
+            case 18:{
+                addFragment(new int[]{18}, new WritingReviewFragment(record.getWritingReviews().get(0), listBtnQuestion.get(17)));
+                btnQuestionNumber.setText("18");
+                break;
+            }
+            case 19:{
+                addFragment(new int[]{19}, new WritingReviewFragment(record.getWritingReviews().get(1), listBtnQuestion.get(18)));
+                btnQuestionNumber.setText("19");
+                break;
+            }
+            case 20:{
+                addFragment(new int[]{20}, new WritingReviewFragment(record.getWritingReviews().get(2), listBtnQuestion.get(19)));
+                btnQuestionNumber.setText("20");
+                break;
+            }
+        }
+        currentQuestion = number;
     }
 }

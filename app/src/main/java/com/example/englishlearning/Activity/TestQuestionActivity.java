@@ -98,6 +98,7 @@ public class TestQuestionActivity extends AppCompatActivity {
         currentQuestion = 0;
         addFragment(new int[]{1,2,3}, new ListeningFragment(listenings.get(0), listBtnQuestion.get(0), listBtnQuestion.get(1),
                 listBtnQuestion.get(2)));
+        btnQuestionNumber.setText("1-3");
 
         startTimer();
     }
@@ -239,10 +240,11 @@ public class TestQuestionActivity extends AppCompatActivity {
         intent.putExtra(ReviewResult.ID_TEST_RECORD_KEY, idInsert);
         startActivity(intent);
 
+        finish();
     }
 
     private void startTimer(){
-        countDownTimer = new CountDownTimer(1000*60*35, 1000) {
+        countDownTimer = new CountDownTimer(1000*30*1, 1000) {
             @Override
             public void onTick(long l) {
                 String second = String.format("%02d", (l/1000)%60);
@@ -251,7 +253,7 @@ public class TestQuestionActivity extends AppCompatActivity {
 
             @Override
             public void onFinish() {
-                tvCountDownTimer.setText("00:00");
+                finishTest();
             }
         };
         countDownTimer.start();
@@ -287,6 +289,7 @@ public class TestQuestionActivity extends AppCompatActivity {
             case 3:{
                 addFragment(new int[]{1,2,3}, new ListeningFragment(listenings.get(0), listBtnQuestion.get(0), listBtnQuestion.get(1),
                                                                     listBtnQuestion.get(2)));
+                btnQuestionNumber.setText("1-3");
                 break;
             }
             case 4:
@@ -294,6 +297,7 @@ public class TestQuestionActivity extends AppCompatActivity {
             case 6:{
                 addFragment(new int[]{4,5,6}, new ListeningFragment(listenings.get(1), listBtnQuestion.get(3), listBtnQuestion.get(4),
                         listBtnQuestion.get(5)));
+                btnQuestionNumber.setText("4-6");
                 break;
             }
 
@@ -304,6 +308,7 @@ public class TestQuestionActivity extends AppCompatActivity {
             case 10:{
                 addFragment(new int[]{7,8,9,10}, new FillingBlankParagraphFragment(fillingBlank, listBtnQuestion.get(6),
                         listBtnQuestion.get(7), listBtnQuestion.get(8), listBtnQuestion.get(9)));
+                btnQuestionNumber.setText("7-10");
                 break;
             }
 
@@ -313,40 +318,50 @@ public class TestQuestionActivity extends AppCompatActivity {
             case 13:{
                 addFragment(new int[]{11,12,13}, new ReadingParagraphFragment(reading, listBtnQuestion.get(10), listBtnQuestion.get(11),
                         listBtnQuestion.get(12)));
+                btnQuestionNumber.setText("11-13");
                 break;
             }
 
             //Single Questions
             case 14:{
                 addFragment(new int[]{14}, new SingleQuestionFragment(singleQuestions.get(0), listBtnQuestion.get(13)));
+                btnQuestionNumber.setText("14");
                 break;
             }
             case 15:{
                 addFragment(new int[]{15}, new SingleQuestionFragment(singleQuestions.get(1), listBtnQuestion.get(14)));
+                btnQuestionNumber.setText("15");
                 break;}
             case 16:{
                 addFragment(new int[]{16}, new SingleQuestionFragment(singleQuestions.get(2), listBtnQuestion.get(15)));
+                btnQuestionNumber.setText("16");
                 break;
             }
             case 17:{
                 addFragment(new int[]{17}, new SingleQuestionFragment(singleQuestions.get(3), listBtnQuestion.get(16)));
+                btnQuestionNumber.setText("17");
                 break;
             }
 
             //Writing
             case 18:{
                 addFragment(new int[]{18}, new WritingFragment(writings.get(0), listBtnQuestion.get(17)));
+                btnQuestionNumber.setText("18");
                 break;
             }
             case 19:{
                 addFragment(new int[]{19}, new WritingFragment(writings.get(1), listBtnQuestion.get(18)));
+                btnQuestionNumber.setText("19");
                 break;
             }
             case 20:{
                 addFragment(new int[]{20}, new WritingFragment(writings.get(2), listBtnQuestion.get(19)));
+                btnQuestionNumber.setText("20");
                 break;
             }
         }
         currentQuestion = number;
     }
+
+
 }

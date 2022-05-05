@@ -17,7 +17,7 @@ import com.example.englishlearning.MultipleChoice;
 import com.example.englishlearning.R;
 import com.example.englishlearning.Utils;
 
-public class FillingBlankFragment extends Fragment {
+public class FillingBlankReviewFragment extends Fragment {
     private TextView tvParagraph;
 
     private TextView tvQuestion1;
@@ -31,7 +31,7 @@ public class FillingBlankFragment extends Fragment {
 
     private FillingBlankReview fillingBlankReview;
 
-    public FillingBlankFragment(FillingBlankReview fillingBlankReview, Button btnQuestion1, Button btnQuestion2, Button btnQuestion3, Button btnQuestion4){
+    public FillingBlankReviewFragment(FillingBlankReview fillingBlankReview, Button btnQuestion1, Button btnQuestion2, Button btnQuestion3, Button btnQuestion4){
         this.fillingBlankReview = fillingBlankReview;
 
         multipleChoice1 = new MultipleChoice();
