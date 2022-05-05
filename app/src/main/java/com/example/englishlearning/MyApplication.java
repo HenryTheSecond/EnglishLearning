@@ -4,7 +4,7 @@ import android.app.Application;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.example.englishlearning.Databases.TestRecordHelper;
+import com.example.englishlearning.Databases.UserDataHelper;
 
 public class MyApplication extends Application {
     private static Context context;
@@ -18,7 +18,7 @@ public class MyApplication extends Application {
     }
 
     private void createTestRecordDatabase(){
-        TestRecordHelper helper = new TestRecordHelper(context);
+        UserDataHelper helper = new UserDataHelper(context);
         SQLiteDatabase database = helper.getWritableDatabase();
         database.execSQL("CREATE TABLE IF NOT EXISTS test_record(" +
                 "id INTEGER PRIMARY KEY AUTOINCREMENT," +

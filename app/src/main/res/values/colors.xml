@@ -11,4 +11,8 @@
     <color name="navy">#000080</color>
     <color name="light_blue">#F0F8FF</color>
     <color name="uncheck">#B0C4DE</color>
+    
+    <color name="correct_answer">#00FF00</color>
+    <color name="incorrect_answer">#FF0000</color>
+    <color name="chosen_answer">#354143</color>
 </resources>

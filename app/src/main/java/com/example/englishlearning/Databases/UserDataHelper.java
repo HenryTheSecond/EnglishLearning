@@ -4,12 +4,12 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-public class TestRecordHelper extends SQLiteOpenHelper {
+public class UserDataHelper extends SQLiteOpenHelper {
 
-    public static final String DBNAME = "test_record.db";
+    public static final String DBNAME = "user_data.db";
     public static final int DBVERSION = 1;
 
-    public TestRecordHelper(Context context){
+    public UserDataHelper(Context context){
         super(context, DBNAME, null, DBVERSION);
     }
 

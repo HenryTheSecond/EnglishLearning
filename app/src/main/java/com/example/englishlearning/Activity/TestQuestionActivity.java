@@ -8,6 +8,7 @@ import androidx.fragment.app.FragmentTransaction;
 import android.app.AlertDialog;
 import android.content.ContentValues;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -19,8 +20,7 @@ import android.widget.FrameLayout;
 import android.widget.TableLayout;
 import android.widget.TextView;
 
-import com.example.englishlearning.Databases.TestRecordHelper;
-import com.example.englishlearning.MULTIPLE_CHOICE_ANSWER_ENUM;
+import com.example.englishlearning.Databases.UserDataHelper;
 import com.example.englishlearning.Model.FillingBlank;
 import com.example.englishlearning.Model.Listening;
 import com.example.englishlearning.Model.Reading;
@@ -63,7 +63,6 @@ public class TestQuestionActivity extends AppCompatActivity {
         setContentView(R.layout.activity_test_question);
 
         Utils.clearAnswerStoreFile(this);
-        currentQuestion = 0;
 
         //Binding
         tvCountDownTimer = findViewById(R.id.tv_countdown_timer);
@@ -93,7 +92,12 @@ public class TestQuestionActivity extends AppCompatActivity {
 
         findAllQuestionButtons();
 
-        getQuestions(1);
+        getQuestions(1);//Get random question by level
+
+        //Initialize first question
+        currentQuestion = 0;
+        addFragment(new int[]{1,2,3}, new ListeningFragment(listenings.get(0), listBtnQuestion.get(0), listBtnQuestion.get(1),
+                listBtnQuestion.get(2)));
 
         startTimer();
     }
@@ -113,29 +117,29 @@ public class TestQuestionActivity extends AppCompatActivity {
         singleQuestions = new ArrayList<>();
         writings = new ArrayList<>();
 
-        Cursor cursor = Utils.getRandomQuestions("listening", 2);
+        Cursor cursor = Utils.getRandomQuestions("listening", 2, level);
         while(cursor.moveToNext()){
             listenings.add(new Listening(cursor.getInt(0), cursor.getString(1), cursor.getString(2),
                                         cursor.getString(3), cursor.getInt(4)));
         }
 
-        cursor = Utils.getRandomQuestions("filling_blank", 1);
+        cursor = Utils.getRandomQuestions("filling_blank", 1, level);
         while (cursor.moveToNext()){
             fillingBlank = new FillingBlank( cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getInt(3) );
         }
 
-        cursor = Utils.getRandomQuestions("reading", 1);
+        cursor = Utils.getRandomQuestions("reading", 1, level);
         while (cursor.moveToNext()){
             reading = new Reading(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getInt(3));
         }
 
-        cursor = Utils.getRandomQuestions("single_question", 4);
+        cursor = Utils.getRandomQuestions("single_question", 4, level);
         while (cursor.moveToNext()){
             singleQuestions.add( new SingleQuestion( cursor.getInt(0), cursor.getString(1), cursor.getString(2),
                                                      cursor.getInt(3), cursor.getInt(4)) );
         }
 
-        cursor = Utils.getRandomQuestions("writing", 3);
+        cursor = Utils.getRandomQuestions("writing", 3, level);
         while (cursor.moveToNext()){
             writings.add( new Writing(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getInt(3)) );
         }
@@ -215,7 +219,7 @@ public class TestQuestionActivity extends AppCompatActivity {
             questionNumber++;
         }
 
-        TestRecordHelper helper = new TestRecordHelper(this);
+        UserDataHelper helper = new UserDataHelper(this);
         SQLiteDatabase database = helper.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put("date_time", date);
@@ -229,7 +233,11 @@ public class TestQuestionActivity extends AppCompatActivity {
         contentValues.put("reading_answer", readingAnswer);
         contentValues.put("single_question", singleQuestionAnswer);
         contentValues.put("writing", writingAnswer);
-        database.insert("test_record", null, contentValues);
+        long idInsert = database.insert("test_record", null, contentValues);
+
+        Intent intent = new Intent(TestQuestionActivity.this, ReviewResult.class);
+        intent.putExtra(ReviewResult.ID_TEST_RECORD_KEY, idInsert);
+        startActivity(intent);
 
     }
 
