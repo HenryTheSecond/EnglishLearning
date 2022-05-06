@@ -42,6 +42,9 @@ public class ReviewResult extends AppCompatActivity {
     private Button btnQuestionNumber;
     private TableLayout tableQuestion;
     private FrameLayout questionContent;
+    private Button btnPrevious;
+    private Button btnNext;
+
 
     private List<Button> listBtnQuestion;
 
@@ -57,7 +60,23 @@ public class ReviewResult extends AppCompatActivity {
         btnQuestionNumber = findViewById(R.id.btn_question_number);
         tableQuestion = findViewById(R.id.table_question);
         tvPoint = findViewById(R.id.tv_point);
+        btnPrevious = findViewById(R.id.btn_previous);
+        btnNext = findViewById(R.id.btn_next);
         listBtnQuestion = new ArrayList<>();
+
+        btnNext.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                nextQuestion();
+            }
+        });
+
+        btnPrevious.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                previousQuestion();
+            }
+        });
 
         btnQuestionNumber.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -77,14 +96,16 @@ public class ReviewResult extends AppCompatActivity {
         changeColorBtnQuestion();
 
 
-        currentQuestion = 0;
         addFragment(new int[]{1,2,3}, new ListeningReviewFragment(record.getListeningReviews().get(0), listBtnQuestion.get(0), listBtnQuestion.get(1),
                 listBtnQuestion.get(2)));
+        currentQuestion = 1;
         btnQuestionNumber.setText("1-3");
 
         tvPoint.setText(String.valueOf(record.getPoint()));
 
     }
+
+
 
     private void findAllQuestionButtons() {
         ViewGroup view = findViewById(R.id.table_question);
@@ -157,6 +178,175 @@ public class ReviewResult extends AppCompatActivity {
             ft.replace(R.id.question_content, fragment);
             //ft.addToBackStack(fragment.getClass().getSimpleName());
             ft.commit();
+        }
+    }
+
+
+    private void nextQuestion(){
+        switch(currentQuestion){
+            //Listening
+            case 1:
+            case 2:
+            case 3:{
+                addFragment(new int[]{4,5,6}, new ListeningReviewFragment(record.getListeningReviews().get(1), listBtnQuestion.get(3), listBtnQuestion.get(4),
+                        listBtnQuestion.get(5)));
+                btnQuestionNumber.setText("4-6");
+                currentQuestion = 4;
+                break;
+            }
+            case 4:
+            case 5:
+            case 6:{
+                addFragment(new int[]{7,8,9,10}, new FillingBlankReviewFragment(record.getFillingBlankReview(), listBtnQuestion.get(6),
+                        listBtnQuestion.get(7), listBtnQuestion.get(8), listBtnQuestion.get(9)));
+                btnQuestionNumber.setText("7-10");
+                currentQuestion = 7;
+                break;
+            }
+
+            //Filling Blank
+            case 7:
+            case 8:
+            case 9:
+            case 10:{
+                addFragment(new int[]{11,12,13}, new ReadingReviewFragment(record.getReadingReview(), listBtnQuestion.get(10), listBtnQuestion.get(11),
+                        listBtnQuestion.get(12)));
+                btnQuestionNumber.setText("11-13");
+                currentQuestion = 11;
+                break;
+            }
+
+            //Reading
+            case 11:
+            case 12:
+            case 13:{
+                addFragment(new int[]{14}, new SingleQuestionReviewFragment(record.getSingleQuestionReviews().get(0), listBtnQuestion.get(13)));
+                btnQuestionNumber.setText("14");
+                currentQuestion = 14;
+                break;
+            }
+
+            //Single Questions
+            case 14:{
+                addFragment(new int[]{15}, new SingleQuestionReviewFragment(record.getSingleQuestionReviews().get(1), listBtnQuestion.get(14)));
+                btnQuestionNumber.setText("15");
+                currentQuestion = 15;
+                break;
+            }
+            case 15:{
+                addFragment(new int[]{16}, new SingleQuestionReviewFragment(record.getSingleQuestionReviews().get(2), listBtnQuestion.get(15)));
+                btnQuestionNumber.setText("16");
+                currentQuestion = 16;
+                break;}
+            case 16:{
+                addFragment(new int[]{17}, new SingleQuestionReviewFragment(record.getSingleQuestionReviews().get(3), listBtnQuestion.get(16)));
+                btnQuestionNumber.setText("17");
+                currentQuestion = 17;
+                break;
+            }
+            case 17:{
+                addFragment(new int[]{18}, new WritingReviewFragment(record.getWritingReviews().get(0), listBtnQuestion.get(17)));
+                btnQuestionNumber.setText("18");
+                currentQuestion = 18;
+                break;
+            }
+
+            //Writing
+            case 18:{
+                addFragment(new int[]{19}, new WritingReviewFragment(record.getWritingReviews().get(1), listBtnQuestion.get(18)));
+                btnQuestionNumber.setText("19");
+                currentQuestion = 19;
+                break;
+            }
+            case 19:{
+                addFragment(new int[]{20}, new WritingReviewFragment(record.getWritingReviews().get(2), listBtnQuestion.get(19)));
+                btnQuestionNumber.setText("20");
+                currentQuestion = 20;
+                break;
+            }
+        }
+    }
+
+    private void previousQuestion(){
+        switch (currentQuestion){
+            case 4:
+            case 5:
+            case 6:{
+                addFragment(new int[]{1,2,3}, new ListeningReviewFragment(record.getListeningReviews().get(0), listBtnQuestion.get(0), listBtnQuestion.get(1),
+                        listBtnQuestion.get(2)));
+                btnQuestionNumber.setText("1-3");
+                currentQuestion = 1;
+                break;
+            }
+
+            //Filling Blank
+            case 7:
+            case 8:
+            case 9:
+            case 10:{
+                addFragment(new int[]{4,5,6}, new ListeningReviewFragment(record.getListeningReviews().get(1), listBtnQuestion.get(3), listBtnQuestion.get(4),
+                        listBtnQuestion.get(5)));
+                btnQuestionNumber.setText("4-6");
+                currentQuestion = 4;
+                break;
+            }
+
+            //Reading
+            case 11:
+            case 12:
+            case 13:{
+                addFragment(new int[]{7,8,9,10}, new FillingBlankReviewFragment(record.getFillingBlankReview(), listBtnQuestion.get(6),
+                        listBtnQuestion.get(7), listBtnQuestion.get(8), listBtnQuestion.get(9)));
+                btnQuestionNumber.setText("7-10");
+                currentQuestion = 7;
+                break;
+            }
+
+            //Single Questions
+            case 14:{
+                addFragment(new int[]{11,12,13}, new ReadingReviewFragment(record.getReadingReview(), listBtnQuestion.get(10), listBtnQuestion.get(11),
+                        listBtnQuestion.get(12)));
+                btnQuestionNumber.setText("11-13");
+                currentQuestion = 11;
+                break;
+            }
+            case 15:{
+                addFragment(new int[]{14}, new SingleQuestionReviewFragment(record.getSingleQuestionReviews().get(0), listBtnQuestion.get(13)));
+                btnQuestionNumber.setText("14");
+                currentQuestion = 14;
+                break;}
+            case 16:{
+                addFragment(new int[]{15}, new SingleQuestionReviewFragment(record.getSingleQuestionReviews().get(1), listBtnQuestion.get(14)));
+                btnQuestionNumber.setText("15");
+                currentQuestion = 15;
+                break;
+            }
+            case 17:{
+                addFragment(new int[]{16}, new SingleQuestionReviewFragment(record.getSingleQuestionReviews().get(2), listBtnQuestion.get(15)));
+                btnQuestionNumber.setText("16");
+                currentQuestion = 16;
+                break;
+            }
+
+            //Writing
+            case 18:{
+                addFragment(new int[]{17}, new SingleQuestionReviewFragment(record.getSingleQuestionReviews().get(3), listBtnQuestion.get(16)));
+                btnQuestionNumber.setText("17");
+                currentQuestion = 17;
+                break;
+            }
+            case 19:{
+                addFragment(new int[]{18}, new WritingReviewFragment(record.getWritingReviews().get(0), listBtnQuestion.get(17)));
+                btnQuestionNumber.setText("18");
+                currentQuestion = 18;
+                break;
+            }
+            case 20:{
+                addFragment(new int[]{19}, new WritingReviewFragment(record.getWritingReviews().get(1), listBtnQuestion.get(18)));
+                btnQuestionNumber.setText("19");
+                currentQuestion = 19;
+                break;
+            }
         }
     }
 

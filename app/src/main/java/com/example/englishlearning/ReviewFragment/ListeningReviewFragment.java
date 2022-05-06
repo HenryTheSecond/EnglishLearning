@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -126,8 +127,11 @@ public class ListeningReviewFragment extends Fragment {
                 player.seekTo(seekBar.getProgress());
 
                 //When the player finishes, we have to play it again
-                if(!player.isPlaying())
+                if(!player.isPlaying()){
                     player.start();
+                    btnPlayAudio.setBackgroundResource(R.drawable.ic_pause_audio);
+                    handler.postDelayed(runnable, 0);
+                }
             }
         });
 
