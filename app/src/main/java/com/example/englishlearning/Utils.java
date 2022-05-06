@@ -20,7 +20,9 @@ import com.example.englishlearning.Model.Writing;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Utils {
     private static final String FILE_NAME_ANSWER_STORE_TEMP = "AnswerStoreTemp";
@@ -112,10 +114,10 @@ public class Utils {
     }
 
 
-    public static Cursor getRandomQuestions(String tableName, int amount){
+    public static Cursor getRandomQuestions(String tableName, int amount, int level){
         EnglishHelper helper = new EnglishHelper(MyApplication.getAppContext());
         SQLiteDatabase database = helper.getReadableDatabase();
-        Cursor cursor = database.rawQuery("Select * from " + tableName + " Order by RANDOM() LIMIT " + amount, null);
+        Cursor cursor = database.rawQuery("Select * from " + tableName + " Where level = " + level + " Order by RANDOM() LIMIT " + amount, null);
         return cursor;
     }
 
@@ -176,5 +178,37 @@ public class Utils {
         if(question.getQuestion().trim() == answer.trim())
             return 0.5;
         return 0;
+    }
+
+    public static void colorAnswerReview(MultipleChoice multipleChoice, int idAnswer,
+                                         List<MultipleChoiceAnswer> listChoice, int idCorrectAnswer  ){
+
+        Map<Integer, Integer> map = new HashMap<>();
+        map.put(0, R.id.answer_a);
+        map.put(1, R.id.answer_b);
+        map.put(2, R.id.answer_c);
+        map.put(3, R.id.answer_d);
+
+        int indexAnswer = -1;
+        int indexCorrectAnswer = -1;
+        for(int i=0; i<listChoice.size(); i++){
+            if(idAnswer == listChoice.get(i).getId())
+                indexAnswer = i;
+            if(idCorrectAnswer == listChoice.get(i).getId())
+                indexCorrectAnswer = i;
+        }
+
+
+
+        if(idAnswer == idCorrectAnswer){
+            multipleChoice.getMultipleChoice().findViewById(map.get(indexAnswer)).setBackgroundTintList(multipleChoice.getMultipleChoice().getContext().getResources().getColorStateList(R.color.correct_answer));
+        }
+        else{
+            if(indexAnswer != -1)
+                multipleChoice.getMultipleChoice().findViewById(map.get(indexAnswer)).setBackgroundTintList(multipleChoice.getMultipleChoice().getContext().getResources().getColorStateList(R.color.chosen_answer));
+
+
+            multipleChoice.getMultipleChoice().findViewById(map.get(indexCorrectAnswer)).setBackgroundTintList(multipleChoice.getMultipleChoice().getContext().getResources().getColorStateList(R.color.incorrect_answer));
+        }
     }
 }
