@@ -15,6 +15,18 @@ public class MyApplication extends Application {
         MyApplication.context = getApplicationContext();
 
         createTestRecordDatabase();
+        createNotedDatabase();
+    }
+
+    private void createNotedDatabase() {
+        TestRecordHelper helper = new TestRecordHelper(context);
+        SQLiteDatabase database = helper.getWritableDatabase();
+
+        database.execSQL("CREATE TABLE IF NOT EXISTS note_word(" +
+                "id INTEGER PRIMARY KEY AUTOINCREMENT," +
+                "content TEXT," +
+                "meaning TEXT," +
+                "type TEXT)" );
     }
 
     private void createTestRecordDatabase(){

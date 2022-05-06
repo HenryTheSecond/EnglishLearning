@@ -6,77 +6,45 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 
 public class ErrorDialogFragment extends DialogFragment {
-
-    private View.OnClickListener onClickBtnOne;
-    private View.OnClickListener onCLickBtnTwo;
-
-    private String mValueTitle;
-    private String mValueMessage;
-
-    private TextView mTitle;
-    private TextView mMessage;
-
+    private EditText edtContent;
+    private EditText edtMeaning;
+    private Spinner spinner;
     private View mButtonOne;
     private View mButtonTwo;
+    private TextView mTitle;
 
     private TextView mLabelBtnOne;
     private TextView mLabelBtnTow;
 
-    private String labelBtnOne;
-    private String labelBtnTwo;
-
+    private boolean mIsAdd;
     private boolean mIsDisableBackButton;
-
     private boolean mIsNeedDismissAfterOnclick = false;
 
     public static ErrorDialogFragment newInstance(
-            String valueTitle,
-            String valueMessage,
-            String labelBtnOne,
-            String labelBtnTow,
-            View.OnClickListener onClickBtnOne,
-            View.OnClickListener onClickBtnTwo) {
-        ErrorDialogFragment dialogFragment = new ErrorDialogFragment();
-        dialogFragment.labelBtnTwo = labelBtnTow;
-        dialogFragment.labelBtnOne = labelBtnOne;
-        dialogFragment.mValueTitle = valueTitle;
-        dialogFragment.mValueMessage = valueMessage;
-        dialogFragment.onClickBtnOne = onClickBtnOne;
-        dialogFragment.onCLickBtnTwo = onClickBtnTwo;
-        return dialogFragment;
-    }
-
-    public static ErrorDialogFragment newInstance(
-            String valueTitle,
-            String valueMessage,
-            String labelBtnOne,
-            String labelBtnTwo,
-            View.OnClickListener onClickBtnOne,
-            View.OnClickListener onCLickBtnTwo,
+            boolean mIsAdd,
             boolean mIsDisableBackButton,
             boolean isNeedDismissAfterOnclick) {
-        ErrorDialogFragment errorDialogFragment = ErrorDialogFragment.newInstance(
-                valueTitle,
-                valueMessage,
-                labelBtnOne,
-                labelBtnTwo,
-                onClickBtnOne,
-                onCLickBtnTwo
-        );
-        errorDialogFragment.mIsDisableBackButton = mIsDisableBackButton;
-        errorDialogFragment.mIsNeedDismissAfterOnclick = isNeedDismissAfterOnclick;
-        return errorDialogFragment;
+        ErrorDialogFragment dialogFragment = new ErrorDialogFragment();
+        dialogFragment.mIsAdd = mIsAdd;
+        dialogFragment.mIsDisableBackButton = mIsDisableBackButton;
+        dialogFragment.mIsNeedDismissAfterOnclick = isNeedDismissAfterOnclick;
+        return dialogFragment;
     }
 
     @NonNull
@@ -102,11 +70,13 @@ public class ErrorDialogFragment extends DialogFragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mTitle = view.findViewById(R.id.title);
-        mMessage = view.findViewById(R.id.message);
         mButtonOne = view.findViewById(R.id.btnOne);
         mButtonTwo = view.findViewById(R.id.btnTwo);
         mLabelBtnOne = view.findViewById(R.id.labelBtnOne);
         mLabelBtnTow = view.findViewById(R.id.labelBtnTow);
+        edtContent = view.findViewById(R.id.edt_content);
+        edtMeaning = view.findViewById(R.id.edt_meaning);
+        spinner = view.findViewById(R.id.spinner_type);
     }
 
     @Override
@@ -115,40 +85,37 @@ public class ErrorDialogFragment extends DialogFragment {
         getDialog().getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         getDialog().getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
-        if (TextUtils.isEmpty(mValueTitle)) {
-            mTitle.setVisibility(View.GONE);
+        if(mIsAdd){
+            mTitle.setVisibility(View.VISIBLE);
+            mButtonOne.setVisibility(View.VISIBLE);
+            mTitle.setText("Add new word");
+            mButtonOne.setOnClickListener(v -> {
+                Toast.makeText(v.getContext(), edtContent.getText().toString(), Toast.LENGTH_LONG).show();
+                if (mIsNeedDismissAfterOnclick) {
+                    dismiss();
+                }
+            });
+            mLabelBtnOne.setText("Add");
         } else {
             mTitle.setVisibility(View.VISIBLE);
-            mTitle.setText(mValueTitle);
-        }
-
-        if (TextUtils.isEmpty(mValueMessage)) {
-            mMessage.setVisibility(View.GONE);
-        } else {
-            mMessage.setVisibility(View.VISIBLE);
-            mMessage.setText(mValueMessage);
-        }
-
-        if (onClickBtnOne != null && !TextUtils.isEmpty(labelBtnOne)) {
             mButtonOne.setVisibility(View.VISIBLE);
+            mTitle.setText("Edit word");
             mButtonOne.setOnClickListener(v -> {
-                onClickBtnOne.onClick(v);
+                Toast.makeText(v.getContext(), edtContent.getText().toString(), Toast.LENGTH_LONG).show();
                 if (mIsNeedDismissAfterOnclick) {
                     dismiss();
                 }
             });
-            mLabelBtnOne.setText(labelBtnOne);
+            mLabelBtnOne.setText("Edit");
         }
 
-        if (onCLickBtnTwo != null && !TextUtils.isEmpty(labelBtnTwo)) {
-            mButtonTwo.setVisibility(View.VISIBLE);
-            mButtonTwo.setOnClickListener(v -> {
-                onCLickBtnTwo.onClick(v);
-                if (mIsNeedDismissAfterOnclick) {
-                    dismiss();
-                }
-            });
-            mLabelBtnTow.setText(labelBtnTwo);
-        }
+        mButtonTwo.setVisibility(View.VISIBLE);
+        mButtonTwo.setOnClickListener(v -> {
+            if (mIsNeedDismissAfterOnclick) {
+                dismiss();
+            }
+        });
+        mLabelBtnTow.setText("Cancel");
+
     }
 }
