@@ -92,7 +92,8 @@ public class TestQuestionActivity extends AppCompatActivity {
 
         findAllQuestionButtons();
 
-        getQuestions(1);//Get random question by level
+        int level = getIntent().getIntExtra(PickLevelActivity.LEVEL_KEY, 1);
+        getQuestions(level);//Get random question by level
 
         //Initialize first question
         currentQuestion = 0;

@@ -56,6 +56,7 @@ public class ReviewResult extends AppCompatActivity {
         questionContent = findViewById(R.id.question_content);
         btnQuestionNumber = findViewById(R.id.btn_question_number);
         tableQuestion = findViewById(R.id.table_question);
+        tvPoint = findViewById(R.id.tv_point);
         listBtnQuestion = new ArrayList<>();
 
         btnQuestionNumber.setOnClickListener(new View.OnClickListener() {
@@ -75,10 +76,13 @@ public class ReviewResult extends AppCompatActivity {
         record = RawTestRecord.getRawTestRecordById( (int)id ).parseToTestRecord();
         changeColorBtnQuestion();
 
+
         currentQuestion = 0;
         addFragment(new int[]{1,2,3}, new ListeningReviewFragment(record.getListeningReviews().get(0), listBtnQuestion.get(0), listBtnQuestion.get(1),
                 listBtnQuestion.get(2)));
         btnQuestionNumber.setText("1-3");
+
+        tvPoint.setText(String.valueOf(record.getPoint()));
 
     }
 
