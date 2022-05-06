@@ -7,10 +7,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.app.FragmentManager;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.example.englishlearning.ErrorDialogFragment;
 import com.example.englishlearning.Model.NotedWord;
@@ -26,6 +29,7 @@ public class NoteActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private Button btnAdd;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,6 +39,7 @@ public class NoteActivity extends AppCompatActivity {
         //Binding view
         recyclerView = findViewById(R.id.recycler_item);
         btnAdd = findViewById(R.id.btn_add);
+
 
         List<NotedWord> list = new ArrayList<>();
         list.add( new NotedWord("Go", "Di"));
@@ -53,12 +58,9 @@ public class NoteActivity extends AppCompatActivity {
 //                recyclerView.setAdapter(adapter);
 
                 ErrorDialogFragment.newInstance(
-                       "dasds",
-                        "asdasd",
-                        "sfdf",
-                        "fsdfsdf",
-                        view1 -> {},
-                        view1 -> {}
+                        false,
+                        true,
+                        true
                 ).show(fragmentManager, ErrorDialogFragment.class.getSimpleName());
             }
         });
