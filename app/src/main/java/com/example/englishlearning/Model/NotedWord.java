@@ -5,6 +5,7 @@ import android.widget.Button;
 import java.util.Date;
 
 public class NotedWord {
+    private int id;
     private String content;
     private Type type;
     private String meaning;
@@ -26,6 +27,19 @@ public class NotedWord {
             }
             return super.toString();
         }
+
+        public static Type parseType(String str){
+            switch(str){
+                case "None": return none;
+                case "Noun": return noun;
+                case "Adjective": return adjective;
+                case "Verb": return verb;
+                case "Phrasal Verb": return phrasal_verb;
+                case "Adverb": return adverb;
+                case "Idiom": return idiom;
+            }
+            return none;
+        }
     }
 
     public NotedWord(){
@@ -34,7 +48,8 @@ public class NotedWord {
         this.meaning = "";
     }
 
-    public NotedWord(String content, Type type, String meaning) {
+    public NotedWord(int id, String content, Type type, String meaning) {
+        this.id = id;
         this.content = content;
         this.type = type;
         this.meaning = meaning;

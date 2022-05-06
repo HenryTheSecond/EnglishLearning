@@ -19,7 +19,7 @@ public class MyApplication extends Application {
     }
 
     private void createNotedDatabase() {
-        TestRecordHelper helper = new TestRecordHelper(context);
+        UserDataHelper helper = new UserDataHelper(context);
         SQLiteDatabase database = helper.getWritableDatabase();
 
         database.execSQL("CREATE TABLE IF NOT EXISTS note_word(" +

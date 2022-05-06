@@ -2,6 +2,8 @@ package com.example.englishlearning;
 
 import android.app.Dialog;
 import android.app.DialogFragment;
+import android.content.ContentValues;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -11,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -19,6 +22,9 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
+import com.example.englishlearning.Databases.UserDataHelper;
+import com.example.englishlearning.Model.NotedWord;
 
 
 public class ErrorDialogFragment extends DialogFragment {
@@ -36,11 +42,16 @@ public class ErrorDialogFragment extends DialogFragment {
     private boolean mIsDisableBackButton;
     private boolean mIsNeedDismissAfterOnclick = false;
 
+    private NoteAdapter noteAdapter;
+    private ArrayAdapter<NotedWord.Type> adapter;
+
     public static ErrorDialogFragment newInstance(
+            NoteAdapter noteAdapter,
             boolean mIsAdd,
             boolean mIsDisableBackButton,
             boolean isNeedDismissAfterOnclick) {
         ErrorDialogFragment dialogFragment = new ErrorDialogFragment();
+        dialogFragment.noteAdapter = noteAdapter;
         dialogFragment.mIsAdd = mIsAdd;
         dialogFragment.mIsDisableBackButton = mIsDisableBackButton;
         dialogFragment.mIsNeedDismissAfterOnclick = isNeedDismissAfterOnclick;
@@ -77,6 +88,8 @@ public class ErrorDialogFragment extends DialogFragment {
         edtContent = view.findViewById(R.id.edt_content);
         edtMeaning = view.findViewById(R.id.edt_meaning);
         spinner = view.findViewById(R.id.spinner_type);
+        adapter = new ArrayAdapter<NotedWord.Type>(view.getContext(), android.R.layout.simple_list_item_1, NotedWord.Type.values());
+        spinner.setAdapter(adapter);
     }
 
     @Override
@@ -90,7 +103,18 @@ public class ErrorDialogFragment extends DialogFragment {
             mButtonOne.setVisibility(View.VISIBLE);
             mTitle.setText("Add new word");
             mButtonOne.setOnClickListener(v -> {
-                Toast.makeText(v.getContext(), edtContent.getText().toString(), Toast.LENGTH_LONG).show();
+                UserDataHelper helper = new UserDataHelper(MyApplication.getAppContext());
+                SQLiteDatabase database = helper.getWritableDatabase();
+                ContentValues contentValues = new ContentValues();
+                contentValues.put("content", edtContent.getText().toString());
+                contentValues.put("meaning", edtMeaning.getText().toString());
+                contentValues.put("type", spinner.getSelectedItem().toString());
+                long idInsert = database.insert("note_word", null, contentValues);
+
+                if(noteAdapter != null) {
+                    NotedWord item = new NotedWord((int) idInsert, edtContent.getText().toString(), NotedWord.Type.parseType(spinner.getSelectedItem().toString()), edtMeaning.getText().toString());
+                    noteAdapter.getList().add(item);
+                }
                 if (mIsNeedDismissAfterOnclick) {
                     dismiss();
                 }
@@ -101,6 +125,7 @@ public class ErrorDialogFragment extends DialogFragment {
             mButtonOne.setVisibility(View.VISIBLE);
             mTitle.setText("Edit word");
             mButtonOne.setOnClickListener(v -> {
+
                 Toast.makeText(v.getContext(), edtContent.getText().toString(), Toast.LENGTH_LONG).show();
                 if (mIsNeedDismissAfterOnclick) {
                     dismiss();

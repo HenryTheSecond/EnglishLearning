@@ -32,6 +32,14 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
         return list;
     }
 
+    public List<NotedWord> getList() {
+        return list;
+    }
+
+    public void setList(List<NotedWord> list) {
+        this.list = list;
+    }
+
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {

@@ -6,6 +6,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.FragmentManager;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -15,6 +17,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.example.englishlearning.Databases.UserDataHelper;
 import com.example.englishlearning.ErrorDialogFragment;
 import com.example.englishlearning.Model.NotedWord;
 import com.example.englishlearning.NoteAdapter;
@@ -41,11 +44,12 @@ public class NoteActivity extends AppCompatActivity {
         btnAdd = findViewById(R.id.btn_add);
 
 
-        List<NotedWord> list = new ArrayList<>();
-        list.add( new NotedWord("Go", "Di"));
-        list.add(new NotedWord("Visit", NotedWord.Type.verb, "Ghe tham"));
 
-        adapter = new NoteAdapter(list);
+        String[] data = null;
+
+
+        adapter = new NoteAdapter();
+        getData();
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
@@ -53,16 +57,26 @@ public class NoteActivity extends AppCompatActivity {
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                NotedWord item = new NotedWord();
-//                adapter.getListItem().add(item);
-//                recyclerView.setAdapter(adapter);
-
                 ErrorDialogFragment.newInstance(
-                        false,
+                        null,
+                        true,
                         true,
                         true
                 ).show(fragmentManager, ErrorDialogFragment.class.getSimpleName());
             }
         });
+    }
+
+    private void getData() {
+        UserDataHelper helper = new UserDataHelper(this);
+        SQLiteDatabase database = helper.getReadableDatabase();
+        String selectQuery = "SELECT  * FROM " + "note_word";
+        Cursor cursor = database.rawQuery(selectQuery, null);
+        if (cursor.moveToFirst()) {
+            do {
+                adapter.getList().add( new NotedWord(cursor.getInt(0), cursor.getString(1), NotedWord.Type.parseType(cursor.getString(2)), cursor.getString(3)));
+            } while (cursor.moveToNext());
+        }
+        database.close();
     }
 }
