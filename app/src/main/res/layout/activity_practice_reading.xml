@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activity.PracticeActivity.PracticeReadingActivity">
+
+    <include layout="@layout/back_header"/>
+    <TextView
+        android:id="@+id/tv_countdown_timer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/defalult_margin"
+        android:layout_marginTop="60dp"
+        android:layout_marginEnd="@dimen/defalult_margin"
+        android:layout_marginBottom="@dimen/defalult_margin"
+        android:text="00:00"
+        android:textSize="30dp"
+        android:textStyle="bold" />
+
+    <Button
+        android:id="@+id/btn_question_number"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="55dp"
+        android:backgroundTint="@color/blue"
+        android:text="1"
+        android:textStyle="bold" />
+
+    <FrameLayout
+        android:id="@+id/question_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/table_question"
+        android:layout_below="@id/tv_countdown_timer" />
+
+    <LinearLayout
+        android:id="@+id/layout_arrow"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:layout_alignParentBottom="true">
+
+        <Button
+            android:id="@+id/btn_previous"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/ic_arrow_back" />
+
+        <Button
+            android:id="@+id/btn_next"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/ic_arrow_next" />
+    </LinearLayout>
+
+    <TableLayout
+        android:id="@+id/table_question"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/layout_arrow"
+        android:visibility="gone">
+
+        <TableRow
+            android:layout_gravity="center_horizontal"
+            android:paddingHorizontal="20dp"
+            android:layout_height="5dp">
+            <Button
+                android:id="@+id/q_1"
+                android:text="1"
+                android:layout_marginEnd="@dimen/defalult_margin"
+                android:backgroundTint="@color/uncheck"
+                android:onClick="btnQuestionClick"
+                android:layout_weight="1"/>
+
+            <Button
+                android:id="@+id/q_2"
+
+                android:layout_marginEnd="@dimen/defalult_margin"
+                android:text="2"
+                android:backgroundTint="@color/uncheck"
+                android:onClick="btnQuestionClick"
+                android:layout_weight="1"/>
+
+            <Button
+                android:id="@+id/q_3"
+
+                android:text="3"
+                android:layout_marginEnd="@dimen/defalult_margin"
+                android:backgroundTint="@color/uncheck"
+                android:onClick="btnQuestionClick"
+                android:layout_weight="1"/>
+
+            <Button
+                android:id="@+id/q_4"
+
+                android:text="4"
+                android:layout_marginEnd="@dimen/defalult_margin"
+                android:backgroundTint="@color/uncheck"
+                android:onClick="btnQuestionClick"
+                android:layout_weight="1"/>
+
+            <Button
+                android:id="@+id/q_5"
+
+                android:text="5"
+                android:layout_marginEnd="@dimen/defalult_margin"
+                android:backgroundTint="@color/uncheck"
+                android:onClick="btnQuestionClick"
+                android:layout_weight="1"/>
+        </TableRow>
+
+        <TableRow
+            android:layout_gravity="center_horizontal"
+            android:paddingHorizontal="20dp">
+            <Button
+
+                android:text="6"
+                android:layout_marginEnd="@dimen/defalult_margin"
+                android:backgroundTint="@color/uncheck"
+                android:onClick="btnQuestionClick"
+                android:layout_weight="1"/>
+
+            <Button
+
+                android:layout_marginEnd="@dimen/defalult_margin"
+                android:text="7"
+                android:backgroundTint="@color/uncheck"
+                android:onClick="btnQuestionClick"
+                android:layout_weight="1"/>
+
+            <Button
+
+                android:text="8"
+                android:layout_marginEnd="@dimen/defalult_margin"
+                android:backgroundTint="@color/uncheck"
+                android:onClick="btnQuestionClick"
+                android:layout_weight="1"/>
+
+            <Button
+
+                android:text="9"
+                android:layout_marginEnd="@dimen/defalult_margin"
+                android:backgroundTint="@color/uncheck"
+                android:onClick="btnQuestionClick"
+                android:layout_weight="1"/>
+
+
+        </TableRow>
+
+
+
+    </TableLayout>
+
+    <Button
+        android:id="@+id/btn_submit"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Submit"/>
+
+</RelativeLayout>
