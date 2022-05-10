@@ -10,9 +10,33 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.EnglishLearning">
+        <activity
+            android:name=".Activity.PracticeActivity.PracticeWritingReview"
+            android:exported="false" />
 <!--        <activity-->
-<!--            android:name=".Activity.PickLevelActivity"-->
+<!--            android:name=".Activity.PracticeActivity.PracticeWritingActivity"-->
 <!--            android:exported="false" />-->
+        <activity
+            android:name=".Activity.PracticeActivity.PracticeSingleQuestionReview"
+            android:exported="false" /> <!-- <activity -->
+        <!-- android:name=".Activity.PracticeActivity.PracticeSingleQuestionActivity" -->
+        <!-- android:exported="false" /> -->
+        <activity
+            android:name=".Activity.PracticeActivity.PracticeReadingReview"
+            android:exported="false" /> <!-- <activity -->
+        <!-- android:name=".Activity.PracticeActivity.PracticeReadingActivity" -->
+        <!-- android:exported="false" /> -->
+        <activity
+            android:name=".Activity.PracticeActivity.PracticeFillingBlankReview"
+            android:exported="false" /> <!-- <activity -->
+        <!-- android:name=".Activity.PracticeActivity.PracticeFillingBlankActivity" -->
+        <!-- android:exported="false" /> -->
+        <!-- <activity -->
+        <!-- android:name=".Activity.PracticeActivity.PracticeListeningActivity" -->
+        <!-- android:exported="false" /> -->
+        <!-- <activity -->
+        <!-- android:name=".Activity.PickLevelActivity" -->
+        <!-- android:exported="false" /> -->
         <activity
             android:name=".Activity.ReviewResult"
             android:exported="false" />
@@ -20,13 +44,16 @@
             android:name=".DashBoard"
             android:exported="false" />
         <activity
-         android:name=".Activity.NoteActivity"
-         android:exported="false" />
+            android:name=".Activity.NoteActivity"
+            android:exported="false" />
         <activity
-         android:name=".Activity.TestQuestionActivity"
-         android:exported="false" />
+            android:name=".Activity.TestQuestionActivity"
+            android:exported="false" />
         <activity
-            android:name=".Activity.PickLevelActivity"
+            android:name=".Activity.PracticeActivity.PracticeListeningReview"
+            android:exported="false" />
+        <activity
+            android:name=".Activity.PracticeActivity.PracticeWritingActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -128,8 +128,11 @@ public class ListeningFragment extends Fragment {
                 player.seekTo(seekBar.getProgress());
 
                 //When the player finishes, we have to play it again
-                if(!player.isPlaying())
+                if(!player.isPlaying()){
                     player.start();
+                    btnPlayAudio.setBackgroundResource(R.drawable.ic_pause_audio);
+                    handler.postDelayed(runnable, 0);
+                }
             }
         });
 

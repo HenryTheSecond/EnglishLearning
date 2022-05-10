@@ -16,6 +16,45 @@ public class MyApplication extends Application {
 
         createTestRecordDatabase();
         createNotedDatabase();
+        createPraticeRecordDatabase();
+    }
+
+    private void createPraticeRecordDatabase(){
+        UserDataHelper helper = new UserDataHelper(context);
+        SQLiteDatabase database = helper.getWritableDatabase();
+
+        database.execSQL("CREATE TABLE IF NOT EXISTS practice_listening(" +
+                "id INTEGER PRIMARY KEY AUTOINCREMENT," +
+                "date_time TEXT," +
+                "correct int," +
+                "id_listenings TEXT," +
+                "listening_answer TEXT)" );
+
+        database.execSQL("CREATE TABLE IF NOT EXISTS practice_filling_blank(" +
+                "id INTEGER PRIMARY KEY AUTOINCREMENT," +
+                "date_time TEXT," +
+                "correct int," +
+                "id_filling_blanks TEXT," +
+                "filling_blank_answer TEXT)" );
+
+        database.execSQL("CREATE TABLE IF NOT EXISTS practice_reading(" +
+                "id INTEGER PRIMARY KEY AUTOINCREMENT," +
+                "date_time TEXT," +
+                "correct int," +
+                "id_readings TEXT," +
+                "reading_answer TEXT)" );
+
+        database.execSQL("CREATE TABLE IF NOT EXISTS practice_single_question(" +
+                "id INTEGER PRIMARY KEY AUTOINCREMENT," +
+                "date_time TEXT," +
+                "correct int," +
+                "single_answer TEXT)" );
+
+        database.execSQL("CREATE TABLE IF NOT EXISTS practice_writing(" +
+                "id INTEGER PRIMARY KEY AUTOINCREMENT," +
+                "date_time TEXT," +
+                "correct int," +
+                "writing_answer TEXT)" );
     }
 
     private void createNotedDatabase() {

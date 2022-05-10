@@ -4,18 +4,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Activity.TestQuestionActivity">
+    tools:context=".Activity.PracticeActivity.PracticeReadingReview">
 
     <include layout="@layout/back_header"/>
     <TextView
-        android:id="@+id/tv_countdown_timer"
+        android:id="@+id/tv_point"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/defalult_margin"
         android:layout_marginTop="60dp"
         android:layout_marginEnd="@dimen/defalult_margin"
         android:layout_marginBottom="@dimen/defalult_margin"
-        android:text="20:00"
+        android:text="Point"
         android:textSize="30dp"
         android:textStyle="bold" />
 
@@ -34,7 +34,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@id/table_question"
-        android:layout_below="@id/tv_countdown_timer" />
+        android:layout_below="@id/tv_point" />
 
     <LinearLayout
         android:id="@+id/layout_arrow"
@@ -147,110 +147,10 @@
                 android:onClick="btnQuestionClick"
                 android:layout_weight="1"/>
 
-            <Button
 
-                android:text="10"
-                android:layout_marginEnd="@dimen/defalult_margin"
-                android:backgroundTint="@color/uncheck"
-                android:onClick="btnQuestionClick"
-                android:layout_weight="1"/>
         </TableRow>
 
-        <TableRow
-            android:layout_gravity="center_horizontal"
-            android:paddingHorizontal="20dp">
-            <Button
 
-                android:text="11"
-                android:layout_marginEnd="@dimen/defalult_margin"
-                android:backgroundTint="@color/uncheck"
-                android:onClick="btnQuestionClick"
-                android:layout_weight="1"/>
-
-            <Button
-
-                android:layout_marginEnd="@dimen/defalult_margin"
-                android:text="12"
-                android:backgroundTint="@color/uncheck"
-                android:onClick="btnQuestionClick"
-                android:layout_weight="1"/>
-
-            <Button
-
-                android:text="13"
-                android:layout_marginEnd="@dimen/defalult_margin"
-                android:backgroundTint="@color/uncheck"
-                android:onClick="btnQuestionClick"
-                android:layout_weight="1"/>
-
-            <Button
-
-                android:text="14"
-                android:layout_marginEnd="@dimen/defalult_margin"
-                android:backgroundTint="@color/uncheck"
-                android:onClick="btnQuestionClick"
-                android:layout_weight="1"/>
-
-            <Button
-
-                android:text="15"
-                android:layout_marginEnd="@dimen/defalult_margin"
-                android:backgroundTint="@color/uncheck"
-                android:onClick="btnQuestionClick"
-                android:layout_weight="1"/>
-        </TableRow>
-
-        <TableRow
-            android:layout_gravity="center_horizontal"
-            android:paddingHorizontal="20dp">
-            <Button
-
-                android:text="16"
-                android:layout_marginEnd="@dimen/defalult_margin"
-                android:backgroundTint="@color/uncheck"
-                android:onClick="btnQuestionClick"
-                android:layout_weight="1"/>
-
-            <Button
-
-                android:layout_marginEnd="@dimen/defalult_margin"
-                android:text="17"
-                android:backgroundTint="@color/uncheck"
-                android:onClick="btnQuestionClick"
-                android:layout_weight="1"/>
-
-            <Button
-
-                android:text="18"
-                android:layout_marginEnd="@dimen/defalult_margin"
-                android:backgroundTint="@color/uncheck"
-                android:onClick="btnQuestionClick"
-                android:layout_weight="1"/>
-
-            <Button
-
-                android:text="19"
-                android:layout_marginEnd="@dimen/defalult_margin"
-                android:backgroundTint="@color/uncheck"
-                android:onClick="btnQuestionClick"
-                android:layout_weight="1"/>
-
-            <Button
-
-                android:text="20"
-                android:layout_marginEnd="@dimen/defalult_margin"
-                android:backgroundTint="@color/uncheck"
-                android:onClick="btnQuestionClick"
-                android:layout_weight="1"/>
-        </TableRow>
     </TableLayout>
-
-    <Button
-        android:id="@+id/btn_submit"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Submit"/>
 
 </RelativeLayout>
