@@ -48,7 +48,7 @@ public class NoteActivity extends AppCompatActivity {
         String[] data = null;
 
 
-        adapter = new NoteAdapter();
+        adapter = new NoteAdapter(this);
         getData();
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -58,6 +58,7 @@ public class NoteActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 ErrorDialogFragment.newInstance(
+                        -1,
                         null,
                         true,
                         true,
@@ -74,7 +75,7 @@ public class NoteActivity extends AppCompatActivity {
         Cursor cursor = database.rawQuery(selectQuery, null);
         if (cursor.moveToFirst()) {
             do {
-                adapter.getList().add( new NotedWord(cursor.getInt(0), cursor.getString(1), NotedWord.Type.parseType(cursor.getString(2)), cursor.getString(3)));
+                adapter.getList().add( new NotedWord(cursor.getInt(0), cursor.getString(1), cursor.getString(2), NotedWord.Type.parseType(cursor.getString(3))));
             } while (cursor.moveToNext());
         }
         database.close();

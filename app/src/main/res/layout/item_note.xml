@@ -32,14 +32,35 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/tv_content"
         android:layout_marginStart="@dimen/defalult_margin"
+        android:maxWidth="190dp"
         android:maxLines="5"
-        android:text="mean"
+        android:text="meaning"
         android:visibility="gone" />
+
+    <Button
+        android:id="@+id/btn_edit_word"
+        android:layout_width="wrap_content"
+        android:layout_height="35dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="40dp"
+        android:layout_toEndOf="@id/tv_meaning"
+        android:text="Edit"
+        android:visibility="gone" />
+
+    <Button
+        android:id="@+id/btn_delete"
+        android:layout_width="wrap_content"
+        android:layout_height="35dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="40dp"
+        android:layout_toEndOf="@id/btn_edit_word"
+        android:visibility="gone"
+        android:text="Delete" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_below="@id/tv_meaning"
-        android:background="@color/blue">
-    </LinearLayout>
+        android:background="@color/blue"
+        android:layout_marginTop="7dp"></LinearLayout>
 </RelativeLayout>
