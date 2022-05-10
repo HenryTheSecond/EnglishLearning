@@ -1,15 +1,22 @@
 package com.example.englishlearning;
 
+import android.app.Activity;
+import android.app.FragmentManager;
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
+
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.englishlearning.Model.NotedWord;
@@ -19,12 +26,10 @@ import java.util.List;
 
 public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
     private List<NotedWord> list;
+    private Context context;
 
-    public NoteAdapter(List<NotedWord> list) {
-        this.list = list;
-    }
-
-    public NoteAdapter(){
+    public NoteAdapter(Context context){
+        this.context = context;
         list = new ArrayList<>();
     }
 
@@ -51,10 +56,23 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         NotedWord item = list.get(position);
 
+        holder.setId(item.getId());
         holder.getTvContent().setText(item.getContent());
         holder.getTvMeaning().setText(item.getMeaning());
         holder.getTvType().setText(item.getType().toString());
-
+        holder.btnEditWord.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentManager fragmentManager = ((Activity)context).getFragmentManager();
+                ErrorDialogFragment.newInstance(
+                        holder.id,
+                        null,
+                        false,
+                        true,
+                        true
+                ).show(fragmentManager, ErrorDialogFragment.class.getSimpleName());
+            }
+        });
 //        int typePosition = holder.getAdapter().getPosition(item.getType());
 //        holder.getSpinnerType().setSelection(typePosition);
     }
@@ -66,27 +84,36 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
 
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
+        private int id;
         private TextView tvContent;
         private TextView tvMeaning;
         private TextView tvType;
+        private Button btnEditWord;
+        private Button btnDelete;
         private ArrayAdapter<NotedWord.Type> adapter;
 
         public ViewHolder(View view) {
             super(view);
-
             tvContent = view.findViewById(R.id.tv_content);
             tvMeaning = view.findViewById(R.id.tv_meaning);
             tvType = view.findViewById(R.id.tv_type);
+            btnEditWord =view.findViewById(R.id.btn_edit_word);
+            btnDelete = view.findViewById(R.id.btn_delete);
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     if(tvMeaning.getVisibility() == View.GONE){
                         tvMeaning.setVisibility(View.VISIBLE);
+                        btnEditWord.setVisibility(View.VISIBLE);
+                        btnDelete.setVisibility(View.VISIBLE);
                     } else {
                         tvMeaning.setVisibility(View.GONE);
+                        btnEditWord.setVisibility(View.GONE);
+                        btnDelete.setVisibility(View.GONE);
                     }
                 }
             });
+
 //            adapter = new ArrayAdapter<NotedWord.Type>(view.getContext(), android.R.layout.simple_list_item_1, NotedWord.Type.values());
 //            spinnerType.setAdapter(adapter);
         }
@@ -105,6 +132,14 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
 
         public ArrayAdapter<NotedWord.Type> getAdapter() {
             return adapter;
+        }
+
+        public int getId() {
+            return id;
+        }
+
+        public void setId(int id) {
+            this.id = id;
         }
     }
 }

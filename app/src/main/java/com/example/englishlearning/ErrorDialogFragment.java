@@ -3,6 +3,7 @@ package com.example.englishlearning;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.ContentValues;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -14,7 +15,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -23,6 +23,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+
+import com.example.englishlearning.Activity.NoteActivity;
 import com.example.englishlearning.Databases.UserDataHelper;
 import com.example.englishlearning.Model.NotedWord;
 
@@ -38,6 +40,7 @@ public class ErrorDialogFragment extends DialogFragment {
     private TextView mLabelBtnOne;
     private TextView mLabelBtnTow;
 
+    private int id;
     private boolean mIsAdd;
     private boolean mIsDisableBackButton;
     private boolean mIsNeedDismissAfterOnclick = false;
@@ -46,11 +49,13 @@ public class ErrorDialogFragment extends DialogFragment {
     private ArrayAdapter<NotedWord.Type> adapter;
 
     public static ErrorDialogFragment newInstance(
+            int id,
             NoteAdapter noteAdapter,
             boolean mIsAdd,
             boolean mIsDisableBackButton,
             boolean isNeedDismissAfterOnclick) {
         ErrorDialogFragment dialogFragment = new ErrorDialogFragment();
+        dialogFragment.id = id;
         dialogFragment.noteAdapter = noteAdapter;
         dialogFragment.mIsAdd = mIsAdd;
         dialogFragment.mIsDisableBackButton = mIsDisableBackButton;
@@ -98,7 +103,7 @@ public class ErrorDialogFragment extends DialogFragment {
         getDialog().getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         getDialog().getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
-        if(mIsAdd){
+        if(mIsAdd && id == -1){
             mTitle.setVisibility(View.VISIBLE);
             mButtonOne.setVisibility(View.VISIBLE);
             mTitle.setText("Add new word");
@@ -112,7 +117,7 @@ public class ErrorDialogFragment extends DialogFragment {
                 long idInsert = database.insert("note_word", null, contentValues);
 
                 if(noteAdapter != null) {
-                    NotedWord item = new NotedWord((int) idInsert, edtContent.getText().toString(), NotedWord.Type.parseType(spinner.getSelectedItem().toString()), edtMeaning.getText().toString());
+                    NotedWord item = new NotedWord((int) idInsert, edtContent.getText().toString(), edtMeaning.getText().toString(), NotedWord.Type.parseType(spinner.getSelectedItem().toString()));
                     noteAdapter.getList().add(item);
                 }
                 if (mIsNeedDismissAfterOnclick) {
@@ -125,8 +130,18 @@ public class ErrorDialogFragment extends DialogFragment {
             mButtonOne.setVisibility(View.VISIBLE);
             mTitle.setText("Edit word");
             mButtonOne.setOnClickListener(v -> {
-
-                Toast.makeText(v.getContext(), edtContent.getText().toString(), Toast.LENGTH_LONG).show();
+                UserDataHelper helper = new UserDataHelper(MyApplication.getAppContext());
+                SQLiteDatabase database = helper.getWritableDatabase();
+                ContentValues contentValues = new ContentValues();
+                contentValues.put("content", edtContent.getText().toString());
+                contentValues.put("meaning", edtMeaning.getText().toString());
+                contentValues.put("type", spinner.getSelectedItem().toString());
+                // The columns for the WHERE clause
+                String selection = ("id" + " = ?");
+                // The values for the WHERE clause
+                String[] selectionArgs = {String.valueOf(id)};
+                id = database.update("note_word", contentValues, selection, selectionArgs);
+                Toast.makeText(v.getContext(), String.valueOf(id), Toast.LENGTH_LONG).show();
                 if (mIsNeedDismissAfterOnclick) {
                     dismiss();
                 }

@@ -48,7 +48,7 @@ public class NotedWord {
         this.meaning = "";
     }
 
-    public NotedWord(int id, String content, Type type, String meaning) {
+    public NotedWord(int id, String content, String meaning, Type type) {
         this.id = id;
         this.content = content;
         this.type = type;
@@ -86,4 +86,11 @@ public class NotedWord {
         this.meaning = meaning;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 }
