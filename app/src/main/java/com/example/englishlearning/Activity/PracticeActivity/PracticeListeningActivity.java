@@ -1,5 +1,6 @@
 package com.example.englishlearning.Activity.PracticeActivity;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -23,6 +24,7 @@ import com.example.englishlearning.Activity.TestQuestionActivity;
 import com.example.englishlearning.Databases.UserDataHelper;
 import com.example.englishlearning.Model.FillingBlank;
 import com.example.englishlearning.Model.Listening;
+import com.example.englishlearning.Model.PracticeModel.PracticeListening;
 import com.example.englishlearning.Model.Reading;
 import com.example.englishlearning.Model.SingleQuestion;
 import com.example.englishlearning.Model.Writing;
@@ -33,6 +35,12 @@ import com.example.englishlearning.QuestionFragment.SingleQuestionFragment;
 import com.example.englishlearning.QuestionFragment.WritingFragment;
 import com.example.englishlearning.R;
 import com.example.englishlearning.Utils;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,6 +57,9 @@ public class PracticeListeningActivity extends AppCompatActivity {
     private int currentQuestion;
 
     private List<Listening> listenings;
+
+    private long id;
+    DatabaseReference reference;
 
 
     @Override
@@ -96,6 +107,22 @@ public class PracticeListeningActivity extends AppCompatActivity {
                     tableQuestion.setVisibility(View.GONE);
             }
         });
+
+        if(Utils.isLoggedIn(this)){
+            reference = FirebaseDatabase.getInstance().getReference("practice_listening").child(Utils.getLogin(this));
+            reference.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    for(DataSnapshot data: snapshot.getChildren()){
+                        if(Long.parseLong(data.getKey())>id)
+                            id = Long.parseLong(data.getKey());
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) { }
+            });
+        }
 
         findAllQuestionButtons();
 
@@ -167,6 +194,33 @@ public class PracticeListeningActivity extends AppCompatActivity {
             listeningAnswer += "/";
         }
 
+        Intent intent = new Intent(PracticeListeningActivity.this, PracticeListeningReview.class);
+        if(Utils.isLoggedIn(this)){
+            saveToFirebase(date, correct, idListenings, listeningAnswer);
+            Gson gson = new Gson();
+            PracticeListening record = new PracticeListening((int)id, date, correct, idListenings, listeningAnswer);
+            intent.putExtra("record", gson.toJson(record));
+        }else{
+            long idInsert = saveToSqlite(date, correct, idListenings, listeningAnswer);
+            intent.putExtra(PracticeListeningReview.ID_TEST_RECORD_KEY, idInsert);
+        }
+
+
+        startActivity(intent);
+
+        finish();
+    }
+
+    private void saveToFirebase(String date, int correct, String idListenings, String listeningAnswer){
+        id++;
+        DatabaseReference node = reference.child( String.valueOf( id ) );
+        node.child("date_time").setValue(date);
+        node.child("correct").setValue(correct);
+        node.child("id_listenings").setValue(idListenings);
+        node.child("listening_answer").setValue(listeningAnswer);
+    }
+
+    private long saveToSqlite(String date, int correct, String idListenings, String listeningAnswer){
         UserDataHelper helper = new UserDataHelper(this);
         SQLiteDatabase database = helper.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
@@ -174,13 +228,7 @@ public class PracticeListeningActivity extends AppCompatActivity {
         contentValues.put("correct", correct);
         contentValues.put("id_listenings", idListenings);
         contentValues.put("listening_answer", listeningAnswer);
-        long idInsert = database.insert("practice_listening", null, contentValues);
-
-        Intent intent = new Intent(PracticeListeningActivity.this, PracticeListeningReview.class);
-        intent.putExtra(PracticeListeningReview.ID_TEST_RECORD_KEY, idInsert);
-        startActivity(intent);
-
-        finish();
+        return database.insert("practice_listening", null, contentValues);
     }
 
     private void addFragment(int[] group,   Fragment fragment){

@@ -21,6 +21,8 @@ import com.example.englishlearning.QuestionFragment.FillingBlankParagraphFragmen
 import com.example.englishlearning.R;
 import com.example.englishlearning.ReviewFragment.FillingBlankReviewFragment;
 import com.example.englishlearning.ReviewFragment.ListeningReviewFragment;
+import com.example.englishlearning.Utils;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -81,8 +83,16 @@ public class PracticeFillingBlankReview extends AppCompatActivity {
 
         findAllQuestionButtons();
 
-        long id = this.getIntent().getExtras().getLong(ID_TEST_RECORD_KEY);
-        rawReview = PracticeFillingBlank.getPracticeFillingBlankById((int)id);
+
+        if(Utils.isLoggedIn(this)){
+            Gson gson = new Gson();
+            rawReview = gson.fromJson( getIntent().getStringExtra("record"), PracticeFillingBlank.class );
+        }else{
+            long id = this.getIntent().getExtras().getLong(ID_TEST_RECORD_KEY);
+            rawReview = PracticeFillingBlank.getPracticeFillingBlankById((int)id);
+        }
+
+
         fillingBlankReviews = rawReview.getReviews();
         changeColorBtnQuestion();
 

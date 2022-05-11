@@ -1,5 +1,6 @@
 package com.example.englishlearning.Activity.PracticeActivity;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -21,9 +22,16 @@ import android.widget.TableLayout;
 import com.example.englishlearning.Activity.PickLevelActivity;
 import com.example.englishlearning.Databases.UserDataHelper;
 import com.example.englishlearning.Model.FillingBlank;
+import com.example.englishlearning.Model.PracticeModel.PracticeFillingBlank;
 import com.example.englishlearning.QuestionFragment.FillingBlankParagraphFragment;
 import com.example.englishlearning.R;
 import com.example.englishlearning.Utils;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,6 +49,9 @@ public class PracticeFillingBlankActivity extends AppCompatActivity {
     private int currentQuestion;
 
     private List<FillingBlank> fillingBlanks;
+
+    private long id = 0;
+    DatabaseReference reference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,6 +98,22 @@ public class PracticeFillingBlankActivity extends AppCompatActivity {
                     tableQuestion.setVisibility(View.GONE);
             }
         });
+
+        if(Utils.isLoggedIn(this)){
+            reference = FirebaseDatabase.getInstance().getReference("practice_filling_blank").child(Utils.getLogin(this));
+            reference.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    for(DataSnapshot data: snapshot.getChildren()){
+                        if(Long.parseLong(data.getKey())>id)
+                            id = Long.parseLong(data.getKey());
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) { }
+            });
+        }
 
         findAllQuestionButtons();
 
@@ -158,6 +185,33 @@ public class PracticeFillingBlankActivity extends AppCompatActivity {
             fillingBlankAnswer += "/";
         }
 
+
+        Intent intent = new Intent(PracticeFillingBlankActivity.this, PracticeFillingBlankReview.class);
+        if(Utils.isLoggedIn(this)){
+            saveToFirebase(date, correct, idFillingBlanks, fillingBlankAnswer);
+            Gson gson = new Gson();
+            PracticeFillingBlank record = new PracticeFillingBlank((int)id, date, correct, idFillingBlanks, fillingBlankAnswer);
+            intent.putExtra("record", gson.toJson(record));
+        }else{
+            long idInsert = saveToSqlite(date, correct, idFillingBlanks, fillingBlankAnswer);
+            intent.putExtra(PracticeFillingBlankReview.ID_TEST_RECORD_KEY, idInsert);
+        }
+
+        startActivity(intent);
+
+        finish();
+    }
+
+    private void saveToFirebase(String date, int correct, String idFillingBlanks, String fillingBlankAnswer){
+        id++;
+        DatabaseReference node = reference.child( String.valueOf( id ) );
+        node.child("date_time").setValue(date);
+        node.child("correct").setValue(correct);
+        node.child("id_filling_blanks").setValue(idFillingBlanks);
+        node.child("filling_blank_answer").setValue(fillingBlankAnswer);
+    }
+
+    private long saveToSqlite(String date, int correct, String idFillingBlanks, String fillingBlankAnswer){
         UserDataHelper helper = new UserDataHelper(this);
         SQLiteDatabase database = helper.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
@@ -166,12 +220,7 @@ public class PracticeFillingBlankActivity extends AppCompatActivity {
         contentValues.put("id_filling_blanks", idFillingBlanks);
         contentValues.put("filling_blank_answer", fillingBlankAnswer);
         long idInsert = database.insert("practice_filling_blank", null, contentValues);
-
-        Intent intent = new Intent(PracticeFillingBlankActivity.this, PracticeFillingBlankReview.class);
-        intent.putExtra(PracticeFillingBlankReview.ID_TEST_RECORD_KEY, idInsert);
-        startActivity(intent);
-
-        finish();
+        return idInsert;
     }
 
     private void addFragment(int[] group,   Fragment fragment){

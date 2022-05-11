@@ -266,4 +266,5 @@ public class Utils {
         return !getLogin(context).equals("");
     }
 
+
 }

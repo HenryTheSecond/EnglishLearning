@@ -49,19 +49,19 @@
             android:name=".Activity.ReviewResult"
             android:exported="false" />
         <activity
-            android:name=".DashBoard"
+            android:name=".Activity.DashBoard"
             android:exported="false" />
         <activity
             android:name=".Activity.NoteActivity"
             android:exported="false" />
-        <activity
-            android:name=".Activity.TestQuestionActivity"
-            android:exported="false" />
+<!--        <activity-->
+<!--            android:name=".Activity.TestQuestionActivity"-->
+<!--            android:exported="false" />-->
         <activity
             android:name=".Activity.PracticeActivity.PracticeListeningReview"
             android:exported="false" />
         <activity
-            android:name=".Activity.LoginActivity"
+            android:name=".Activity.PracticeActivity.PracticeListeningActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

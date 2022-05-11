@@ -31,12 +31,15 @@ import com.example.englishlearning.ReviewFragment.ListeningReviewFragment;
 import com.example.englishlearning.ReviewFragment.ReadingReviewFragment;
 import com.example.englishlearning.ReviewFragment.SingleQuestionReviewFragment;
 import com.example.englishlearning.ReviewFragment.WritingReviewFragment;
+import com.example.englishlearning.Utils;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class ReviewResult extends AppCompatActivity {
     public static final String ID_TEST_RECORD_KEY = "id_test_record_key";
+    public static final String RECORD_KEY = "record";
     private TestRecord record;
     private TextView tvPoint;
     private Button btnQuestionNumber;
@@ -92,7 +95,14 @@ public class ReviewResult extends AppCompatActivity {
         findAllQuestionButtons();
 
         long id = this.getIntent().getExtras().getLong(ID_TEST_RECORD_KEY);
-        record = RawTestRecord.getRawTestRecordById( (int)id ).parseToTestRecord();
+
+        if(Utils.isLoggedIn(this)){
+            Gson gson = new Gson();
+            RawTestRecord rawRecord = gson.fromJson( getIntent().getStringExtra(RECORD_KEY), RawTestRecord.class );
+            record = rawRecord.parseToTestRecord();
+        }
+        else
+            record = RawTestRecord.getRawTestRecordById( (int)id ).parseToTestRecord();
         changeColorBtnQuestion();
 
 
