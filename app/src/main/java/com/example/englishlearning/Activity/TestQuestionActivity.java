@@ -1,5 +1,7 @@
 package com.example.englishlearning.Activity;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -24,6 +26,7 @@ import com.example.englishlearning.Databases.UserDataHelper;
 import com.example.englishlearning.Model.FillingBlank;
 import com.example.englishlearning.Model.Listening;
 import com.example.englishlearning.Model.Reading;
+import com.example.englishlearning.Model.ReviewModel.RawTestRecord;
 import com.example.englishlearning.Model.SingleQuestion;
 import com.example.englishlearning.Model.Writing;
 import com.example.englishlearning.QuestionFragment.FillingBlankParagraphFragment;
@@ -33,6 +36,13 @@ import com.example.englishlearning.QuestionFragment.SingleQuestionFragment;
 import com.example.englishlearning.QuestionFragment.WritingFragment;
 import com.example.englishlearning.R;
 import com.example.englishlearning.Utils;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,7 +67,8 @@ public class TestQuestionActivity extends AppCompatActivity {
     List<SingleQuestion> singleQuestions;
     List<Writing> writings;
 
-
+    long id = 0;
+    DatabaseReference reference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,6 +117,25 @@ public class TestQuestionActivity extends AppCompatActivity {
                     tableQuestion.setVisibility(View.GONE);
             }
         });
+
+        if(Utils.isLoggedIn(this)){
+            reference = FirebaseDatabase.getInstance().getReference("test_record").child(Utils.getLogin(this));
+            reference.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    for(DataSnapshot data: snapshot.getChildren()){
+                        if(Long.parseLong(data.getKey())>id)
+                            id = Long.parseLong(data.getKey());
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+        }
+
 
 
         findAllQuestionButtons();
@@ -239,6 +269,51 @@ public class TestQuestionActivity extends AppCompatActivity {
             questionNumber++;
         }
 
+        long idInsert;
+        RawTestRecord record = null;
+        Intent intent = new Intent(TestQuestionActivity.this, ReviewResult.class);
+
+        if(Utils.isLoggedIn(this)){
+            idInsert = saveToFirebase(date, point, idListenings, listeningAnswer, idFillingBlank, fillingBlankAnswer,
+                    idReading, readingAnswer, singleQuestionAnswer, writingAnswer);
+            record = new RawTestRecord((int)idInsert, date, point, idListenings, listeningAnswer, idFillingBlank, fillingBlankAnswer,
+                                        idReading, readingAnswer, singleQuestionAnswer, writingAnswer);
+            Gson gson = new Gson();
+            intent.putExtra(ReviewResult.RECORD_KEY, gson.toJson(record));
+        }
+        else{
+            idInsert = saveToSqlite(date, point, idListenings, listeningAnswer, idFillingBlank, fillingBlankAnswer,
+                    idReading, readingAnswer, singleQuestionAnswer, writingAnswer);
+            intent.putExtra(ReviewResult.ID_TEST_RECORD_KEY, idInsert);
+        }
+
+        startActivity(intent);
+
+        finish();
+
+    }
+
+    private long saveToFirebase(String date, double point, String idListenings, String listeningAnswer, String idFillingBlank, String fillingBlankAnswer, String idReading, String readingAnswer, String singleQuestionAnswer, String writingAnswer) {
+        id++;
+        DatabaseReference node = reference.child( String.valueOf( id ) );
+        node.child("date_time").setValue(date);
+        node.child("point").setValue(point);
+        node.child("id_listenings").setValue(idListenings);
+        node.child("listening_answer").setValue(listeningAnswer);
+        node.child("id_filling_blank").setValue(idFillingBlank);
+        node.child("filling_blank_answer").setValue(fillingBlankAnswer);
+        node.child("id_reading").setValue(idReading);
+        node.child("reading_answer").setValue(readingAnswer);
+        node.child("reading_answer").setValue(readingAnswer);
+        node.child("single_question").setValue(singleQuestionAnswer);
+        node.child("writing").setValue(writingAnswer);
+
+        return id;
+    }
+
+
+    private long saveToSqlite(String date, double point, String idListenings, String listeningAnswer,String idFillingBlank, String fillingBlankAnswer,
+                              String idReading, String readingAnswer, String singleQuestionAnswer, String writingAnswer){
         UserDataHelper helper = new UserDataHelper(this);
         SQLiteDatabase database = helper.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
@@ -253,14 +328,9 @@ public class TestQuestionActivity extends AppCompatActivity {
         contentValues.put("reading_answer", readingAnswer);
         contentValues.put("single_question", singleQuestionAnswer);
         contentValues.put("writing", writingAnswer);
-        long idInsert = database.insert("test_record", null, contentValues);
-
-        Intent intent = new Intent(TestQuestionActivity.this, ReviewResult.class);
-        intent.putExtra(ReviewResult.ID_TEST_RECORD_KEY, idInsert);
-        startActivity(intent);
-
-        finish();
+        return database.insert("test_record", null, contentValues);
     }
+
 
     private void startTimer(){
         countDownTimer = new CountDownTimer(1000*60*30, 1000) {

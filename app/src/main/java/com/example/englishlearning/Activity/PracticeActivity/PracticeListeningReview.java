@@ -14,6 +14,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.example.englishlearning.Model.PracticeModel.PracticeFillingBlank;
 import com.example.englishlearning.Model.PracticeModel.PracticeListening;
 import com.example.englishlearning.Model.ReviewModel.FillingBlankReview;
 import com.example.englishlearning.Model.ReviewModel.ListeningReview;
@@ -24,6 +25,8 @@ import com.example.englishlearning.Model.ReviewModel.WritingReview;
 import com.example.englishlearning.QuestionFragment.ListeningFragment;
 import com.example.englishlearning.R;
 import com.example.englishlearning.ReviewFragment.ListeningReviewFragment;
+import com.example.englishlearning.Utils;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -84,8 +87,15 @@ public class PracticeListeningReview extends AppCompatActivity {
 
         findAllQuestionButtons();
 
-        long id = this.getIntent().getExtras().getLong(ID_TEST_RECORD_KEY);
-        rawReview = PracticeListening.getPracticeListeningById((int)id);
+        if(Utils.isLoggedIn(this)){
+            Gson gson = new Gson();
+            rawReview = gson.fromJson( getIntent().getStringExtra("record"), PracticeListening.class );
+        }else{
+            long id = this.getIntent().getExtras().getLong(ID_TEST_RECORD_KEY);
+            rawReview = PracticeListening.getPracticeListeningById((int)id);
+        }
+
+
         listeningReviews = rawReview.getReviews();
         changeColorBtnQuestion();
 

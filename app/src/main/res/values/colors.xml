@@ -15,4 +15,6 @@
     <color name="correct_answer">#00FF00</color>
     <color name="incorrect_answer">#FF0000</color>
     <color name="chosen_answer">#354143</color>
+
+    <color name="log_in_with_guest">#FF0055</color>
 </resources>

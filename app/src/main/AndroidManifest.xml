@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.englishlearning">
+    
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
         android:name=".MyApplication"
@@ -10,12 +13,17 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.EnglishLearning">
+<!--        <activity-->
+<!--            android:name=".RegisterActivity"-->
+<!--            android:exported="false" />-->
+<!--        <activity-->
+<!--            android:name=".Activity.LoginActivity"-->
+<!--            android:exported="false" />-->
         <activity
             android:name=".Activity.PracticeActivity.PracticeWritingReview"
-            android:exported="false" />
-<!--        <activity-->
-<!--            android:name=".Activity.PracticeActivity.PracticeWritingActivity"-->
-<!--            android:exported="false" />-->
+            android:exported="false" /> <!-- <activity -->
+        <!-- android:name=".Activity.PracticeActivity.PracticeWritingActivity" -->
+        <!-- android:exported="false" /> -->
         <activity
             android:name=".Activity.PracticeActivity.PracticeSingleQuestionReview"
             android:exported="false" /> <!-- <activity -->
@@ -41,19 +49,19 @@
             android:name=".Activity.ReviewResult"
             android:exported="false" />
         <activity
-            android:name=".DashBoard"
+            android:name=".Activity.DashBoard"
             android:exported="false" />
         <activity
             android:name=".Activity.NoteActivity"
             android:exported="false" />
-        <activity
-            android:name=".Activity.TestQuestionActivity"
-            android:exported="false" />
+<!--        <activity-->
+<!--            android:name=".Activity.TestQuestionActivity"-->
+<!--            android:exported="false" />-->
         <activity
             android:name=".Activity.PracticeActivity.PracticeListeningReview"
             android:exported="false" />
         <activity
-            android:name=".Activity.PracticeActivity.PracticeWritingActivity"
+            android:name=".Activity.PracticeActivity.PracticeListeningActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

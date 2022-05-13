@@ -6,8 +6,10 @@ import android.content.res.AssetFileDescriptor;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.media.MediaPlayer;
+import android.net.ConnectivityManager;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.example.englishlearning.Databases.EnglishHelper;
 import com.example.englishlearning.Model.FillingBlank;
@@ -18,6 +20,10 @@ import com.example.englishlearning.Model.SingleQuestion;
 import com.example.englishlearning.Model.Writing;
 
 import java.io.IOException;
+import java.math.BigInteger;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -26,7 +32,9 @@ import java.util.Map;
 
 public class Utils {
     private static final String FILE_NAME_ANSWER_STORE_TEMP = "AnswerStoreTemp";
+    private static final String FILE_NAME_SAVE_LOG_IN = "LoginSave";
     private static final String QUESTION_KEY = "question";
+    private static final String USERNAME_KEY = "username";
 
 
     public static MediaPlayer playListeningAudio(Context context, String fileName){
@@ -198,8 +206,6 @@ public class Utils {
                 indexCorrectAnswer = i;
         }
 
-
-
         if(idAnswer == idCorrectAnswer){
             multipleChoice.getMultipleChoice().findViewById(map.get(indexAnswer)).setBackgroundTintList(multipleChoice.getMultipleChoice().getContext().getResources().getColorStateList(R.color.correct_answer));
         }
@@ -211,4 +217,54 @@ public class Utils {
             multipleChoice.getMultipleChoice().findViewById(map.get(indexCorrectAnswer)).setBackgroundTintList(multipleChoice.getMultipleChoice().getContext().getResources().getColorStateList(R.color.incorrect_answer));
         }
     }
+
+    public static String HashPassword(String password){
+        try {
+            MessageDigest digest = MessageDigest.getInstance("SHA-256");
+            byte[] hash = digest.digest( password.getBytes(StandardCharsets.UTF_8) );
+            BigInteger number = new BigInteger(1, hash);
+            StringBuilder hexString = new StringBuilder(number.toString(16));
+            while (hexString.length() < 64)
+            {
+                hexString.insert(0, '0');
+            }
+
+            return hexString.toString();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static boolean checkInternet(Context context){
+        ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        if(connectivityManager.getActiveNetworkInfo() !=null && connectivityManager.getActiveNetworkInfo().isConnected()){
+            return true;
+        }
+        Toast.makeText(context, "No internet available", Toast.LENGTH_SHORT).show();
+        return false;
+    }
+
+    public static void saveLogin(Context context, String username){
+        SharedPreferences sharedPreferences = context.getSharedPreferences(FILE_NAME_SAVE_LOG_IN, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(USERNAME_KEY, username);
+        editor.commit();
+    }
+
+    public static String getLogin(Context context){
+        SharedPreferences sharedPreferences = context.getSharedPreferences(FILE_NAME_SAVE_LOG_IN, Context.MODE_PRIVATE);
+        return sharedPreferences.getString(USERNAME_KEY, "");
+    }
+
+    public static void removeLogin(Context context){
+        SharedPreferences sharedPreferences = context.getSharedPreferences(FILE_NAME_SAVE_LOG_IN, Context.MODE_PRIVATE);
+        sharedPreferences.edit().clear().commit();
+    }
+
+    public static boolean isLoggedIn(Context context){
+        return !getLogin(context).equals("");
+    }
+
+
 }
