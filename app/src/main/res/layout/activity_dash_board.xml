@@ -62,7 +62,17 @@
             android:layout_marginTop="20dp"
             android:layout_height="60dp"
             android:backgroundTint="@color/blue"
-            android:text="note"
+            android:text="note word"
+            android:textSize="20sp"
+            android:textStyle="bold"/>
+
+        <Button
+            android:id="@+id/btn_review"
+            android:layout_width="match_parent"
+            android:layout_marginTop="20dp"
+            android:layout_height="60dp"
+            android:backgroundTint="@color/blue"
+            android:text="review result"
             android:textSize="20sp"
             android:textStyle="bold"/>
     </LinearLayout>

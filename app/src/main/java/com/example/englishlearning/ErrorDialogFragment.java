@@ -40,8 +40,6 @@ public class ErrorDialogFragment extends DialogFragment {
     private TextView mLabelBtnOne;
     private TextView mLabelBtnTow;
 
-    private int id;
-    private boolean mIsAdd;
     private boolean mIsDisableBackButton;
     private boolean mIsNeedDismissAfterOnclick = false;
 
@@ -49,15 +47,11 @@ public class ErrorDialogFragment extends DialogFragment {
     private ArrayAdapter<NotedWord.Type> adapter;
 
     public static ErrorDialogFragment newInstance(
-            int id,
             NoteAdapter noteAdapter,
-            boolean mIsAdd,
             boolean mIsDisableBackButton,
             boolean isNeedDismissAfterOnclick) {
         ErrorDialogFragment dialogFragment = new ErrorDialogFragment();
-        dialogFragment.id = id;
         dialogFragment.noteAdapter = noteAdapter;
-        dialogFragment.mIsAdd = mIsAdd;
         dialogFragment.mIsDisableBackButton = mIsDisableBackButton;
         dialogFragment.mIsNeedDismissAfterOnclick = isNeedDismissAfterOnclick;
         return dialogFragment;
@@ -103,7 +97,7 @@ public class ErrorDialogFragment extends DialogFragment {
         getDialog().getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         getDialog().getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
-        if(mIsAdd && id == -1){
+
             mTitle.setVisibility(View.VISIBLE);
             mButtonOne.setVisibility(View.VISIBLE);
             mTitle.setText("Add new word");
@@ -125,29 +119,7 @@ public class ErrorDialogFragment extends DialogFragment {
                 }
             });
             mLabelBtnOne.setText("Add");
-        } else {
-            mTitle.setVisibility(View.VISIBLE);
-            mButtonOne.setVisibility(View.VISIBLE);
-            mTitle.setText("Edit word");
-            mButtonOne.setOnClickListener(v -> {
-                UserDataHelper helper = new UserDataHelper(MyApplication.getAppContext());
-                SQLiteDatabase database = helper.getWritableDatabase();
-                ContentValues contentValues = new ContentValues();
-                contentValues.put("content", edtContent.getText().toString());
-                contentValues.put("meaning", edtMeaning.getText().toString());
-                contentValues.put("type", spinner.getSelectedItem().toString());
-                // The columns for the WHERE clause
-                String selection = ("id" + " = ?");
-                // The values for the WHERE clause
-                String[] selectionArgs = {String.valueOf(id)};
-                id = database.update("note_word", contentValues, selection, selectionArgs);
-                Toast.makeText(v.getContext(), String.valueOf(id), Toast.LENGTH_LONG).show();
-                if (mIsNeedDismissAfterOnclick) {
-                    dismiss();
-                }
-            });
-            mLabelBtnOne.setText("Edit");
-        }
+
 
         mButtonTwo.setVisibility(View.VISIBLE);
         mButtonTwo.setOnClickListener(v -> {

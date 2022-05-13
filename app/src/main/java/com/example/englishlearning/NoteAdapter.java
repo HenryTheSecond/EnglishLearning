@@ -1,24 +1,22 @@
 package com.example.englishlearning;
 
-import android.app.Activity;
-import android.app.FragmentManager;
 import android.content.Context;
+import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Spinner;
-import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.englishlearning.Activity.PracticeActivity.EditWordActivity;
+import com.example.englishlearning.Databases.UserDataHelper;
 import com.example.englishlearning.Model.NotedWord;
 
 import java.util.ArrayList;
@@ -63,18 +61,30 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
         holder.btnEditWord.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                FragmentManager fragmentManager = ((Activity)context).getFragmentManager();
-                ErrorDialogFragment.newInstance(
-                        holder.id,
-                        null,
-                        false,
-                        true,
-                        true
-                ).show(fragmentManager, ErrorDialogFragment.class.getSimpleName());
+                Intent intent = new Intent(view.getContext(), EditWordActivity.class);
+                intent.putExtra("id", item.getId());
+                intent.putExtra("content", item.getContent());
+                intent.putExtra("meaning", item.getMeaning());
+                intent.putExtra("type", item.getType().toString());
+                context.startActivity(intent);
             }
         });
-//        int typePosition = holder.getAdapter().getPosition(item.getType());
-//        holder.getSpinnerType().setSelection(typePosition);
+        holder.btnDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                UserDataHelper helper = new UserDataHelper(MyApplication.getAppContext());
+                SQLiteDatabase database = helper.getWritableDatabase();
+                // The columns for the WHERE clause
+                String selection = ("id" + " = ?");
+                // The values for the WHERE clause
+                String[] selectionArgs = {String.valueOf(item.getId())};
+                int id = database.delete("note_word", selection, selectionArgs);
+                if(id != -1)
+                {
+                    holder.itemView.setVisibility(View.GONE);
+                }
+            }
+        });
     }
 
     @Override

@@ -58,9 +58,7 @@ public class NoteActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 ErrorDialogFragment.newInstance(
-                        -1,
-                        null,
-                        true,
+                        adapter,
                         true,
                         true
                 ).show(fragmentManager, ErrorDialogFragment.class.getSimpleName());
