@@ -3,6 +3,20 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/EnglishLearning/app/src/main/res/layout/activity_add_essay.xml" value="0.36666666666666664" />
+        <entry key="..\:/EnglishLearning/app/src/main/res/layout/activity_add_fill_blank.xml" value="0.36666666666666664" />
+        <entry key="..\:/EnglishLearning/app/src/main/res/layout/activity_add_listen_file.xml" value="0.36666666666666664" />
+        <entry key="..\:/EnglishLearning/app/src/main/res/layout/activity_add_single_question.xml" value="0.36666666666666664" />
+        <entry key="..\:/EnglishLearning/app/src/main/res/layout/activity_add_write.xml" value="0.20244565217391305" />
+        <entry key="..\:/EnglishLearning/app/src/main/res/layout/activity_practice_filling_blank.xml" value="0.36666666666666664" />
+        <entry key="..\:/EnglishLearning/app/src/main/res/layout/activity_practice_filling_blank_review.xml" value="0.36666666666666664" />
+        <entry key="..\:/EnglishLearning/app/src/main/res/layout/activity_practice_listening.xml" value="0.36666666666666664" />
+        <entry key="..\:/EnglishLearning/app/src/main/res/layout/first_time.xml" value="0.20244565217391305" />
+        <entry key="..\:/EnglishLearning/app/src/main/res/layout/fragment_filling_blank_paragraph.xml" value="0.20244565217391305" />
+        <entry key="..\:/EnglishLearning/app/src/main/res/layout/fragment_listening.xml" value="0.20244565217391305" />
+        <entry key="..\:/EnglishLearning/app/src/main/res/layout/fragment_reading_paragraph.xml" value="0.20244565217391305" />
+        <entry key="..\:/EnglishLearning/app/src/main/res/layout/fragment_single_question.xml" value="0.20244565217391305" />
+        <entry key="..\:/EnglishLearning/app/src/main/res/layout/fragment_writing.xml" value="0.33" />
         <entry key="..\:/code/lap trinh di dong/workspace/EnglishLearning/EnglishLearning/app/src/main/res/layout/activity_test_question.xml" value="0.25" />
         <entry key="..\:/code/lap trinh di dong/workspace/EnglishLearning/EnglishLearning/app/src/main/res/layout/fragment_listening.xml" value="0.25" />
         <entry key="..\:/code/lap trinh di dong/workspace/EnglishLearning/EnglishLearning/app/src/main/res/layout/fragment_reading_paragraph.xml" value="0.25" />
