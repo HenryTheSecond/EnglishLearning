@@ -1,5 +1,6 @@
 package com.example.englishlearning.Activity.PracticeActivity;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -21,12 +22,19 @@ import android.widget.TableLayout;
 import com.example.englishlearning.Activity.PickLevelActivity;
 import com.example.englishlearning.Databases.UserDataHelper;
 import com.example.englishlearning.Model.Listening;
+import com.example.englishlearning.Model.PracticeModel.PracticeFillingBlank;
 import com.example.englishlearning.Model.PracticeModel.PracticeReading;
 import com.example.englishlearning.Model.Reading;
 import com.example.englishlearning.QuestionFragment.ListeningFragment;
 import com.example.englishlearning.QuestionFragment.ReadingParagraphFragment;
 import com.example.englishlearning.R;
 import com.example.englishlearning.Utils;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,6 +52,9 @@ public class PracticeReadingActivity extends AppCompatActivity {
     private int currentQuestion;
 
     private List<Reading> readings;
+
+    private long id = 0;
+    DatabaseReference reference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,6 +101,23 @@ public class PracticeReadingActivity extends AppCompatActivity {
                     tableQuestion.setVisibility(View.GONE);
             }
         });
+
+        if(Utils.isLoggedIn(this)){
+            reference = FirebaseDatabase.getInstance().getReference("practice_reading").child(Utils.getLogin(this));
+            reference.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    for(DataSnapshot data: snapshot.getChildren()){
+                        if(Long.parseLong(data.getKey())>id)
+                            id = Long.parseLong(data.getKey());
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) { }
+            });
+        }
+
 
         findAllQuestionButtons();
 
@@ -160,6 +188,33 @@ public class PracticeReadingActivity extends AppCompatActivity {
             readingAnswer += "/";
         }
 
+        Intent intent = new Intent(PracticeReadingActivity.this, PracticeReadingReview.class);
+        if(Utils.isLoggedIn(this)){
+            saveToFirebase(date, correct, idReadings, readingAnswer);
+            Gson gson = new Gson();
+            PracticeReading record = new PracticeReading((int)id, date, correct, idReadings, readingAnswer);
+            intent.putExtra("record", gson.toJson(record));
+        }else{
+            long idInsert = saveToSqlite(date, correct, idReadings, readingAnswer);
+            intent.putExtra(PracticeFillingBlankReview.ID_TEST_RECORD_KEY, idInsert);
+        }
+
+
+        startActivity(intent);
+
+        finish();
+    }
+
+    private void saveToFirebase(String date, int correct, String idReadings, String readingAnswer){
+        id++;
+        DatabaseReference node = reference.child( String.valueOf( id ) );
+        node.child("date_time").setValue(date);
+        node.child("correct").setValue(correct);
+        node.child("id_readings").setValue(idReadings);
+        node.child("reading_answer").setValue(readingAnswer);
+    }
+
+    private long saveToSqlite(String date, int correct, String idReadings, String readingAnswer){
         UserDataHelper helper = new UserDataHelper(this);
         SQLiteDatabase database = helper.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
@@ -167,13 +222,8 @@ public class PracticeReadingActivity extends AppCompatActivity {
         contentValues.put("correct", correct);
         contentValues.put("id_readings", idReadings);
         contentValues.put("reading_answer", readingAnswer);
-        long idInsert = database.insert("practice_reading", null, contentValues);
 
-        Intent intent = new Intent(PracticeReadingActivity.this, PracticeReadingReview.class);
-        intent.putExtra(PracticeReadingReview.ID_TEST_RECORD_KEY, idInsert);
-        startActivity(intent);
-
-        finish();
+        return database.insert("practice_reading", null, contentValues);
     }
 
     private void addFragment(int[] group,   Fragment fragment){

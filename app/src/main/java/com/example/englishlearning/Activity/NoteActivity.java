@@ -39,6 +39,11 @@ public class NoteActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private Button btnAdd;
 
+    ValueEventListener listener;
+    DatabaseReference reference;
+
+    private int[] id = {0};
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,12 +60,37 @@ public class NoteActivity extends AppCompatActivity {
         String[] data = null;
 
 
-        adapter = new NoteAdapter(this);
+        if(Utils.isLoggedIn(this)){
+            listener = new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    for(DataSnapshot data: snapshot.getChildren()){
+                        if(Integer.parseInt(data.getKey()) > id[0]){
+                            id[0] = Integer.parseInt(data.getKey());
+                        }
+                        System.out.println(data);
+                        NotedWord word = new NotedWord( Integer.parseInt(data.getKey()),
+                                data.child("content").getValue(String.class),
+                                data.child("meaning").getValue(String.class),
+                                NotedWord.Type.parseType( data.child("type").getValue(String.class)) );
+                        adapter.getList().add(word);
+                    }
+                    id[0]++;
+                    recyclerView.setAdapter(adapter);
+                }
 
-        if(Utils.isLoggedIn(this))
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            };
+            adapter = new NoteAdapter(this, reference, listener);
             getDataFromFirebase();
-        else
+        }
+        else{
+            adapter = new NoteAdapter(this);
             getData();
+        }
 
 
         recyclerView.setAdapter(adapter);
@@ -70,10 +100,12 @@ public class NoteActivity extends AppCompatActivity {
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                reference.removeEventListener(listener);
                 ErrorDialogFragment.newInstance(
                         adapter,
                         true,
-                        true
+                        true,
+                        id
                 ).show(fragmentManager, ErrorDialogFragment.class.getSimpleName());
             }
         });
@@ -93,26 +125,9 @@ public class NoteActivity extends AppCompatActivity {
     }
 
     private void getDataFromFirebase(){
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("note_word").child(Utils.getLogin(this));
-        reference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for(DataSnapshot data: snapshot.getChildren()){
-                    System.out.println(data);
-                    NotedWord word = new NotedWord( Integer.parseInt(data.getKey()),
-                            data.child("content").getValue(String.class),
-                            data.child("meaning").getValue(String.class),
-                            NotedWord.Type.parseType( data.child("type").getValue(String.class)));
-                    adapter.getList().add(word);
-                    System.out.println(word.getContent());
-                }
-                recyclerView.setAdapter(adapter);
-            }
+        reference = FirebaseDatabase.getInstance().getReference("note_word").child(Utils.getLogin(this));
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
+        reference.addValueEventListener( listener );
 
-            }
-        });
     }
 }

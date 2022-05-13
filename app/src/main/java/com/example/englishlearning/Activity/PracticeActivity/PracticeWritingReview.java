@@ -13,6 +13,7 @@ import android.widget.FrameLayout;
 import android.widget.TableLayout;
 import android.widget.TextView;
 
+import com.example.englishlearning.Model.PracticeModel.PracticeReading;
 import com.example.englishlearning.Model.PracticeModel.PracticeSingleQuestion;
 import com.example.englishlearning.Model.PracticeModel.PracticeWriting;
 import com.example.englishlearning.Model.ReviewModel.SingleQuestionReview;
@@ -20,6 +21,8 @@ import com.example.englishlearning.Model.ReviewModel.WritingReview;
 import com.example.englishlearning.R;
 import com.example.englishlearning.ReviewFragment.SingleQuestionReviewFragment;
 import com.example.englishlearning.ReviewFragment.WritingReviewFragment;
+import com.example.englishlearning.Utils;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -80,8 +83,14 @@ public class PracticeWritingReview extends AppCompatActivity {
 
         findAllQuestionButtons();
 
-        long id = this.getIntent().getExtras().getLong(ID_TEST_RECORD_KEY);
-        rawReview = PracticeWriting.getPracticeWritingById((int)id);
+        if(Utils.isLoggedIn(this)){
+            Gson gson = new Gson();
+            rawReview = gson.fromJson( getIntent().getStringExtra("record"), PracticeWriting.class );
+        }else{
+            long id = this.getIntent().getExtras().getLong(ID_TEST_RECORD_KEY);
+            rawReview = PracticeWriting.getPracticeWritingById((int)id);
+        }
+
         writingReviews = rawReview.getReviews();
         changeColorBtnQuestion();
 

@@ -14,6 +14,7 @@ import android.widget.TableLayout;
 import android.widget.TextView;
 
 import com.example.englishlearning.Model.PracticeModel.PracticeFillingBlank;
+import com.example.englishlearning.Model.PracticeModel.PracticeReading;
 import com.example.englishlearning.Model.PracticeModel.PracticeSingleQuestion;
 import com.example.englishlearning.Model.ReviewModel.FillingBlankReview;
 import com.example.englishlearning.Model.ReviewModel.SingleQuestionReview;
@@ -21,6 +22,8 @@ import com.example.englishlearning.QuestionFragment.SingleQuestionFragment;
 import com.example.englishlearning.R;
 import com.example.englishlearning.ReviewFragment.FillingBlankReviewFragment;
 import com.example.englishlearning.ReviewFragment.SingleQuestionReviewFragment;
+import com.example.englishlearning.Utils;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -81,8 +84,15 @@ public class PracticeSingleQuestionReview extends AppCompatActivity {
 
         findAllQuestionButtons();
 
-        long id = this.getIntent().getExtras().getLong(ID_TEST_RECORD_KEY);
-        rawReview = PracticeSingleQuestion.getPracticeSingleQuestionById((int)id);
+        if(Utils.isLoggedIn(this)){
+            Gson gson = new Gson();
+            rawReview = gson.fromJson( getIntent().getStringExtra("record"), PracticeSingleQuestion.class );
+        }else{
+            long id = this.getIntent().getExtras().getLong(ID_TEST_RECORD_KEY);
+            rawReview = PracticeSingleQuestion.getPracticeSingleQuestionById((int)id);
+        }
+
+
         singleQuestionReviews = rawReview.getReviews();
         changeColorBtnQuestion();
 

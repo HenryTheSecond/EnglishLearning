@@ -18,6 +18,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.englishlearning.Activity.PracticeActivity.EditWordActivity;
 import com.example.englishlearning.Databases.UserDataHelper;
 import com.example.englishlearning.Model.NotedWord;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +28,16 @@ import java.util.List;
 public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
     private List<NotedWord> list;
     private Context context;
+
+    private DatabaseReference reference;
+    private ValueEventListener listener;
+
+    public NoteAdapter(Context context, DatabaseReference reference, ValueEventListener listener){
+        this.context = context;
+        this.reference = reference;
+        this.listener = listener;
+        list = new ArrayList<>();
+    }
 
     public NoteAdapter(Context context){
         this.context = context;
@@ -54,6 +67,7 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         NotedWord item = list.get(position);
 
+
         holder.setId(item.getId());
         holder.getTvContent().setText(item.getContent());
         holder.getTvMeaning().setText(item.getMeaning());
@@ -72,19 +86,36 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
         holder.btnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                UserDataHelper helper = new UserDataHelper(MyApplication.getAppContext());
-                SQLiteDatabase database = helper.getWritableDatabase();
-                // The columns for the WHERE clause
-                String selection = ("id" + " = ?");
-                // The values for the WHERE clause
-                String[] selectionArgs = {String.valueOf(item.getId())};
-                int id = database.delete("note_word", selection, selectionArgs);
-                if(id != -1)
-                {
-                    holder.itemView.setVisibility(View.GONE);
+                if(Utils.isLoggedIn(view.getContext())){
+                    deleteFromFirebase(holder, item);
+                }else{
+                    deleteFromSqlite(holder, item);
                 }
             }
         });
+    }
+
+    private void deleteFromFirebase(ViewHolder holder, NotedWord item){
+        String login = Utils.getLogin(context);
+        reference = FirebaseDatabase.getInstance().getReference("note_word/"+login);
+        reference.removeEventListener(listener);
+        reference.child(String.valueOf(item.getId())).removeValue();
+        list.remove(holder.getAdapterPosition());
+        notifyItemRemoved(holder.getAdapterPosition());
+    }
+
+    private void deleteFromSqlite(ViewHolder holder, NotedWord item){
+        UserDataHelper helper = new UserDataHelper(MyApplication.getAppContext());
+        SQLiteDatabase database = helper.getWritableDatabase();
+        // The columns for the WHERE clause
+        String selection = ("id" + " = ?");
+        // The values for the WHERE clause
+        String[] selectionArgs = {String.valueOf(item.getId())};
+        int id = database.delete("note_word", selection, selectionArgs);
+        if(id != -1)
+        {
+            holder.itemView.setVisibility(View.GONE);
+        }
     }
 
     @Override

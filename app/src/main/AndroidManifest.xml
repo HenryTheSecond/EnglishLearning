@@ -26,7 +26,8 @@
         <!-- android:exported="false" /> -->
         <activity
             android:name=".Activity.PracticeActivity.PracticeSingleQuestionReview"
-            android:exported="false" /> <!-- <activity -->
+            android:exported="false" />
+        <!-- <activity -->
         <!-- android:name=".Activity.PracticeActivity.PracticeSingleQuestionActivity" -->
         <!-- android:exported="false" /> -->
         <activity
@@ -51,17 +52,21 @@
         <activity
             android:name=".Activity.DashBoard"
             android:exported="false" />
-        <activity
-            android:name=".Activity.NoteActivity"
-            android:exported="false" />
+<!--        <activity-->
+<!--            android:name=".Activity.NoteActivity"-->
+<!--            android:exported="false" />-->
 <!--        <activity-->
 <!--            android:name=".Activity.TestQuestionActivity"-->
 <!--            android:exported="false" />-->
         <activity
             android:name=".Activity.PracticeActivity.PracticeListeningReview"
             android:exported="false" />
+
         <activity
-            android:name=".Activity.PracticeActivity.PracticeListeningActivity"
+            android:name=".Activity.PracticeActivity.EditWordActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activity.NoteActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -13,6 +13,7 @@ import android.widget.FrameLayout;
 import android.widget.TableLayout;
 import android.widget.TextView;
 
+import com.example.englishlearning.Model.PracticeModel.PracticeFillingBlank;
 import com.example.englishlearning.Model.PracticeModel.PracticeListening;
 import com.example.englishlearning.Model.PracticeModel.PracticeReading;
 import com.example.englishlearning.Model.ReviewModel.ListeningReview;
@@ -21,6 +22,8 @@ import com.example.englishlearning.QuestionFragment.ReadingParagraphFragment;
 import com.example.englishlearning.R;
 import com.example.englishlearning.ReviewFragment.ListeningReviewFragment;
 import com.example.englishlearning.ReviewFragment.ReadingReviewFragment;
+import com.example.englishlearning.Utils;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -80,8 +83,15 @@ public class PracticeReadingReview extends AppCompatActivity {
 
         findAllQuestionButtons();
 
-        long id = this.getIntent().getExtras().getLong(ID_TEST_RECORD_KEY);
-        rawReview = PracticeReading.getPracticeReadingById((int)id);
+        if(Utils.isLoggedIn(this)){
+            Gson gson = new Gson();
+            rawReview = gson.fromJson( getIntent().getStringExtra("record"), PracticeReading.class );
+        }else{
+            long id = this.getIntent().getExtras().getLong(ID_TEST_RECORD_KEY);
+            rawReview = PracticeReading.getPracticeReadingById((int)id);
+        }
+
+
         readingReviews = rawReview.getReviews();
         changeColorBtnQuestion();
 

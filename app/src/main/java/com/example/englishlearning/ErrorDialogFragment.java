@@ -27,6 +27,8 @@ import androidx.annotation.Nullable;
 import com.example.englishlearning.Activity.NoteActivity;
 import com.example.englishlearning.Databases.UserDataHelper;
 import com.example.englishlearning.Model.NotedWord;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 
 public class ErrorDialogFragment extends DialogFragment {
@@ -46,14 +48,18 @@ public class ErrorDialogFragment extends DialogFragment {
     private NoteAdapter noteAdapter;
     private ArrayAdapter<NotedWord.Type> adapter;
 
+    private int[] id;
+
     public static ErrorDialogFragment newInstance(
             NoteAdapter noteAdapter,
             boolean mIsDisableBackButton,
-            boolean isNeedDismissAfterOnclick) {
+            boolean isNeedDismissAfterOnclick,
+            int[] id) {
         ErrorDialogFragment dialogFragment = new ErrorDialogFragment();
         dialogFragment.noteAdapter = noteAdapter;
         dialogFragment.mIsDisableBackButton = mIsDisableBackButton;
         dialogFragment.mIsNeedDismissAfterOnclick = isNeedDismissAfterOnclick;
+        dialogFragment.id = id;
         return dialogFragment;
     }
 
@@ -102,20 +108,10 @@ public class ErrorDialogFragment extends DialogFragment {
             mButtonOne.setVisibility(View.VISIBLE);
             mTitle.setText("Add new word");
             mButtonOne.setOnClickListener(v -> {
-                UserDataHelper helper = new UserDataHelper(MyApplication.getAppContext());
-                SQLiteDatabase database = helper.getWritableDatabase();
-                ContentValues contentValues = new ContentValues();
-                contentValues.put("content", edtContent.getText().toString());
-                contentValues.put("meaning", edtMeaning.getText().toString());
-                contentValues.put("type", spinner.getSelectedItem().toString());
-                long idInsert = database.insert("note_word", null, contentValues);
-
-                if(noteAdapter != null) {
-                    NotedWord item = new NotedWord((int) idInsert, edtContent.getText().toString(), edtMeaning.getText().toString(), NotedWord.Type.parseType(spinner.getSelectedItem().toString()));
-                    noteAdapter.getList().add(item);
-                }
-                if (mIsNeedDismissAfterOnclick) {
-                    dismiss();
+                if(Utils.isLoggedIn(v.getContext())){
+                    saveToFirebase(v);
+                }else{
+                    saveToSqlite(v);
                 }
             });
             mLabelBtnOne.setText("Add");
@@ -129,5 +125,39 @@ public class ErrorDialogFragment extends DialogFragment {
         });
         mLabelBtnTow.setText("Cancel");
 
+    }
+
+    private void saveToFirebase(View v){
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("note_word").child(Utils.getLogin(v.getContext())).child(String.valueOf(id[0]));
+        reference.child("content").setValue(edtContent.getText().toString());
+        reference.child("meaning").setValue(edtMeaning.getText().toString());
+        reference.child("type").setValue(spinner.getSelectedItem().toString());
+
+        if(noteAdapter != null){
+            NotedWord item = new NotedWord(id[0], edtContent.getText().toString(), edtMeaning.getText().toString(), NotedWord.Type.parseType(spinner.getSelectedItem().toString()));
+            noteAdapter.getList().add(item);
+        }
+        if (mIsNeedDismissAfterOnclick) {
+            dismiss();
+        }
+        id[0]++;
+    }
+
+    private void saveToSqlite(View v){
+        UserDataHelper helper = new UserDataHelper(MyApplication.getAppContext());
+        SQLiteDatabase database = helper.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("content", edtContent.getText().toString());
+        contentValues.put("meaning", edtMeaning.getText().toString());
+        contentValues.put("type", spinner.getSelectedItem().toString());
+        long idInsert = database.insert("note_word", null, contentValues);
+
+        if(noteAdapter != null) {
+            NotedWord item = new NotedWord((int) idInsert, edtContent.getText().toString(), edtMeaning.getText().toString(), NotedWord.Type.parseType(spinner.getSelectedItem().toString()));
+            noteAdapter.getList().add(item);
+        }
+        if (mIsNeedDismissAfterOnclick) {
+            dismiss();
+        }
     }
 }
