@@ -10,9 +10,8 @@ import com.example.englishlearning.MyApplication;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PracticeListening {
-    private int id;
-    private String dateTime;
+public class PracticeListening extends GeneralPractice {
+
     private int correct;
     private String idListenings;
     private String listeningAnswer;
@@ -39,6 +38,11 @@ public class PracticeListening {
 
     public void setDateTime(String dateTime) {
         this.dateTime = dateTime;
+    }
+
+    @Override
+    public String getResult() {
+        return String.valueOf(correct) + "/9";
     }
 
     public int getCorrect() {

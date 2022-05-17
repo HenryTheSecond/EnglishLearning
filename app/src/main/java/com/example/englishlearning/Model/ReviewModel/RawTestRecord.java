@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import androidx.annotation.NonNull;
 
 import com.example.englishlearning.Databases.UserDataHelper;
+import com.example.englishlearning.Model.PracticeModel.GeneralPractice;
 import com.example.englishlearning.MyApplication;
 import com.example.englishlearning.OnGetDataListener;
 import com.example.englishlearning.Utils;
@@ -21,9 +22,8 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.concurrent.CountDownLatch;
 
-public class RawTestRecord {
-    private int id;
-    private String dateTime;
+public class RawTestRecord extends GeneralPractice {
+
     private double point;
     private String idListenings;
     private String listeningAnswer;
@@ -111,4 +111,8 @@ public class RawTestRecord {
         return null;
     }
 
+    @Override
+    public String getResult() {
+        return String.valueOf(point) + "/10";
+    }
 }

@@ -8,6 +8,9 @@
     android:orientation="vertical">
 
     <include layout="@layout/back_header"/>
+
+
+
     <ListView
         android:id="@+id/lv_result"
         android:layout_width="match_parent"

@@ -1,10 +1,12 @@
 package com.example.englishlearning.Model.ReviewModel;
 
 
+import com.example.englishlearning.Model.PracticeModel.GeneralPractice;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class TestRecord {
+public class TestRecord  {
     private int id;
     private String dateTime;
     private double point;
@@ -35,6 +37,7 @@ public class TestRecord {
     public void setDateTime(String dateTime) {
         this.dateTime = dateTime;
     }
+
 
     public double getPoint() {
         return point;

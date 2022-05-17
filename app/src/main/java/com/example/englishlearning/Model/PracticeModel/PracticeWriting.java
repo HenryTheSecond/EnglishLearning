@@ -4,16 +4,14 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.example.englishlearning.Databases.UserDataHelper;
-import com.example.englishlearning.Model.ReviewModel.SingleQuestionReview;
 import com.example.englishlearning.Model.ReviewModel.WritingReview;
 import com.example.englishlearning.MyApplication;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class PracticeWriting {
-    private int id;
-    private String dateTime;
+public class PracticeWriting extends GeneralPractice {
+
     private int correct;
     private String writingAnswer;
 
@@ -38,6 +36,11 @@ public class PracticeWriting {
 
     public void setDateTime(String dateTime) {
         this.dateTime = dateTime;
+    }
+
+    @Override
+    public String getResult() {
+        return String.valueOf(correct) + "/5";
     }
 
     public int getCorrect() {

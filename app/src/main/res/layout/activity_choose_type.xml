@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ChooseTypeActivity"
+    android:orientation="vertical">
+
+    <include layout="@layout/header"/>
+
+        <Button
+            android:id="@+id/btn_filling_blank"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:backgroundTint="@color/blue"
+            android:text="filling blank"
+            android:layout_marginTop="20dp"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:onClick="btnClick"/>
+
+        <Button
+            android:id="@+id/btn_listening"
+            android:layout_width="match_parent"
+            android:layout_marginTop="20dp"
+            android:layout_height="60dp"
+            android:backgroundTint="@color/blue"
+            android:text="listening"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:onClick="btnClick"/>
+
+    <Button
+        android:id="@+id/btn_reading"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:backgroundTint="@color/blue"
+        android:text="reading"
+        android:layout_marginTop="20dp"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:onClick="btnClick"/>
+
+    <Button
+        android:id="@+id/btn_single_question"
+        android:layout_width="match_parent"
+        android:layout_marginTop="20dp"
+        android:layout_height="60dp"
+        android:backgroundTint="@color/blue"
+        android:text="single question"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:onClick="btnClick"/>
+
+    <Button
+        android:id="@+id/btn_writing"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:backgroundTint="@color/blue"
+        android:text="Writing"
+        android:layout_marginTop="20dp"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:onClick="btnClick"/>
+
+    <Button
+        android:id="@+id/btn_all"
+        android:layout_width="match_parent"
+        android:layout_marginTop="20dp"
+        android:layout_height="60dp"
+        android:backgroundTint="@color/blue"
+        android:text="all"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:onClick="btnClick"/>
+
+
+</LinearLayout>

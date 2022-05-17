@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    >
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -16,10 +15,9 @@
         android:layout_weight="2"
         android:layout_marginTop="@dimen/defalult_margin"
         android:layout_marginLeft="@dimen/defalult_margin"
-        android:text="10/05/2022"
-        android:textSize="30sp"
-        android:textColor="@color/black"
-        />
+        android:text="10/05/2022 10:55:55"
+        android:textSize="20sp"
+        android:textColor="@color/black" />
 
     <TextView
         android:id="@+id/tv_result"
@@ -29,8 +27,7 @@
         android:layout_marginTop="@dimen/defalult_margin"
         android:text="Result: 10/10"
         android:textSize="20sp"
-        android:textColor="@color/black"
-        />
+        android:textColor="@color/black" />
     </LinearLayout>
 
     <View

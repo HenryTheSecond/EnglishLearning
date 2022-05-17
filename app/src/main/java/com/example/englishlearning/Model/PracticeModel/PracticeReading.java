@@ -4,16 +4,14 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.example.englishlearning.Databases.UserDataHelper;
-import com.example.englishlearning.Model.ReviewModel.ListeningReview;
 import com.example.englishlearning.Model.ReviewModel.ReadingReview;
 import com.example.englishlearning.MyApplication;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class PracticeReading {
-    private int id;
-    private String dateTime;
+public class PracticeReading extends GeneralPractice {
+
     private int correct;
     private String idReadings;
     private String readingAnswer;
@@ -40,6 +38,11 @@ public class PracticeReading {
 
     public void setDateTime(String dateTime) {
         this.dateTime = dateTime;
+    }
+
+    @Override
+    public String getResult() {
+        return String.valueOf(correct) + "/9";
     }
 
     public int getCorrect() {

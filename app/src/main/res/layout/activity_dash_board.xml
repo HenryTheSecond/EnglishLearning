@@ -17,34 +17,6 @@
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
         android:orientation="vertical">
-        <Button
-            android:id="@+id/btn_listen"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:backgroundTint="@color/blue"
-            android:text="Listen"
-            android:layout_marginTop="20dp"
-            android:textSize="20sp"
-            android:textStyle="bold"/>
-
-        <Button
-            android:id="@+id/btn_read"
-            android:layout_width="match_parent"
-            android:layout_marginTop="20dp"
-            android:layout_height="60dp"
-            android:backgroundTint="@color/blue"
-            android:text="Read"
-            android:textSize="20sp"
-            android:textStyle="bold"/>
-        <Button
-            android:id="@+id/btn_write"
-            android:layout_width="match_parent"
-            android:layout_marginTop="20dp"
-            android:layout_height="60dp"
-            android:backgroundTint="@color/blue"
-            android:text="Write"
-            android:textSize="20sp"
-            android:textStyle="bold"/>
 
         <Button
             android:id="@+id/btn_test"

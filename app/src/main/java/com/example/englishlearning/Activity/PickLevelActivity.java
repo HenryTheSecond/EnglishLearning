@@ -8,11 +8,21 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.englishlearning.Activity.PracticeActivity.PracticeFillingBlankActivity;
+import com.example.englishlearning.Activity.PracticeActivity.PracticeListeningActivity;
+import com.example.englishlearning.Activity.PracticeActivity.PracticeReadingActivity;
+import com.example.englishlearning.Activity.PracticeActivity.PracticeSingleQuestionActivity;
+import com.example.englishlearning.Activity.PracticeActivity.PracticeWritingActivity;
+import com.example.englishlearning.Model.PracticeModel.PracticeListening;
 import com.example.englishlearning.R;
+
+import java.util.HashMap;
 
 public class PickLevelActivity extends AppCompatActivity {
 
     public static final String LEVEL_KEY = "level";
+    String callingType;
+    HashMap<String, Class> testHash;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,6 +33,15 @@ public class PickLevelActivity extends AppCompatActivity {
         TextView tvLevel1 = findViewById(R.id.tv_level_1);
         TextView tvLevel2 = findViewById(R.id.tv_level_2);
         TextView tvLevel3 = findViewById(R.id.tv_level_3);
+
+        callingType = getIntent().getStringExtra("callingType");
+        testHash = new HashMap<>();
+        testHash.put("filling_blank", PracticeFillingBlankActivity.class);
+        testHash.put("listening", PracticeListeningActivity.class);
+        testHash.put("reading", PracticeReadingActivity.class);
+        testHash.put("single_question", PracticeSingleQuestionActivity.class);
+        testHash.put("writing", PracticeWritingActivity.class);
+        testHash.put("all", TestQuestionActivity.class);
 
         tvLevel1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -49,7 +68,7 @@ public class PickLevelActivity extends AppCompatActivity {
     private void pickLevel(View view){
         Button btn = (Button) view;
         int level = Integer.parseInt(btn.getText().toString().substring(6));
-        Intent intent = new Intent(PickLevelActivity.this, TestQuestionActivity.class);
+        Intent intent = new Intent(PickLevelActivity.this, testHash.get(callingType));
         intent.putExtra(LEVEL_KEY, level);
         startActivity(intent);
         finish();

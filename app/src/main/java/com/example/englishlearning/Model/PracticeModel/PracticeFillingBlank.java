@@ -5,15 +5,13 @@ import android.database.sqlite.SQLiteDatabase;
 
 import com.example.englishlearning.Databases.UserDataHelper;
 import com.example.englishlearning.Model.ReviewModel.FillingBlankReview;
-import com.example.englishlearning.Model.ReviewModel.ListeningReview;
 import com.example.englishlearning.MyApplication;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class PracticeFillingBlank {
-    private int id;
-    private String dateTime;
+public class PracticeFillingBlank extends GeneralPractice {
+
     private int correct;
     private String idFillingBlanks;
     private String fillingBlankAnswer;
@@ -40,6 +38,11 @@ public class PracticeFillingBlank {
 
     public void setDateTime(String dateTime) {
         this.dateTime = dateTime;
+    }
+
+    @Override
+    public String getResult() {
+        return String.valueOf(correct) + "/12";
     }
 
     public int getCorrect() {
