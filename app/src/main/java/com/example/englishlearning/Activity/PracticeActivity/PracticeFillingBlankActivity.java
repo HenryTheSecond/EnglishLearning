@@ -34,6 +34,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class PracticeFillingBlankActivity extends AppCompatActivity {
@@ -101,18 +102,18 @@ public class PracticeFillingBlankActivity extends AppCompatActivity {
 
         if(Utils.isLoggedIn(this)){
             reference = FirebaseDatabase.getInstance().getReference("practice_filling_blank").child(Utils.getLogin(this));
-            reference.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    for(DataSnapshot data: snapshot.getChildren()){
-                        if(Long.parseLong(data.getKey())>id)
-                            id = Long.parseLong(data.getKey());
-                    }
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) { }
-            });
+//            reference.addValueEventListener(new ValueEventListener() {
+//                @Override
+//                public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                    for(DataSnapshot data: snapshot.getChildren()){
+//                        if(Long.parseLong(data.getKey())>id)
+//                            id = Long.parseLong(data.getKey());
+//                    }
+//                }
+//
+//                @Override
+//                public void onCancelled(@NonNull DatabaseError error) { }
+//            });
         }
 
         findAllQuestionButtons();
@@ -190,7 +191,7 @@ public class PracticeFillingBlankActivity extends AppCompatActivity {
         if(Utils.isLoggedIn(this)){
             saveToFirebase(date, correct, idFillingBlanks, fillingBlankAnswer);
             Gson gson = new Gson();
-            PracticeFillingBlank record = new PracticeFillingBlank((int)id, date, correct, idFillingBlanks, fillingBlankAnswer);
+            PracticeFillingBlank record = new PracticeFillingBlank(id, date, correct, idFillingBlanks, fillingBlankAnswer);
             intent.putExtra("record", gson.toJson(record));
         }else{
             long idInsert = saveToSqlite(date, correct, idFillingBlanks, fillingBlankAnswer);
@@ -203,7 +204,7 @@ public class PracticeFillingBlankActivity extends AppCompatActivity {
     }
 
     private void saveToFirebase(String date, int correct, String idFillingBlanks, String fillingBlankAnswer){
-        id++;
+        id = new Date().getTime();
         DatabaseReference node = reference.child( String.valueOf( id ) );
         node.child("date_time").setValue(date);
         node.child("correct").setValue(correct);

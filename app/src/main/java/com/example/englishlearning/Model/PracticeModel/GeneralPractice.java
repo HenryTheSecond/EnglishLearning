@@ -1,14 +1,14 @@
 package com.example.englishlearning.Model.PracticeModel;
 
 public abstract class GeneralPractice {
-    protected int id;
+    protected long id;
     protected String dateTime;
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 

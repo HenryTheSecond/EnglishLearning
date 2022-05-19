@@ -112,10 +112,8 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
         // The values for the WHERE clause
         String[] selectionArgs = {String.valueOf(item.getId())};
         int id = database.delete("note_word", selection, selectionArgs);
-        if(id != -1)
-        {
-            holder.itemView.setVisibility(View.GONE);
-        }
+        list.remove(holder.getAdapterPosition());
+        notifyItemRemoved(holder.getAdapterPosition());
     }
 
     @Override
@@ -125,7 +123,7 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
 
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        private int id;
+        private long id;
         private TextView tvContent;
         private TextView tvMeaning;
         private TextView tvType;
@@ -175,11 +173,11 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
             return adapter;
         }
 
-        public int getId() {
+        public long getId() {
             return id;
         }
 
-        public void setId(int id) {
+        public void setId(long id) {
             this.id = id;
         }
     }

@@ -34,7 +34,7 @@ public class RawTestRecord extends GeneralPractice {
     private String singleQuestion;
     private String writing;
 
-    public RawTestRecord(int id, String dateTime, double point, String idListenings,
+    public RawTestRecord(long id, String dateTime, double point, String idListenings,
                          String listeningAnswer, String idFillingBlank, String fillingBlankAnswer,
                          String idReading, String readingAnswer, String singleQuestion, String writing) {
         this.id = id;

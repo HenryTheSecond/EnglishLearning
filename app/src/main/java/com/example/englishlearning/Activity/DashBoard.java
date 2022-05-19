@@ -7,8 +7,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-import com.example.englishlearning.ChooseTypeActivity;
 import com.example.englishlearning.R;
+import com.example.englishlearning.Utils;
 
 public class DashBoard extends AppCompatActivity {
 
@@ -31,6 +31,8 @@ public class DashBoard extends AppCompatActivity {
         btnNote.setOnClickListener(view ->{
             moveToActivity(NoteActivity.class);
         });
+
+        Utils.createMenu(this);
     }
 
     private void moveToActivity(Class activity) {
@@ -48,4 +50,8 @@ public class DashBoard extends AppCompatActivity {
         }
         startActivity(intent);
     }
+
+
+
+
 }

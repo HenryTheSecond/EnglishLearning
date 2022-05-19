@@ -37,6 +37,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class PracticeSingleQuestionActivity extends AppCompatActivity {
@@ -104,18 +105,18 @@ public class PracticeSingleQuestionActivity extends AppCompatActivity {
 
         if(Utils.isLoggedIn(this)){
             reference = FirebaseDatabase.getInstance().getReference("practice_single_question").child(Utils.getLogin(this));
-            reference.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    for(DataSnapshot data: snapshot.getChildren()){
-                        if(Long.parseLong(data.getKey())>id)
-                            id = Long.parseLong(data.getKey());
-                    }
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) { }
-            });
+//            reference.addValueEventListener(new ValueEventListener() {
+//                @Override
+//                public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                    for(DataSnapshot data: snapshot.getChildren()){
+//                        if(Long.parseLong(data.getKey())>id)
+//                            id = Long.parseLong(data.getKey());
+//                    }
+//                }
+//
+//                @Override
+//                public void onCancelled(@NonNull DatabaseError error) { }
+//            });
         }
 
         findAllQuestionButtons();
@@ -187,7 +188,7 @@ public class PracticeSingleQuestionActivity extends AppCompatActivity {
         if(Utils.isLoggedIn(this)){
             saveToFirebase(date, correct, singleAnswer);
             Gson gson = new Gson();
-            PracticeSingleQuestion record = new PracticeSingleQuestion((int)id, date, correct, singleAnswer);
+            PracticeSingleQuestion record = new PracticeSingleQuestion(id, date, correct, singleAnswer);
             intent.putExtra("record", gson.toJson(record));
         }else{
             long idInsert = saveToSqlite(date, correct, singleAnswer);
@@ -200,7 +201,7 @@ public class PracticeSingleQuestionActivity extends AppCompatActivity {
     }
 
     private void saveToFirebase(String date, int correct, String singleAnswer){
-        id++;
+        id = new Date().getTime();
         DatabaseReference node = reference.child( String.valueOf( id ) );
         node.child("date_time").setValue(date);
         node.child("correct").setValue(correct);

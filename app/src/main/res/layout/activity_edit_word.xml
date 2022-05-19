@@ -8,7 +8,7 @@
     android:orientation="vertical"
     android:background="@color/white">
 
-    <include layout="@layout/back_header"/>
+    <include layout="@layout/header"/>
     <TextView
         android:id="@+id/title"
         android:layout_width="match_parent"

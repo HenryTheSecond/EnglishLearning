@@ -15,6 +15,7 @@ import com.example.englishlearning.Activity.PracticeActivity.PracticeSingleQuest
 import com.example.englishlearning.Activity.PracticeActivity.PracticeWritingActivity;
 import com.example.englishlearning.Model.PracticeModel.PracticeListening;
 import com.example.englishlearning.R;
+import com.example.englishlearning.Utils;
 
 import java.util.HashMap;
 
@@ -63,6 +64,8 @@ public class PickLevelActivity extends AppCompatActivity {
                 pickLevel(view);
             }
         });
+
+        Utils.createMenu(this);
     }
 
     private void pickLevel(View view){

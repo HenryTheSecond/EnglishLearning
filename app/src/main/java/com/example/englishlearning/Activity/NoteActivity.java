@@ -42,7 +42,7 @@ public class NoteActivity extends AppCompatActivity {
     ValueEventListener listener;
     DatabaseReference reference;
 
-    private int[] id = {0};
+//    private int[] id = {0};
 
 
     @Override
@@ -65,17 +65,12 @@ public class NoteActivity extends AppCompatActivity {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     for(DataSnapshot data: snapshot.getChildren()){
-                        if(Integer.parseInt(data.getKey()) > id[0]){
-                            id[0] = Integer.parseInt(data.getKey());
-                        }
-                        System.out.println(data);
-                        NotedWord word = new NotedWord( Integer.parseInt(data.getKey()),
+                        NotedWord word = new NotedWord( Long.parseLong(data.getKey()),
                                 data.child("content").getValue(String.class),
                                 data.child("meaning").getValue(String.class),
                                 NotedWord.Type.parseType( data.child("type").getValue(String.class)) );
                         adapter.getList().add(word);
                     }
-                    id[0]++;
                     recyclerView.setAdapter(adapter);
                 }
 
@@ -100,12 +95,13 @@ public class NoteActivity extends AppCompatActivity {
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                reference.removeEventListener(listener);
+                if(reference != null)
+                    reference.removeEventListener(listener);
                 ErrorDialogFragment.newInstance(
                         adapter,
                         true,
-                        true,
-                        id
+                        true
+
                 ).show(fragmentManager, ErrorDialogFragment.class.getSimpleName());
             }
         });

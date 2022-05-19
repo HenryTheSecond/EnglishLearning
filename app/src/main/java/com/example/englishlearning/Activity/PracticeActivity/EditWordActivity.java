@@ -29,7 +29,7 @@ public class EditWordActivity extends AppCompatActivity {
     private View btnEdit;
     private View btnCancel;
 
-    int id;
+    long id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +43,7 @@ public class EditWordActivity extends AppCompatActivity {
         btnEdit = findViewById(R.id.btnOne);
         btnCancel = findViewById(R.id.btnTwo);
 
-        id = getIntent().getIntExtra("id", -1);
+        id = getIntent().getLongExtra("id", -1);
         edtContent.setText(getIntent().getStringExtra("content"));
         edtMeaning.setText(getIntent().getStringExtra("meaning"));
         spinner.setSelection(adapter.getPosition(NotedWord.Type.parseType(getIntent().getStringExtra("type"))));
@@ -65,6 +65,8 @@ public class EditWordActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        Utils.createMenu(this);
     }
 
     private void saveToFirebase(View view){
@@ -85,6 +87,8 @@ public class EditWordActivity extends AppCompatActivity {
         contentValues.put("content", edtContent.getText().toString());
         contentValues.put("meaning", edtMeaning.getText().toString());
         contentValues.put("type", spinner.getSelectedItem().toString());
+        System.out.print(edtContent.getText().toString());
+        System.out.print(edtMeaning.getText().toString());
         // The columns for the WHERE clause
         String selection = ("id" + " = ?");
         // The values for the WHERE clause

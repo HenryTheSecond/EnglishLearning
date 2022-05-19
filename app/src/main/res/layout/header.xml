@@ -1,28 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.appcompat.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="50dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="horizontal"
     android:weightSum="5"
-    android:background="@color/light_blue">
+    android:background="@color/light_blue"
+    android:id="@+id/tool_bar"
+    app:menu="@menu/menu_header">
 
-    <TextView
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:gravity="center"
-        android:fontFamily="casual"
-        android:text="@string/app_name"
-        android:textSize="40dp"
-        android:layout_weight="1"
-        android:textStyle="bold|italic"
-        android:textColor="@color/blue"
-        />
+        android:layout_height="wrap_content">
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="4"
+            android:src="@drawable/avatar" />
 
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="4"
-        android:src="@drawable/avatar"
-        />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:gravity="center"
+            android:fontFamily="casual"
+            android:text="@string/app_name"
+            android:textSize="40dp"
+            android:layout_weight="1"
+            android:textStyle="bold|italic"
+            android:textColor="@color/blue" />
 
-</LinearLayout>
+
+    </LinearLayout>
+
+
+
+
+</androidx.appcompat.widget.Toolbar>

@@ -16,7 +16,7 @@ public class PracticeFillingBlank extends GeneralPractice {
     private String idFillingBlanks;
     private String fillingBlankAnswer;
 
-    public PracticeFillingBlank(int id, String dateTime, int correct, String idFillingBlanks, String fillingBlankAnswer) {
+    public PracticeFillingBlank(long id, String dateTime, int correct, String idFillingBlanks, String fillingBlankAnswer) {
         this.id = id;
         this.dateTime = dateTime;
         this.correct = correct;
@@ -24,11 +24,11 @@ public class PracticeFillingBlank extends GeneralPractice {
         this.fillingBlankAnswer = fillingBlankAnswer;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 

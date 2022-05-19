@@ -15,18 +15,18 @@ public class PracticeWriting extends GeneralPractice {
     private int correct;
     private String writingAnswer;
 
-    public PracticeWriting(int id, String dateTime, int correct, String writingAnswer) {
+    public PracticeWriting(long id, String dateTime, int correct, String writingAnswer) {
         this.id = id;
         this.dateTime = dateTime;
         this.correct = correct;
         this.writingAnswer = writingAnswer;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 

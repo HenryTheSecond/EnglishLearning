@@ -16,7 +16,7 @@ public class PracticeListening extends GeneralPractice {
     private String idListenings;
     private String listeningAnswer;
 
-    public PracticeListening(int id, String dateTime, int correct, String idListenings, String listeningAnswer) {
+    public PracticeListening(long id, String dateTime, int correct, String idListenings, String listeningAnswer) {
         this.id = id;
         this.dateTime = dateTime;
         this.correct = correct;
@@ -24,11 +24,11 @@ public class PracticeListening extends GeneralPractice {
         this.listeningAnswer = listeningAnswer;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 

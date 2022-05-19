@@ -1,23 +1,40 @@
 package com.example.englishlearning;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.AssetFileDescriptor;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.media.MediaPlayer;
 import android.net.ConnectivityManager;
+
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import androidx.appcompat.widget.Toolbar;
+
+import com.example.englishlearning.Activity.LoginActivity;
 import com.example.englishlearning.Databases.EnglishHelper;
+import com.example.englishlearning.Databases.UserDataHelper;
 import com.example.englishlearning.Model.FillingBlank;
 import com.example.englishlearning.Model.Listening;
 import com.example.englishlearning.Model.MultipleChoiceAnswer;
+import com.example.englishlearning.Model.NotedWord;
+import com.example.englishlearning.Model.PracticeModel.PracticeFillingBlank;
+import com.example.englishlearning.Model.PracticeModel.PracticeListening;
+import com.example.englishlearning.Model.PracticeModel.PracticeReading;
+import com.example.englishlearning.Model.PracticeModel.PracticeSingleQuestion;
+import com.example.englishlearning.Model.PracticeModel.PracticeWriting;
 import com.example.englishlearning.Model.Reading;
+import com.example.englishlearning.Model.ReviewModel.RawTestRecord;
 import com.example.englishlearning.Model.SingleQuestion;
 import com.example.englishlearning.Model.Writing;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.io.IOException;
 import java.math.BigInteger;
@@ -243,7 +260,9 @@ public class Utils {
         }
         Toast.makeText(context, "No internet available", Toast.LENGTH_SHORT).show();
         return false;
+
     }
+
 
     public static void saveLogin(Context context, String username){
         SharedPreferences sharedPreferences = context.getSharedPreferences(FILE_NAME_SAVE_LOG_IN, Context.MODE_PRIVATE);
@@ -267,4 +286,144 @@ public class Utils {
     }
 
 
+    public static void createMenu(Activity context){
+        Toolbar toolbar = context.findViewById(R.id.tool_bar);
+
+        if(!Utils.isLoggedIn(context))
+            toolbar.getMenu().getItem(1).setTitle("Log in");
+
+        toolbar.getMenu().getItem(0).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem) {
+                if(Utils.checkInternet(context))
+                    if(Utils.isLoggedIn(context)){
+                        synchronizeData(context);
+                    }else{
+                        Intent intent = new Intent(context, LoginActivity.class);
+                        intent.putExtra("isSynchronize", true);
+                        context.startActivity(intent);
+                    }
+                return true;
+            }
+        });
+        toolbar.getMenu().getItem(1).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem) {
+                Intent intent = new Intent(context, LoginActivity.class);
+                if(Utils.isLoggedIn(context)){
+                    removeLogin(context);
+                    context.finish();
+                }
+                context.startActivity(intent);
+                return true;
+            }
+        });
+    }
+
+    public static void synchronizeData(Activity context){
+        String login = Utils.getLogin(context);
+        UserDataHelper helper = new UserDataHelper(context);
+        SQLiteDatabase database = helper.getReadableDatabase();
+
+        //note_word
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("note_word/" + login);
+        Cursor cursor = database.rawQuery("SELECT * FROM note_word", null);
+        NotedWord notedWord;
+        long id;
+        while(cursor.moveToNext()){
+            id = new Date().getTime();
+            notedWord = new NotedWord(id, cursor.getString(1), cursor.getString(2), NotedWord.Type.parseType(cursor.getString(3)));
+            ref.child(String.valueOf(id)).setValue(notedWord);
+        }
+
+        //filling_blank
+        ref = FirebaseDatabase.getInstance().getReference("practice_filling_blank/" + login);
+        cursor = database.rawQuery("Select * from practice_filling_blank", null);
+        while(cursor.moveToNext()){
+            id = new Date().getTime();
+
+            DatabaseReference node = ref.child(String.valueOf(id));
+            node.child("date_time").setValue(cursor.getString(1));
+            node.child("correct").setValue(cursor.getInt(2));
+            node.child("id_filling_blanks").setValue(cursor.getString(3));
+            node.child("filling_blank_answer").setValue(cursor.getString(4));
+        }
+
+        //listening
+        ref = FirebaseDatabase.getInstance().getReference("practice_listening/" + login);
+        cursor = database.rawQuery("Select * from practice_listening", null);
+        while(cursor.moveToNext()){
+            id = new Date().getTime();
+            DatabaseReference node = ref.child(String.valueOf(id));
+            node.child("date_time").setValue(cursor.getString(1));
+            node.child("correct").setValue(cursor.getInt(2));
+            node.child("id_listenings").setValue(cursor.getString(3));
+            node.child("listening_answer").setValue(cursor.getString(4));
+        }
+
+        //reading
+        ref = FirebaseDatabase.getInstance().getReference("practice_reading/" + login);
+        cursor = database.rawQuery("Select * from practice_reading", null);
+        while(cursor.moveToNext()){
+            id = new Date().getTime();
+            DatabaseReference node = ref.child(String.valueOf(id));
+            node.child("date_time").setValue(cursor.getString(1));
+            node.child("correct").setValue(cursor.getInt(2));
+            node.child("id_readings").setValue(cursor.getString(3));
+            node.child("reading_answer").setValue(cursor.getString(4));
+        }
+
+        //single_question
+        ref = FirebaseDatabase.getInstance().getReference("practice_single_question/" + login);
+        cursor = database.rawQuery("Select * from practice_single_question", null);
+        while(cursor.moveToNext()){
+            id = new Date().getTime();
+            DatabaseReference node = ref.child(String.valueOf(id));
+            node.child("date_time").setValue(cursor.getString(1));
+            node.child("correct").setValue(cursor.getInt(2));
+            node.child("single_answer").setValue(cursor.getString(3));
+        }
+
+        //writing
+        ref = FirebaseDatabase.getInstance().getReference("practice_writing/" + login);
+        cursor = database.rawQuery("Select * from practice_writing", null);
+        while(cursor.moveToNext()){
+            id = new Date().getTime();
+            DatabaseReference node = ref.child(String.valueOf(id));
+            node.child("date_time").setValue(cursor.getString(1));
+            node.child("correct").setValue(cursor.getInt(2));
+            node.child("writing_answer").setValue(cursor.getString(3));
+        }
+
+        //all
+        ref = FirebaseDatabase.getInstance().getReference("test_record/" + login);
+        cursor = database.rawQuery("Select * from test_record", null);
+        while(cursor.moveToNext()){
+            id = new Date().getTime();
+
+            DatabaseReference node = ref.child(String.valueOf(id));
+            node.child("date_time").setValue(cursor.getString(1));
+            node.child("point").setValue(cursor.getDouble(2));
+            node.child("id_listenings").setValue(cursor.getString(3));
+            node.child("listening_answer").setValue(cursor.getString(4));
+            node.child("id_filling_blank").setValue(cursor.getString(5));
+            node.child("filling_blank_answer").setValue(cursor.getString(6));
+            node.child("id_reading").setValue(cursor.getString(7));
+            node.child("reading_answer").setValue(cursor.getString(8));
+            node.child("single_question").setValue(cursor.getString(9));
+            node.child("writing").setValue(cursor.getString(10));
+        }
+
+        SQLiteDatabase writeDatabse = helper.getWritableDatabase();
+
+        writeDatabse.execSQL("DELETE FROM note_word");
+        writeDatabse.execSQL("DELETE FROM practice_filling_blank");
+        writeDatabse.execSQL("DELETE FROM practice_listening");
+        writeDatabse.execSQL("DELETE FROM practice_reading");
+        writeDatabse.execSQL("DELETE FROM practice_single_question");
+        writeDatabse.execSQL("DELETE FROM practice_writing");
+        writeDatabse.execSQL("DELETE FROM test_record");
+
+
+    }
 }

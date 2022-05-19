@@ -1,4 +1,4 @@
-package com.example.englishlearning;
+package com.example.englishlearning.Activity;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -19,6 +19,9 @@ import com.example.englishlearning.Model.PracticeModel.PracticeSingleQuestion;
 import com.example.englishlearning.Model.PracticeModel.PracticeWriting;
 import com.example.englishlearning.Model.ReviewModel.RawTestRecord;
 import com.example.englishlearning.Model.ReviewModel.TestRecord;
+import com.example.englishlearning.R;
+import com.example.englishlearning.ReviewAdapter;
+import com.example.englishlearning.Utils;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -49,6 +52,8 @@ public class ReviewListActivity extends AppCompatActivity {
             getDataFromSqlite();
         }
         lvItem.setAdapter(adapter);
+
+        Utils.createMenu(this);
     }
 
     private void getDataFromSqlite(){
@@ -139,7 +144,7 @@ public class ReviewListActivity extends AppCompatActivity {
     }
 
     private GeneralPractice getItem(DataSnapshot snapshot){
-        int id = Integer.parseInt(snapshot.getKey());
+        long id = Long.parseLong(snapshot.getKey());
         String dateTime = snapshot.child("date_time").getValue(String.class);
         int correct = -1;
         double point = -1;

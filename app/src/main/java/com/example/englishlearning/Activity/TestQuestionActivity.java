@@ -45,6 +45,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class TestQuestionActivity extends AppCompatActivity {
@@ -120,20 +121,20 @@ public class TestQuestionActivity extends AppCompatActivity {
 
         if(Utils.isLoggedIn(this)){
             reference = FirebaseDatabase.getInstance().getReference("test_record").child(Utils.getLogin(this));
-            reference.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    for(DataSnapshot data: snapshot.getChildren()){
-                        if(Long.parseLong(data.getKey())>id)
-                            id = Long.parseLong(data.getKey());
-                    }
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-
-                }
-            });
+//            reference.addValueEventListener(new ValueEventListener() {
+//                @Override
+//                public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                    for(DataSnapshot data: snapshot.getChildren()){
+//                        if(Long.parseLong(data.getKey())>id)
+//                            id = Long.parseLong(data.getKey());
+//                    }
+//                }
+//
+//                @Override
+//                public void onCancelled(@NonNull DatabaseError error) {
+//
+//                }
+//            });
         }
 
 
@@ -276,7 +277,7 @@ public class TestQuestionActivity extends AppCompatActivity {
         if(Utils.isLoggedIn(this)){
             idInsert = saveToFirebase(date, point, idListenings, listeningAnswer, idFillingBlank, fillingBlankAnswer,
                     idReading, readingAnswer, singleQuestionAnswer, writingAnswer);
-            record = new RawTestRecord((int)idInsert, date, point, idListenings, listeningAnswer, idFillingBlank, fillingBlankAnswer,
+            record = new RawTestRecord(idInsert, date, point, idListenings, listeningAnswer, idFillingBlank, fillingBlankAnswer,
                                         idReading, readingAnswer, singleQuestionAnswer, writingAnswer);
             Gson gson = new Gson();
             intent.putExtra(ReviewResult.RECORD_KEY, gson.toJson(record));
@@ -294,7 +295,8 @@ public class TestQuestionActivity extends AppCompatActivity {
     }
 
     private long saveToFirebase(String date, double point, String idListenings, String listeningAnswer, String idFillingBlank, String fillingBlankAnswer, String idReading, String readingAnswer, String singleQuestionAnswer, String writingAnswer) {
-        id++;
+//        id++;
+        id = new Date().getTime();
         DatabaseReference node = reference.child( String.valueOf( id ) );
         node.child("date_time").setValue(date);
         node.child("point").setValue(point);
@@ -303,7 +305,6 @@ public class TestQuestionActivity extends AppCompatActivity {
         node.child("id_filling_blank").setValue(idFillingBlank);
         node.child("filling_blank_answer").setValue(fillingBlankAnswer);
         node.child("id_reading").setValue(idReading);
-        node.child("reading_answer").setValue(readingAnswer);
         node.child("reading_answer").setValue(readingAnswer);
         node.child("single_question").setValue(singleQuestionAnswer);
         node.child("writing").setValue(writingAnswer);

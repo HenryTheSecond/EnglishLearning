@@ -43,6 +43,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class PracticeListeningActivity extends AppCompatActivity {
@@ -110,18 +111,18 @@ public class PracticeListeningActivity extends AppCompatActivity {
 
         if(Utils.isLoggedIn(this)){
             reference = FirebaseDatabase.getInstance().getReference("practice_listening").child(Utils.getLogin(this));
-            reference.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    for(DataSnapshot data: snapshot.getChildren()){
-                        if(Long.parseLong(data.getKey())>id)
-                            id = Long.parseLong(data.getKey());
-                    }
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) { }
-            });
+//            reference.addValueEventListener(new ValueEventListener() {
+//                @Override
+//                public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                    for(DataSnapshot data: snapshot.getChildren()){
+//                        if(Long.parseLong(data.getKey())>id)
+//                            id = Long.parseLong(data.getKey());
+//                    }
+//                }
+//
+//                @Override
+//                public void onCancelled(@NonNull DatabaseError error) { }
+//            });
         }
 
         findAllQuestionButtons();
@@ -198,7 +199,7 @@ public class PracticeListeningActivity extends AppCompatActivity {
         if(Utils.isLoggedIn(this)){
             saveToFirebase(date, correct, idListenings, listeningAnswer);
             Gson gson = new Gson();
-            PracticeListening record = new PracticeListening((int)id, date, correct, idListenings, listeningAnswer);
+            PracticeListening record = new PracticeListening(id, date, correct, idListenings, listeningAnswer);
             intent.putExtra("record", gson.toJson(record));
         }else{
             long idInsert = saveToSqlite(date, correct, idListenings, listeningAnswer);
@@ -212,7 +213,7 @@ public class PracticeListeningActivity extends AppCompatActivity {
     }
 
     private void saveToFirebase(String date, int correct, String idListenings, String listeningAnswer){
-        id++;
+        id = new Date().getTime();
         DatabaseReference node = reference.child( String.valueOf( id ) );
         node.child("date_time").setValue(date);
         node.child("correct").setValue(correct);

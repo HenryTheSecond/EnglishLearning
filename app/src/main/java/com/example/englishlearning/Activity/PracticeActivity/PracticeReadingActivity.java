@@ -37,6 +37,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class PracticeReadingActivity extends AppCompatActivity {
@@ -104,18 +105,18 @@ public class PracticeReadingActivity extends AppCompatActivity {
 
         if(Utils.isLoggedIn(this)){
             reference = FirebaseDatabase.getInstance().getReference("practice_reading").child(Utils.getLogin(this));
-            reference.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    for(DataSnapshot data: snapshot.getChildren()){
-                        if(Long.parseLong(data.getKey())>id)
-                            id = Long.parseLong(data.getKey());
-                    }
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) { }
-            });
+//            reference.addValueEventListener(new ValueEventListener() {
+//                @Override
+//                public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                    for(DataSnapshot data: snapshot.getChildren()){
+//                        if(Long.parseLong(data.getKey())>id)
+//                            id = Long.parseLong(data.getKey());
+//                    }
+//                }
+//
+//                @Override
+//                public void onCancelled(@NonNull DatabaseError error) { }
+//            });
         }
 
 
@@ -192,7 +193,7 @@ public class PracticeReadingActivity extends AppCompatActivity {
         if(Utils.isLoggedIn(this)){
             saveToFirebase(date, correct, idReadings, readingAnswer);
             Gson gson = new Gson();
-            PracticeReading record = new PracticeReading((int)id, date, correct, idReadings, readingAnswer);
+            PracticeReading record = new PracticeReading(id, date, correct, idReadings, readingAnswer);
             intent.putExtra("record", gson.toJson(record));
         }else{
             long idInsert = saveToSqlite(date, correct, idReadings, readingAnswer);
@@ -206,7 +207,7 @@ public class PracticeReadingActivity extends AppCompatActivity {
     }
 
     private void saveToFirebase(String date, int correct, String idReadings, String readingAnswer){
-        id++;
+        id = new Date().getTime();
         DatabaseReference node = reference.child( String.valueOf( id ) );
         node.child("date_time").setValue(date);
         node.child("correct").setValue(correct);

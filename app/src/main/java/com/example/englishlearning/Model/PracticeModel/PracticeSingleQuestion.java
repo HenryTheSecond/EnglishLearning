@@ -15,18 +15,18 @@ public class PracticeSingleQuestion extends GeneralPractice {
     private int correct;
     private String singleAnswer;
 
-    public PracticeSingleQuestion(int id, String dateTime, int correct, String singleAnswer) {
+    public PracticeSingleQuestion(long id, String dateTime, int correct, String singleAnswer) {
         this.id = id;
         this.dateTime = dateTime;
         this.correct = correct;
         this.singleAnswer = singleAnswer;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 

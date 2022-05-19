@@ -39,7 +39,8 @@ public class LoginActivity extends AppCompatActivity {
         btnLogin = findViewById(R.id.btn_login);
 
         btnLogin.setOnClickListener(view -> {
-            btnLoginClicked();
+            if(Utils.checkInternet(view.getContext()))
+                btnLoginClicked();
         });
 
         tvGuest.setOnClickListener(view -> {
@@ -78,6 +79,9 @@ public class LoginActivity extends AppCompatActivity {
 
     private void login(){
         Utils.saveLogin(this, etUsername.getText().toString());
+        if(getIntent().getBooleanExtra("isSynchronize", false)){
+            Utils.synchronizeData(this);
+        }
 
         moveToDashBoard();
     }

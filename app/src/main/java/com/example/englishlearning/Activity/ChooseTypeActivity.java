@@ -1,15 +1,13 @@
-package com.example.englishlearning;
+package com.example.englishlearning.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Pair;
 import android.view.View;
 
-import com.example.englishlearning.Activity.DashBoard;
-import com.example.englishlearning.Activity.MainActivity;
-import com.example.englishlearning.Activity.PickLevelActivity;
+import com.example.englishlearning.R;
+import com.example.englishlearning.Utils;
 
 import java.util.HashMap;
 
@@ -40,6 +38,8 @@ public class ChooseTypeActivity extends AppCompatActivity {
         reviewHash.put(R.id.btn_all, "test_record");
 
         callingType = getIntent().getStringExtra(DashBoard.CALLING_TYPE);
+
+        Utils.createMenu(this);
     }
 
     public void btnClick(View view){

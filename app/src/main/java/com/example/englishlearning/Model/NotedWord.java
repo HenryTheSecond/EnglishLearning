@@ -5,7 +5,7 @@ import android.widget.Button;
 import java.util.Date;
 
 public class NotedWord {
-    private int id;
+    private long id;
     private String content;
     private Type type;
     private String meaning;
@@ -48,7 +48,7 @@ public class NotedWord {
         this.meaning = "";
     }
 
-    public NotedWord(int id, String content, String meaning, Type type) {
+    public NotedWord(long id, String content, String meaning, Type type) {
         this.id = id;
         this.content = content;
         this.type = type;
@@ -86,11 +86,11 @@ public class NotedWord {
         this.meaning = meaning;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 }

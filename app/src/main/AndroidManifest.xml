@@ -14,11 +14,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.EnglishLearning">
         <activity
-            android:name=".ChooseTypeActivity"
+            android:name=".Activity.ChooseTypeActivity"
             android:exported="false" />
-        <!-- <activity -->
-        <!-- android:name=".RegisterActivity" -->
-        <!-- android:exported="false" /> -->
+         <activity
+         android:name=".Activity.RegisterActivity"
+         android:exported="false" />
         <!-- <activity -->
         <!-- android:name=".Activity.LoginActivity" -->
         <!-- android:exported="false" /> -->
@@ -58,9 +58,9 @@
         <activity
             android:name=".Activity.DashBoard"
             android:exported="false" />
-        <!-- <activity -->
-        <!-- android:name=".Activity.NoteActivity" -->
-        <!-- android:exported="false" /> -->
+         <activity
+         android:name=".Activity.NoteActivity"
+         android:exported="false" />
         <activity
             android:name=".Activity.TestQuestionActivity"
             android:exported="false" />
@@ -70,7 +70,7 @@
         <activity
             android:name=".Activity.PracticeActivity.EditWordActivity"
             android:exported="false" />
-        <activity android:name=".ReviewListActivity"
+        <activity android:name=".Activity.ReviewListActivity"
             android:exported="false"/>
         <activity
             android:name=".Activity.LoginActivity"

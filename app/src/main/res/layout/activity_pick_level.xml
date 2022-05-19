@@ -8,22 +8,26 @@
     android:orientation="vertical">
 
 
+    <include layout="@layout/header"/>
     <Button
         android:id="@+id/tv_level_1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Level 1"/>
+        android:text="Level 1"
+        android:backgroundTint="@color/blue"/>
 
     <Button
         android:id="@+id/tv_level_2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Level 2"/>
+        android:text="Level 2"
+        android:backgroundTint="@color/blue"/>
 
     <Button
         android:id="@+id/tv_level_3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Level 3"/>
+        android:text="Level 3"
+        android:backgroundTint="@color/blue"/>
 
 </LinearLayout>
