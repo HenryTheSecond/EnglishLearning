@@ -8,7 +8,7 @@
     android:orientation="vertical">
 
     <EditText
-        android:id="@+id/tv_paragraph"
+        android:id="@+id/et_question"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:maxLines="5"
@@ -33,6 +33,27 @@
             android:hint="Answer here"/>
 
     </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/defalult_margin">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:text="Input level: " />
+
+        <EditText
+            android:id="@+id/et_level"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="numberDecimal"
+            android:hint="Level here"/>
+
+    </LinearLayout>
+
 
 
     <LinearLayout
