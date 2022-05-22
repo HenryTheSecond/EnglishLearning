@@ -1,97 +1,88 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:weightSum="4"
-        >
 
+    <RadioGroup
+        android:id="@+id/radio_group"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
         <RadioButton
             android:id="@+id/rbt_answer_a"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"/>
-        <EditText
-            android:id="@+id/answer_a"
-            android:backgroundTint="@color/blue"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="3"
-            android:maxLines="3"
-            android:hint="A.answer a"
-            />
-    </LinearLayout>
+            android:layout_weight="1" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:weightSum="4"
-        >
+
+
+
 
         <RadioButton
             android:id="@+id/rbt_answer_b"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"/>
-        <EditText
-            android:id="@+id/answer_b"
-            android:backgroundTint="@color/blue"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_below="@id/rbt_answer_a"/>
 
-            android:layout_weight="3"
-            android:maxLines="3"
-            android:hint="B.answer b"
-            />
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:weightSum="4"
-        >
+
 
         <RadioButton
             android:id="@+id/rbt_answer_c"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"/>
-        <EditText
-            android:id="@+id/answer_c"
-            android:backgroundTint="@color/blue"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="3"
-            android:maxLines="3"
-            android:hint="C.answer c"
-            />
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:weightSum="4"
-        >
+            android:layout_weight="1"
+            android:layout_below="@id/rbt_answer_b"/>
+
 
         <RadioButton
             android:id="@+id/rbt_answer_d"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"/>
-        <EditText
-            android:id="@+id/answer_d"
-            android:backgroundTint="@color/blue"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="3"
-            android:maxLines="3"
-            android:hint="D.answer d"
-            />
-    </LinearLayout>
-</LinearLayout>
+            android:layout_weight="1"
+            android:layout_below="@id/rbt_answer_c"/>
+
+    </RadioGroup>
+
+    <EditText
+        android:id="@+id/answer_a"
+        android:backgroundTint="@color/blue"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="3"
+        android:maxLines="3"
+        android:hint="A.answer a"
+        android:layout_toEndOf="@id/radio_group"/>
+    <EditText
+        android:id="@+id/answer_b"
+        android:backgroundTint="@color/blue"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="3"
+        android:maxLines="3"
+        android:hint="B.answer b"
+        android:layout_toEndOf="@id/radio_group"
+        android:layout_below="@id/answer_a"/>
+    <EditText
+        android:id="@+id/answer_c"
+        android:backgroundTint="@color/blue"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="3"
+        android:maxLines="3"
+        android:hint="C.answer c"
+        android:layout_toEndOf="@id/radio_group"
+        android:layout_below="@id/answer_b"/>
+    <EditText
+        android:id="@+id/answer_d"
+        android:backgroundTint="@color/blue"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="3"
+        android:maxLines="3"
+        android:hint="D.answer d"
+        android:layout_toEndOf="@id/radio_group"
+        android:layout_below="@id/answer_c"/>
+
+</RelativeLayout>

@@ -7,14 +7,6 @@
     tools:context=".Activity.Admin.AddSingleQuestionActivity"
     android:orientation="vertical">
 
-    <EditText
-        android:id="@+id/edt_paragraph"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:maxLines="5"
-        android:hint="paragraph_displays_here \n\n\n\n\n\n\n\n\n\n\n\n"
-        android:layout_marginBottom="@dimen/text_margin"
-        android:layout_margin="@dimen/defalult_margin"/>
 
     <ScrollView
         android:layout_width="match_parent"
@@ -31,6 +23,27 @@
                 android:hint="Question number 1"/>
             <include layout="@layout/single_question"
                 android:id="@+id/multiple_choice1"/>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/defalult_margin">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="10dp"
+                    android:text="Input level: " />
+
+                <Spinner
+                    android:id="@+id/spinner_level"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="numberDecimal"
+                    android:hint="Level here"/>
+
+            </LinearLayout>
 
 
             <LinearLayout
@@ -58,4 +71,6 @@
             </LinearLayout>
         </LinearLayout>
     </ScrollView>
+
+
 </LinearLayout>
