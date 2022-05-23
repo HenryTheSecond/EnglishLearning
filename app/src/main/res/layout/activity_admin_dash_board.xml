@@ -33,21 +33,11 @@
             android:layout_height="60dp"
             android:backgroundTint="@color/blue"
             android:text="filling blank"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="50dp"
             android:textSize="20sp"
             android:textStyle="bold"
             />
 
-        <Button
-            android:id="@+id/btn_listening"
-            android:layout_width="match_parent"
-            android:layout_marginTop="20dp"
-            android:layout_height="60dp"
-            android:backgroundTint="@color/blue"
-            android:text="listening"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            />
 
         <Button
             android:id="@+id/btn_reading"

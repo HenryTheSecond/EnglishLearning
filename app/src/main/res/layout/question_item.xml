@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="7">
+        <TextView
+            android:id="@+id/tv_question"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginTop="@dimen/defalult_margin"
+            android:layout_marginLeft="@dimen/defalult_margin"
+            android:text="questions"
+            android:textSize="20sp"
+            android:textColor="@color/black"
+            android:maxLength="50"/>
+
+        <Button
+            android:id="@+id/btn_edit_question"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_marginTop="@dimen/defalult_margin"
+            android:visibility="visible"
+            android:layout_weight="3"
+            android:background="@drawable/pencil"/>
+
+        <Button
+            android:id="@+id/btn_delete_question"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_marginTop="@dimen/defalult_margin"
+            android:visibility="visible"
+            android:layout_weight="3"
+            android:background="@drawable/bin"/>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/blue" />
+</LinearLayout>
