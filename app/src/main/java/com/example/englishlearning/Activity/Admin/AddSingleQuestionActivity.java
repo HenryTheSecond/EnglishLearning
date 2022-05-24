@@ -1,8 +1,14 @@
 package com.example.englishlearning.Activity.Admin;
 
+import static com.example.englishlearning.Activity.Admin.AdminDashBoardActivity.FILL_BLANK;
+import static com.example.englishlearning.Activity.Admin.AdminDashBoardActivity.SINGLE_QUESTION;
+import static com.example.englishlearning.Activity.Admin.AdminDashBoardActivity.TABLE;
+import static com.example.englishlearning.Activity.Admin.QuestionListActivity.IS_ADD;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.ContentValues;
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
@@ -26,13 +32,16 @@ public class AddSingleQuestionActivity extends AppCompatActivity {
     EditText edtQuestion;
     Spinner spinnerLevel;
     View multipleChoice1;
-
+    Boolean isAdd;
+    Long id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_single_question);
 
+        isAdd = getIntent().getBooleanExtra(IS_ADD, true);
+        id = getIntent().getLongExtra("id", -1);
         edtQuestion = findViewById(R.id.edt_question1);
         spinnerLevel = findViewById(R.id.spinner_level);
 
@@ -40,8 +49,22 @@ public class AddSingleQuestionActivity extends AppCompatActivity {
         Button btnAdd = findViewById(R.id.btn_add_question);
         Button btnCancel = findViewById(R.id.btn_cancel);
 
-        btnAdd.setOnClickListener(view -> {
-            addSingleQuestion();
+        if(isAdd && id != -1){
+            btnAdd.setText("Add");
+            btnAdd.setOnClickListener( view ->{
+                addSingleQuestion();
+            });
+        } else{
+            btnAdd.setText("Edit");
+            btnAdd.setOnClickListener( view ->{
+                Toast.makeText(this, String.valueOf(id), Toast.LENGTH_SHORT).show();
+            });
+        }
+
+        btnCancel.setOnClickListener( view ->{
+            Intent intent = new Intent(AddSingleQuestionActivity.this, QuestionListActivity.class);
+            intent.putExtra(TABLE, SINGLE_QUESTION);
+            startActivity(intent);
         });
 
         ArrayAdapter<Integer> adapter = new ArrayAdapter<Integer>(this, android.R.layout.simple_list_item_1, new Integer[]{1,2,3});

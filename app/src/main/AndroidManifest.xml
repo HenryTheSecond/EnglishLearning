@@ -72,8 +72,18 @@
             android:exported="false" />
         <activity android:name=".Activity.ReviewListActivity"
             android:exported="false"/>
+        <activity android:name=".Activity.Admin.QuestionListActivity"
+            android:exported="false"/>
+        <activity android:name=".Activity.Admin.AddFillBlankActivity"
+            android:exported="false"/>
+        <activity android:name=".Activity.Admin.AddSingleQuestionActivity"
+            android:exported="false"/>
+        <activity android:name=".Activity.Admin.AddEssayActivity"
+            android:exported="false"/>
+        <activity android:name=".Activity.Admin.AddWriteActivity"
+            android:exported="false"/>
         <activity
-            android:name=".Activity.Admin.AddEssayActivity"
+            android:name=".Activity.Admin.AdminDashBoardActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -1,8 +1,15 @@
 package com.example.englishlearning.Activity.Admin;
 
+
+import static com.example.englishlearning.Activity.Admin.AdminDashBoardActivity.FILL_BLANK;
+import static com.example.englishlearning.Activity.Admin.AdminDashBoardActivity.READ;
+import static com.example.englishlearning.Activity.Admin.AdminDashBoardActivity.TABLE;
+import static com.example.englishlearning.Activity.Admin.QuestionListActivity.IS_ADD;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.ContentValues;
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
@@ -27,8 +34,8 @@ public class AddEssayActivity extends AppCompatActivity {
     List<EditText> listEdtQuestion;
     List<View> listMultipleChoice;
     Spinner spinnerLevel;
-
-
+    Boolean isAdd;
+    Long id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +44,8 @@ public class AddEssayActivity extends AppCompatActivity {
 
         listEdtQuestion = new ArrayList<>();
         listMultipleChoice = new ArrayList<>();
+        isAdd = getIntent().getBooleanExtra(IS_ADD, true);
+        id = getIntent().getLongExtra("id", -1);
 
         edtParagraph = findViewById(R.id.edt_paragraph);
         listEdtQuestion.add(findViewById(R.id.edt_question1)); listEdtQuestion.add(findViewById(R.id.edt_question2)); listEdtQuestion.add(findViewById(R.id.edt_question3));
@@ -48,8 +57,24 @@ public class AddEssayActivity extends AppCompatActivity {
 
         Button btnAdd = findViewById(R.id.btn_add_question);
 
-        btnAdd.setOnClickListener( view ->{
-            addEssay();
+        if(isAdd && id != -1){
+            btnAdd.setText("Add");
+            btnAdd.setOnClickListener( view ->{
+                addEssay();
+            });
+        } else{
+            btnAdd.setText("Edit");
+            btnAdd.setOnClickListener( view ->{
+                Toast.makeText(this, String.valueOf(id), Toast.LENGTH_SHORT).show();
+            });
+        }
+
+
+        Button btnCancel = findViewById(R.id.btn_cancel);
+        btnCancel.setOnClickListener( view ->{
+            Intent intent = new Intent(AddEssayActivity.this, QuestionListActivity.class);
+            intent.putExtra(TABLE, READ);
+            startActivity(intent);
         });
     }
 

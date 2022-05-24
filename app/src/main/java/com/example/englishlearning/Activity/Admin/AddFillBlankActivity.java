@@ -1,8 +1,13 @@
 package com.example.englishlearning.Activity.Admin;
 
+import static com.example.englishlearning.Activity.Admin.AdminDashBoardActivity.FILL_BLANK;
+import static com.example.englishlearning.Activity.Admin.AdminDashBoardActivity.TABLE;
+import static com.example.englishlearning.Activity.Admin.QuestionListActivity.IS_ADD;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.ContentValues;
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
@@ -25,22 +30,19 @@ import java.util.List;
 public class AddFillBlankActivity extends AppCompatActivity {
 
     EditText edtParagraph;
-    List<EditText> listEdtQuestion;
     List<View> listMultipleChoice;
     Spinner spinnerLevel;
+    Boolean isAdd;
+    Long id;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_fill_blank);
-
-        listEdtQuestion = new ArrayList<>();
         listMultipleChoice = new ArrayList<>();
 
+        isAdd = getIntent().getBooleanExtra(IS_ADD, true);
+        id = getIntent().getLongExtra("id", -1);
         edtParagraph = findViewById(R.id.edt_paragraph);
-        listEdtQuestion.add(findViewById(R.id.edt_question1));
-        listEdtQuestion.add(findViewById(R.id.edt_question2));
-        listEdtQuestion.add(findViewById(R.id.edt_question3));
-        listEdtQuestion.add(findViewById(R.id.edt_question4));
         listMultipleChoice.add(findViewById(R.id.multiple_choice1));
         listMultipleChoice.add(findViewById(R.id.multiple_choice2));
         listMultipleChoice.add(findViewById(R.id.multiple_choice3));
@@ -52,8 +54,23 @@ public class AddFillBlankActivity extends AppCompatActivity {
 
         Button btnAdd = findViewById(R.id.btn_add_question);
 
-        btnAdd.setOnClickListener( view ->{
-            addEssay();
+        if(isAdd && id != -1){
+            btnAdd.setText("Add");
+            btnAdd.setOnClickListener( view ->{
+                addEssay();
+            });
+        } else{
+            btnAdd.setText("Edit");
+            btnAdd.setOnClickListener( view ->{
+                Toast.makeText(this, String.valueOf(id), Toast.LENGTH_SHORT).show();
+            });
+        }
+
+        Button btnCancel = findViewById(R.id.btn_cancel);
+        btnCancel.setOnClickListener( view ->{
+            Intent intent = new Intent(AddFillBlankActivity.this, QuestionListActivity.class);
+            intent.putExtra(TABLE, FILL_BLANK);
+            startActivity(intent);
         });
     }
 
@@ -81,7 +98,6 @@ public class AddFillBlankActivity extends AppCompatActivity {
             }
 
             ContentValues contentValues = new ContentValues();
-            contentValues.put("question", listEdtQuestion.get(i).getText().toString());
             contentValues.put("id_multiple_choice", idMultipleChoice);
             contentValues.put("id_answer", listId[ radioMapToIndex.get(radioGroup.getCheckedRadioButtonId()) ]);
             long idInsert = database.insert("filling_blank_question", null, contentValues);
@@ -101,12 +117,6 @@ public class AddFillBlankActivity extends AppCompatActivity {
         if(edtParagraph.getText().toString().trim().equals("")){
             Toast.makeText(this, "Please fulfill paragraph", Toast.LENGTH_SHORT).show();
             return false;
-        }
-        for(int i=0; i<listEdtQuestion.size(); i++){
-            if(listEdtQuestion.get(i).getText().toString().trim().equals("")){
-                Toast.makeText(this, "Please fulfill all the question", Toast.LENGTH_SHORT).show();
-                return false;
-            }
         }
         for(int i=0; i<listMultipleChoice.size(); i++){
             if(!UtilsAdmin.checkSingleQuestion(listMultipleChoice.get(i))){

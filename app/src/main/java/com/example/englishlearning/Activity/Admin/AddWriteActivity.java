@@ -1,8 +1,14 @@
 package com.example.englishlearning.Activity.Admin;
 
+import static com.example.englishlearning.Activity.Admin.AdminDashBoardActivity.FILL_BLANK;
+import static com.example.englishlearning.Activity.Admin.AdminDashBoardActivity.TABLE;
+import static com.example.englishlearning.Activity.Admin.AdminDashBoardActivity.WRITE;
+import static com.example.englishlearning.Activity.Admin.QuestionListActivity.IS_ADD;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.ContentValues;
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
@@ -19,33 +25,40 @@ import com.example.englishlearning.R;
 
 public class AddWriteActivity extends AppCompatActivity {
 
-    private Button btnCancel;
     private Button btnAddQuestion;
     private EditText etQuestion;
     private EditText etAnswer;
     Spinner spinnerLevel;
+    Boolean isAdd;
+    Long id;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_write);
-        btnCancel = findViewById(R.id.btn_cancel);
         btnAddQuestion = findViewById(R.id.btn_add_question);
         etQuestion = findViewById(R.id.et_question);
         etAnswer = findViewById(R.id.et_answer);
         spinnerLevel = findViewById(R.id.spinner_level);
+        isAdd = getIntent().getBooleanExtra(IS_ADD, true);
+        id = getIntent().getLongExtra("id", -1);
 
-        btnAddQuestion.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        if(isAdd && id != -1){
+            btnAddQuestion.setText("Add");
+            btnAddQuestion.setOnClickListener( view ->{
                 AddNewQuestion();
-            }
-        });
+            });
+        } else{
+            btnAddQuestion.setText("Edit");
+            btnAddQuestion.setOnClickListener( view ->{
+                Toast.makeText(this, String.valueOf(id), Toast.LENGTH_SHORT).show();
+            });
+        }
 
-        btnCancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-            }
+        Button btnCancel = findViewById(R.id.btn_cancel);
+        btnCancel.setOnClickListener( view ->{
+            Intent intent = new Intent(AddWriteActivity.this, QuestionListActivity.class);
+            intent.putExtra(TABLE, WRITE);
+            startActivity(intent);
         });
 
         ArrayAdapter<Integer> adapter = new ArrayAdapter<Integer>(this, android.R.layout.simple_list_item_1, new Integer[]{1,2,3});
