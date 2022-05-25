@@ -2,6 +2,10 @@
     <string name="app_name">CAT ENGLISH</string>
     <string name="title_activity_note">NoteActivity</string>
     <string name="margin_default">5dp</string>
+    <string name="id_channel">Id Channel</string>
+    <string name="channel_name">Channel name</string>
+    <string name="channel_description">Channel description</string>
+    <string name="notification_content">You have not used app for</string>
     <string name="large_text">
         "Material is the metaphor.\n\n"
 

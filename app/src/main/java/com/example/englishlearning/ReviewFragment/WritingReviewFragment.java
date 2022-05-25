@@ -19,6 +19,7 @@ public class WritingReviewFragment extends Fragment {
     EditText etAnswer;
     TextView tvParagraph;
     Button btnQuestion;
+    TextView tvResult;
 
     WritingReview writingReview;
 
@@ -38,9 +39,20 @@ public class WritingReviewFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         etAnswer = getView().findViewById(R.id.et_answer);
         tvParagraph = getView().findViewById(R.id.tv_paragraph);
+        tvResult = getView().findViewById(R.id.tv_result);
 
         etAnswer.setText( writingReview.getAnswer().trim() );
 
         tvParagraph.setText(writingReview.getWriting().getQuestion());
+
+        String correctAnswer = writingReview.getWriting().getAnswer();
+        if(correctAnswer.trim().toLowerCase().equals( writingReview.getAnswer().trim().toLowerCase() )){
+            tvResult.setText("Correct");
+            tvResult.setTextColor( getResources().getColor(R.color.correct_answer) );
+        }else{
+            tvResult.setText("Incorrect (" + correctAnswer + ")");
+            tvResult.setTextColor( getResources().getColor(R.color.incorrect_answer) );
+        }
+        tvResult.setVisibility(View.VISIBLE);
     }
 }

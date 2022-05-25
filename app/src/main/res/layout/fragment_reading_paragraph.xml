@@ -11,7 +11,8 @@
         android:id="@+id/tv_paragraph"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:maxLines="20"
+        android:maxLines="10"
+        android:scrollbars="vertical"
         android:text="paragraph_displays_here \n\n\n\n\n\n\n\n\n\n\n\n"
         android:layout_marginBottom="@dimen/text_margin"
         android:layout_margin="@dimen/defalult_margin"/>

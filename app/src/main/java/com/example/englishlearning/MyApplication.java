@@ -1,8 +1,13 @@
 package com.example.englishlearning;
 
 import android.app.Application;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.Build;
+
+import androidx.annotation.RequiresApi;
 
 import com.example.englishlearning.Databases.UserDataHelper;
 
@@ -17,6 +22,8 @@ public class MyApplication extends Application {
         createTestRecordDatabase();
         createNotedDatabase();
         createPraticeRecordDatabase();
+
+        createNotificationChannel();
     }
 
     private void createPraticeRecordDatabase(){
@@ -84,6 +91,17 @@ public class MyApplication extends Application {
                 "single_question TEXT," +
                 "writing TEXT )");
     }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private void createNotificationChannel(){
+        NotificationManager notificationManager = getSystemService(NotificationManager.class);
+        NotificationChannel channel = new NotificationChannel(getResources().getString(R.string.id_channel),
+                getResources().getString(R.string.channel_name),
+                NotificationManager.IMPORTANCE_DEFAULT);
+        channel.setDescription(getResources().getString(R.string.channel_description));
+        notificationManager.createNotificationChannel(channel);
+    }
+
 
     public static Context getAppContext(){
         return MyApplication.context;

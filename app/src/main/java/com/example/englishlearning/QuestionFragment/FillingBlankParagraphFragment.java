@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.text.method.ScrollingMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -66,6 +67,8 @@ public class FillingBlankParagraphFragment extends Fragment {
         tvQuestion1 = getView().findViewById(R.id.tv_question1);
         multipleChoice1.setMultipleChoice( getView().findViewById(R.id.multiple_choice1) );
         multipleChoice1.setAnswer( Utils.getMultipleChoiceAnswer(getContext(), Integer.parseInt(multipleChoice1.getBtnQuestion().getText().toString())));
+
+        tvParagraph.setMovementMethod(new ScrollingMovementMethod());
 
         tvQuestion2 = getView().findViewById(R.id.tv_question2);
         multipleChoice2.setMultipleChoice( getView().findViewById(R.id.multiple_choice2) );

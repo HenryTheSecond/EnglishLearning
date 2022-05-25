@@ -33,4 +33,13 @@
 
     </LinearLayout>
 
+    <TextView
+        android:visibility="gone"
+        android:textColor="@color/correct_answer"
+        android:id="@+id/tv_result"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Correct"
+        android:textSize="30sp"/>
+
 </LinearLayout>

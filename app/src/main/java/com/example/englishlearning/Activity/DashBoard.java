@@ -6,9 +6,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
+import com.example.englishlearning.Constant;
 import com.example.englishlearning.R;
 import com.example.englishlearning.Utils;
+import com.example.englishlearning.UtilsNotification;
 
 public class DashBoard extends AppCompatActivity {
 
@@ -20,6 +23,7 @@ public class DashBoard extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dash_board);
 
+        UtilsNotification.deleteAlarm();
 
         btnTest = findViewById(R.id.btn_test);
         btnNote = findViewById(R.id.btn_note);
@@ -51,7 +55,19 @@ public class DashBoard extends AppCompatActivity {
         startActivity(intent);
     }
 
+    @Override
+    protected void onPause() {
+        Toast.makeText(this, "App paused", Toast.LENGTH_SHORT).show();
+        super.onPause();
+    }
 
+    @Override
+    protected void onDestroy() {
+        Toast.makeText(this, "App closed", Toast.LENGTH_SHORT).show();
 
-
+        UtilsNotification.day = Constant.initDayNoti;
+        UtilsNotification.countAfterFirstNoti = -1;
+        UtilsNotification.createAlarm();
+        super.onDestroy();
+    }
 }

@@ -158,23 +158,23 @@
 
         <TableRow
             android:layout_gravity="center_horizontal"
-            android:paddingHorizontal="20dp">
+            android:paddingHorizontal="20dp"
+            android:weightSum="5">
             <Button
-
                 android:text="11"
                 android:layout_marginEnd="@dimen/defalult_margin"
                 android:backgroundTint="@color/uncheck"
                 android:onClick="btnQuestionClick"
+                android:layout_width="0dp"
                 android:layout_weight="1"/>
 
             <Button
-
                 android:layout_marginEnd="@dimen/defalult_margin"
                 android:text="12"
                 android:backgroundTint="@color/uncheck"
                 android:onClick="btnQuestionClick"
+                android:layout_width="0dp"
                 android:layout_weight="1"/>
-
 
         </TableRow>
 
