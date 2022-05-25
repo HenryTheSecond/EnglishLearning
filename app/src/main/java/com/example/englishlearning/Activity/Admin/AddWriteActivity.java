@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.ContentValues;
 import android.content.Intent;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
@@ -20,8 +21,11 @@ import android.widget.Toast;
 
 import com.example.englishlearning.Databases.EnglishHelper;
 import com.example.englishlearning.Databases.UserDataHelper;
+import com.example.englishlearning.Model.Writing;
 import com.example.englishlearning.MyApplication;
 import com.example.englishlearning.R;
+import com.example.englishlearning.Utils;
+import com.example.englishlearning.UtilsAdmin;
 
 public class AddWriteActivity extends AppCompatActivity {
 
@@ -31,6 +35,7 @@ public class AddWriteActivity extends AppCompatActivity {
     Spinner spinnerLevel;
     Boolean isAdd;
     Long id;
+    Writing writing;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,8 +54,9 @@ public class AddWriteActivity extends AppCompatActivity {
             });
         } else{
             btnAddQuestion.setText("Edit");
+            setView();
             btnAddQuestion.setOnClickListener( view ->{
-                Toast.makeText(this, String.valueOf(id), Toast.LENGTH_SHORT).show();
+                EditQuestion();
             });
         }
 
@@ -63,6 +69,33 @@ public class AddWriteActivity extends AppCompatActivity {
 
         ArrayAdapter<Integer> adapter = new ArrayAdapter<Integer>(this, android.R.layout.simple_list_item_1, new Integer[]{1,2,3});
         spinnerLevel.setAdapter(adapter);
+    }
+
+    private void EditQuestion() {
+        EnglishHelper helper = new EnglishHelper(MyApplication.getAppContext());
+        SQLiteDatabase database = helper.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("question", etQuestion.getText().toString());
+        contentValues.put("answer", etAnswer.getText().toString());
+        contentValues.put("level", Integer.valueOf(spinnerLevel.getSelectedItem().toString()));
+        String selection = ("id" + " = ?");
+        String[] selectionArgs = {String.valueOf(id)};
+        int idUpdate = database.update("writing", contentValues, selection, selectionArgs);
+        if(idUpdate != -1){
+            Intent intent = new Intent(AddWriteActivity.this, QuestionListActivity.class);
+            intent.putExtra(TABLE, WRITE);
+            startActivity(intent);
+        }
+    }
+
+    private void setView() {
+        Cursor cursor = UtilsAdmin.getQuestionById(WRITE,id);
+        while (cursor.moveToNext()) {
+            writing = new Writing(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getInt(3));
+        }
+        etQuestion.setText(writing.getQuestion());
+        etAnswer.setText(writing.getAnswer());
+        spinnerLevel.setSelection(writing.getLevel());
     }
 
     private void AddNewQuestion() {
