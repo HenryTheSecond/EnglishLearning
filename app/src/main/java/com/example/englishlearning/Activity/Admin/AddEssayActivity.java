@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.ContentValues;
 import android.content.Intent;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
@@ -21,8 +22,12 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.englishlearning.Databases.EnglishHelper;
+import com.example.englishlearning.Model.MultipleChoiceAnswer;
+import com.example.englishlearning.Model.Reading;
+import com.example.englishlearning.MultipleChoice;
 import com.example.englishlearning.MyApplication;
 import com.example.englishlearning.R;
+import com.example.englishlearning.Utils;
 import com.example.englishlearning.UtilsAdmin;
 
 import java.util.ArrayList;
@@ -36,6 +41,7 @@ public class AddEssayActivity extends AppCompatActivity {
     Spinner spinnerLevel;
     Boolean isAdd;
     Long id;
+    Reading reading;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,8 +70,9 @@ public class AddEssayActivity extends AppCompatActivity {
             });
         } else{
             btnAdd.setText("Edit");
+            setView();
             btnAdd.setOnClickListener( view ->{
-                Toast.makeText(this, String.valueOf(id), Toast.LENGTH_SHORT).show();
+                EditEssay();
             });
         }
 
@@ -76,6 +83,26 @@ public class AddEssayActivity extends AppCompatActivity {
             intent.putExtra(TABLE, READ);
             startActivity(intent);
         });
+    }
+
+    private void EditEssay() {
+        //TODO
+    }
+
+    private void setView() {
+        Cursor cursor = UtilsAdmin.getQuestionById(READ,id);
+        while (cursor.moveToNext()){
+            reading = new Reading(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getInt(3));
+        }
+        edtParagraph.setText( reading.getParagraph() );
+        for(int i=0; i<listEdtQuestion.size(); i++){
+            listEdtQuestion.get(i).setText(reading.getListQuestions().get(i).getQuestion());
+        }
+        for(int i=0; i<listMultipleChoice.size(); i++){
+            Utils.setTextForEdtMultipleChoice(listMultipleChoice.get(i),  reading.getListQuestions().get(i).getListChoice());
+        }
+        spinnerLevel.setSelection(reading.getLevel());
+        //TODO map radio
     }
 
     private void addEssay(){

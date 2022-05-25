@@ -1,6 +1,7 @@
 package com.example.englishlearning.Activity.Admin;
 
 import static com.example.englishlearning.Activity.Admin.AdminDashBoardActivity.FILL_BLANK;
+import static com.example.englishlearning.Activity.Admin.AdminDashBoardActivity.READ;
 import static com.example.englishlearning.Activity.Admin.AdminDashBoardActivity.TABLE;
 import static com.example.englishlearning.Activity.Admin.QuestionListActivity.IS_ADD;
 
@@ -8,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.ContentValues;
 import android.content.Intent;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
@@ -19,8 +21,11 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.englishlearning.Databases.EnglishHelper;
+import com.example.englishlearning.Model.FillingBlank;
+import com.example.englishlearning.Model.Reading;
 import com.example.englishlearning.MyApplication;
 import com.example.englishlearning.R;
+import com.example.englishlearning.Utils;
 import com.example.englishlearning.UtilsAdmin;
 
 import java.util.ArrayList;
@@ -34,6 +39,7 @@ public class AddFillBlankActivity extends AppCompatActivity {
     Spinner spinnerLevel;
     Boolean isAdd;
     Long id;
+    FillingBlank fillingBlank;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,8 +67,9 @@ public class AddFillBlankActivity extends AppCompatActivity {
             });
         } else{
             btnAdd.setText("Edit");
+            setView();
             btnAdd.setOnClickListener( view ->{
-                Toast.makeText(this, String.valueOf(id), Toast.LENGTH_SHORT).show();
+                EditEssay();
             });
         }
 
@@ -74,6 +81,22 @@ public class AddFillBlankActivity extends AppCompatActivity {
         });
     }
 
+    private void EditEssay() {
+       //TODO
+    }
+
+    private void setView() {
+        Cursor cursor = UtilsAdmin.getQuestionById(FILL_BLANK,id);
+        while (cursor.moveToNext()){
+            fillingBlank = new FillingBlank( cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getInt(3) );
+        }
+        edtParagraph.setText( fillingBlank.getParagraph() );
+        for(int i=0; i<listMultipleChoice.size(); i++){
+            Utils.setTextForEdtMultipleChoice(listMultipleChoice.get(i),  fillingBlank.getListQuestions().get(i).getListChoice());
+        }
+        spinnerLevel.setSelection(fillingBlank.getLevel());
+        //TODO map radio
+    }
     private void addEssay() {
         EnglishHelper helper = new EnglishHelper(MyApplication.getAppContext());
         SQLiteDatabase database = helper.getWritableDatabase();

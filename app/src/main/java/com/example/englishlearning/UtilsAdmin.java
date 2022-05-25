@@ -1,6 +1,7 @@
 package com.example.englishlearning;
 
 import android.content.ContentValues;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.view.View;
 import android.widget.EditText;
@@ -54,5 +55,13 @@ public class UtilsAdmin {
             listId[i] = UtilsAdmin.insertToMultipleChoiceAnswer( edtTemp.getText().toString() );
         }
         return listId;
+    }
+
+
+    public static Cursor getQuestionById(String tableName, long id){
+        EnglishHelper helper = new EnglishHelper(MyApplication.getAppContext());
+        SQLiteDatabase database = helper.getReadableDatabase();
+        Cursor cursor = database.rawQuery("Select * from " + tableName + " Where id = " + id, null);
+        return cursor;
     }
 }

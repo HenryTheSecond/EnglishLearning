@@ -19,6 +19,7 @@ import com.example.englishlearning.Activity.Admin.AddEssayActivity;
 import com.example.englishlearning.Activity.Admin.AddFillBlankActivity;
 import com.example.englishlearning.Activity.Admin.AddSingleQuestionActivity;
 import com.example.englishlearning.Activity.Admin.AddWriteActivity;
+import com.example.englishlearning.Activity.Admin.AdminDashBoardActivity;
 import com.example.englishlearning.Activity.Admin.QuestionListActivity;
 import com.example.englishlearning.Activity.PracticeActivity.EditWordActivity;
 import com.example.englishlearning.Databases.EnglishHelper;
@@ -37,6 +38,7 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.ViewHo
     private Context context;
     private String type;
     private Boolean isAdd = false;
+
 
     public QuestionAdapter(Context context, String type){
         this.context = context;
@@ -108,7 +110,6 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.ViewHo
             }
         });
     }
-
 
     private void deleteFromSqlite(QuestionAdapter.ViewHolder holder, Question item){
         EnglishHelper helper = new EnglishHelper(MyApplication.getAppContext());

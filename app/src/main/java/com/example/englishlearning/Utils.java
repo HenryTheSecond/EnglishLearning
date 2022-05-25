@@ -13,6 +13,7 @@ import android.net.ConnectivityManager;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.appcompat.widget.Toolbar;
@@ -156,6 +157,18 @@ public class Utils {
         btnB.setText("B." + listAnswer.get(1).getContent());
         btnC.setText("C." + listAnswer.get(2).getContent());
         btnD.setText("D." + listAnswer.get(3).getContent());
+    }
+
+    public static void setTextForEdtMultipleChoice(View edtMultiChoiceView, List<MultipleChoiceAnswer> listAnswer){
+        EditText edtA = edtMultiChoiceView.findViewById(R.id.answer_a);
+        EditText edtB = edtMultiChoiceView.findViewById(R.id.answer_b);
+        EditText edtC = edtMultiChoiceView.findViewById(R.id.answer_c);
+        EditText edtD = edtMultiChoiceView.findViewById(R.id.answer_d);
+
+        edtA.setText(listAnswer.get(0).getContent());
+        edtB.setText(listAnswer.get(1).getContent());
+        edtC.setText(listAnswer.get(2).getContent());
+        edtD.setText(listAnswer.get(3).getContent());
     }
 
     public static String getCurrentTimeString(){
