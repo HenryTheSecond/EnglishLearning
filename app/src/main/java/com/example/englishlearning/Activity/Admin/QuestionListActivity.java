@@ -35,7 +35,7 @@ public class QuestionListActivity extends AppCompatActivity {
     public static final String IS_ADD = "isAdd";
     private boolean isAdd;
     public static int REQUEST_CODE = 1;
-
+    private View header;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +50,16 @@ public class QuestionListActivity extends AppCompatActivity {
         getData(table);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        header = findViewById(R.id.header);
+
+        header.findViewById(R.id.btn_back).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(view.getContext(), AdminDashBoardActivity.class);
+                startActivity(intent);
+            }
+        });
+
 
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override

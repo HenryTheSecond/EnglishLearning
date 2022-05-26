@@ -43,10 +43,12 @@ public class AddWriteActivity extends AppCompatActivity {
         btnAddQuestion = findViewById(R.id.btn_add_question);
         etQuestion = findViewById(R.id.et_question);
         etAnswer = findViewById(R.id.et_answer);
-        spinnerLevel = findViewById(R.id.spinner_level);
         isAdd = getIntent().getBooleanExtra(IS_ADD, true);
         id = getIntent().getLongExtra("id", -1);
+        spinnerLevel = findViewById(R.id.spinner_level);
 
+        ArrayAdapter<Integer> adapter = new ArrayAdapter<Integer>(this, android.R.layout.simple_list_item_1, new Integer[]{1,2,3});
+        spinnerLevel.setAdapter(adapter);
 
         if(isAdd && id == -1){
             btnAddQuestion.setText("Add");
@@ -67,9 +69,6 @@ public class AddWriteActivity extends AppCompatActivity {
             intent.putExtra(TABLE, WRITE);
             startActivity(intent);
         });
-
-        ArrayAdapter<Integer> adapter = new ArrayAdapter<Integer>(this, android.R.layout.simple_list_item_1, new Integer[]{1,2,3});
-        spinnerLevel.setAdapter(adapter);
     }
 
     private void EditQuestion() {
@@ -96,7 +95,7 @@ public class AddWriteActivity extends AppCompatActivity {
         }
         etQuestion.setText(writing.getQuestion());
         etAnswer.setText(writing.getAnswer());
-        spinnerLevel.setSelection(writing.getLevel());
+        spinnerLevel.setSelection(writing.getLevel() - 1);
     }
 
     private void AddNewQuestion() {
