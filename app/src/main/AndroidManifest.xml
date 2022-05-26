@@ -61,6 +61,10 @@
         <activity
             android:name=".Activity.DashBoard"
             android:exported="false" />
+
+        <activity
+            android:name=".Activity.Admin.AdminDashBoardActivity"
+            android:exported="false" />
          <activity
          android:name=".Activity.NoteActivity"
          android:exported="false" />

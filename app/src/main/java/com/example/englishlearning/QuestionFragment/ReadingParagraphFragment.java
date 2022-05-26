@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.text.method.ScrollingMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -57,6 +58,7 @@ public class ReadingParagraphFragment extends Fragment {
 
         //Binding
         tvParagraph = getView().findViewById(R.id.tv_paragraph);
+        tvParagraph.setMovementMethod(new ScrollingMovementMethod());
 
         tvQuestion1 = getView().findViewById(R.id.tv_question1);
         multipleChoice1.setMultipleChoice( getView().findViewById(R.id.multiple_choice1) );
@@ -69,6 +71,8 @@ public class ReadingParagraphFragment extends Fragment {
         tvQuestion3 = getView().findViewById(R.id.tv_question3);
         multipleChoice3.setMultipleChoice( getView().findViewById(R.id.multiple_choice3) );
         multipleChoice3.setAnswer( Utils.getMultipleChoiceAnswer(getContext(), Integer.parseInt(multipleChoice3.getBtnQuestion().getText().toString())));
+
+
 
         Utils.colorAnswer(multipleChoice1); Utils.colorAnswer(multipleChoice2); Utils.colorAnswer(multipleChoice3);
 

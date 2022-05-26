@@ -9,8 +9,10 @@ import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.example.englishlearning.Databases.EnglishHelper;
+import com.example.englishlearning.Model.MultipleChoiceAnswer;
 
 import java.util.HashMap;
+import java.util.List;
 
 public class UtilsAdmin {
     public static long insertToMultipleChoiceAnswer(String content){
@@ -57,6 +59,13 @@ public class UtilsAdmin {
         return listId;
     }
 
+    public static int findIndexOfAnswer(List<MultipleChoiceAnswer> list, int idAnswer){
+        for(int i=0; i<list.size(); i++){
+            if(list.get(i).getId() == idAnswer)
+                return i;
+        }
+        return -1;
+    }
 
     public static Cursor getQuestionById(String tableName, long id){
         EnglishHelper helper = new EnglishHelper(MyApplication.getAppContext());

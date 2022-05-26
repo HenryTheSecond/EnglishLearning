@@ -47,7 +47,8 @@ public class AddWriteActivity extends AppCompatActivity {
         isAdd = getIntent().getBooleanExtra(IS_ADD, true);
         id = getIntent().getLongExtra("id", -1);
 
-        if(isAdd && id != -1){
+
+        if(isAdd && id == -1){
             btnAddQuestion.setText("Add");
             btnAddQuestion.setOnClickListener( view ->{
                 AddNewQuestion();

@@ -75,6 +75,10 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.ViewHo
         holder.btnEditWord.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                System.out.println(holder.id);
+                System.out.println(holder.getAdapterPosition());
+                System.out.println(list.size());
+
                 switch (type){
                     case "writing":
                         Intent intent = new Intent(view.getContext(), AddWriteActivity.class);
@@ -102,6 +106,7 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.ViewHo
                         break;
                 }
             }
+
         });
         holder.btnDelete.setOnClickListener(new View.OnClickListener() {
             @Override

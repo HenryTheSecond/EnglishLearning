@@ -1,6 +1,7 @@
 package com.example.englishlearning.ReviewFragment;
 
 import android.os.Bundle;
+import android.text.method.ScrollingMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -52,6 +53,7 @@ public class ReadingReviewFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         tvParagraph = getView().findViewById(R.id.tv_paragraph);
+        tvParagraph.setMovementMethod(new ScrollingMovementMethod());
 
         tvQuestion1 = getView().findViewById(R.id.tv_question1);
         multipleChoice1.setMultipleChoice( getView().findViewById(R.id.multiple_choice1) );

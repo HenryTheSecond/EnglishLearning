@@ -2,6 +2,7 @@ package com.example.englishlearning.Activity.Admin;
 
 import static com.example.englishlearning.Activity.Admin.AdminDashBoardActivity.TABLE;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -33,6 +34,9 @@ public class QuestionListActivity extends AppCompatActivity {
     private String table;
     public static final String IS_ADD = "isAdd";
     private boolean isAdd;
+    public static int REQUEST_CODE = 1;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,7 +75,22 @@ public class QuestionListActivity extends AppCompatActivity {
     private void moveToActivity(Class activity) {
         Intent intent = new Intent(QuestionListActivity.this, activity);
         intent.putExtra(IS_ADD, isAdd);
-        startActivity(intent);
+        startActivityForResult(intent, REQUEST_CODE);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode==REQUEST_CODE){
+            if(resultCode == RESULT_OK) {
+                long id = data.getLongExtra("id", -1);
+                String question = data.getStringExtra("question");
+                adapter.getList().add(new Question(id, question));
+                adapter.notifyDataSetChanged();
+            }
+
+        }
+
     }
 
     private void getData(String table) {
@@ -86,4 +105,6 @@ public class QuestionListActivity extends AppCompatActivity {
         }
         database.close();
     }
+
+
 }

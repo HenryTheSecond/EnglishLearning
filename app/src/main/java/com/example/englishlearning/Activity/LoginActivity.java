@@ -12,6 +12,7 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.englishlearning.Activity.Admin.AdminDashBoardActivity;
 import com.example.englishlearning.R;
 import com.example.englishlearning.Utils;
 import com.google.firebase.database.DataSnapshot;
@@ -25,6 +26,8 @@ public class LoginActivity extends AppCompatActivity {
     private RadioGroup radioGroup;
     private TextView tvGuest;
     private Button btnLogin;
+    private Button btnRegister;
+    public static final int REGISTER_REQUEST_CODE = 100;
 
 
     @Override
@@ -37,6 +40,7 @@ public class LoginActivity extends AppCompatActivity {
         radioGroup = findViewById(R.id.radio_group);
         tvGuest = findViewById(R.id.tv_login_with_guest);
         btnLogin = findViewById(R.id.btn_login);
+        btnRegister = findViewById(R.id.btn_register);
 
         btnLogin.setOnClickListener(view -> {
             if(Utils.checkInternet(view.getContext()))
@@ -44,7 +48,12 @@ public class LoginActivity extends AppCompatActivity {
         });
 
         tvGuest.setOnClickListener(view -> {
-            moveToDashBoard();
+            moveToDashBoard(false);
+        });
+
+        btnRegister.setOnClickListener(view -> {
+            Intent intent = new Intent(view.getContext(), RegisterActivity.class);
+            startActivityForResult(intent, REGISTER_REQUEST_CODE);
         });
 
         initMoveToDashBoard();
@@ -74,7 +83,36 @@ public class LoginActivity extends AppCompatActivity {
             });
         }else{
             //Admin log in
+            database.orderByChild("username").equalTo(etUsername.getText().toString()).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    if(snapshot.exists() ){
+                        DataSnapshot user = snapshot.child(etUsername.getText().toString());
+                        System.out.println(user);
+                        if(Utils.HashPassword( etPassword.getText().toString().trim() ).equals( user.child("password").getValue() )
+                           && user.child("isAdmin").exists() && user.child("isAdmin").getValue(Boolean.class))
+                            loginAdmin();
+                        else
+                            Toast.makeText(LoginActivity.this, "Wrong password or username", Toast.LENGTH_SHORT).show();
+                    }else
+                        Toast.makeText(LoginActivity.this, "Wrong password or username", Toast.LENGTH_SHORT).show();
+
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
         }
+    }
+
+    private void loginAdmin(){
+        Utils.saveLoginAdmin(this, etUsername.getText().toString());
+        if(getIntent().getBooleanExtra("isSynchronize", false)){
+            Utils.synchronizeData(this);
+        }
+        moveToDashBoard(true);
     }
 
     private void login(){
@@ -83,7 +121,7 @@ public class LoginActivity extends AppCompatActivity {
             Utils.synchronizeData(this);
         }
 
-        moveToDashBoard();
+        moveToDashBoard(false);
     }
 
     private boolean validate(){
@@ -91,12 +129,21 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void initMoveToDashBoard(){
-        if(Utils.isLoggedIn(this))
-            moveToDashBoard();
+        if(Utils.isLoggedIn(this)){
+            if(!Utils.isAdmin(this))
+                moveToDashBoard(false);
+            else
+                moveToDashBoard(true);
+        }
+
     }
 
-    private void moveToDashBoard(){
-        Intent intent = new Intent(LoginActivity.this, DashBoard.class);
+    private void moveToDashBoard(boolean isAdmin){
+        Intent intent;
+        if(!isAdmin)
+            intent = new Intent(LoginActivity.this, DashBoard.class);
+        else
+            intent = new Intent(LoginActivity.this, AdminDashBoardActivity.class);
         startActivity(intent);
         finish();
     }

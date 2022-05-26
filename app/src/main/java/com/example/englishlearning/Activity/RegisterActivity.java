@@ -48,6 +48,7 @@ public class RegisterActivity extends AppCompatActivity {
                                 database.child( etUsername.getText().toString() ).child("password").setValue( Utils.HashPassword(etPassword.getText().toString())  );
                                 database.child( etUsername.getText().toString() ).child("email").setValue(etEmail.getText().toString());
                                 database.child( etUsername.getText().toString() ).child("phone").setValue(etPhone.getText().toString());
+                                finish();
                             }
                         }else
                             Toast.makeText(RegisterActivity.this, "Fulfill all the fields", Toast.LENGTH_SHORT).show();

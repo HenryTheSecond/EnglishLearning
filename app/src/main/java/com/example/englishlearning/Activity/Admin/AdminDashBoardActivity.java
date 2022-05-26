@@ -11,6 +11,7 @@ import com.example.englishlearning.Activity.ChooseTypeActivity;
 import com.example.englishlearning.Activity.DashBoard;
 import com.example.englishlearning.Activity.NoteActivity;
 import com.example.englishlearning.R;
+import com.example.englishlearning.Utils;
 
 public class AdminDashBoardActivity extends AppCompatActivity {
 
@@ -58,6 +59,8 @@ public class AdminDashBoardActivity extends AppCompatActivity {
                 moveToActivity(WRITE);
             }
         });
+
+        Utils.createMenu(this);
     }
 
     private void moveToActivity(String type) {
