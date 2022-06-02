@@ -7,15 +7,49 @@
     tools:context=".Activity.NoteActivity"
     android:orientation="vertical">
 
+
         <include layout="@layout/back_header"
             android:id="@+id/header" />
+
+        <androidx.appcompat.widget.SearchView
+            android:id="@+id/search_view"
+            android:layout_below="@id/header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <LinearLayout
+            android:id="@+id/spinner_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/search_view"
+            android:layout_marginBottom="10dp">
+                <TextView
+                    android:textSize="16sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Find by"/>
+                <Spinner
+                    android:id="@+id/spinner_content_meaning"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:textSize="16sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Choose type"/>
+                <Spinner
+                    android:id="@+id/spinner_type"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+        </LinearLayout>
+
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_item"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_above="@id/btn_add"
-            android:layout_below="@id/header" />
+            android:layout_below="@id/spinner_layout" />
 
                 <Button
                     android:id="@+id/btn_add"

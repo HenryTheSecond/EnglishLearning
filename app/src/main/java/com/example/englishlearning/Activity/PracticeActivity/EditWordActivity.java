@@ -78,6 +78,7 @@ public class EditWordActivity extends AppCompatActivity {
         reference.child("type").setValue( spinner.getSelectedItem().toString() );
         Intent intent = new Intent(view.getContext(), NoteActivity.class);
         startActivity(intent);
+        finish();
     }
 
     private void saveToSqlite(View view){
@@ -97,6 +98,7 @@ public class EditWordActivity extends AppCompatActivity {
         if(idUpdate != -1){
             Intent intent = new Intent(view.getContext(), NoteActivity.class);
             startActivity(intent);
+            finish();
         }
     }
 }

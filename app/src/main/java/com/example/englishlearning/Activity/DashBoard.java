@@ -62,9 +62,15 @@ public class DashBoard extends AppCompatActivity {
     }
 
     @Override
-    protected void onDestroy() {
-        Toast.makeText(this, "App closed", Toast.LENGTH_SHORT).show();
+    protected void onStop() {
+        Toast.makeText(this, "App stopped", Toast.LENGTH_SHORT).show();
 
+        super.onStop();
+    }
+
+    @Override
+    protected void onDestroy() {
+        Toast.makeText(this, "App destroyed", Toast.LENGTH_SHORT).show();
         UtilsNotification.day = Constant.initDayNoti;
         UtilsNotification.countAfterFirstNoti = -1;
         UtilsNotification.createAlarm();

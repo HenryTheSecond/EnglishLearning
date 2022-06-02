@@ -138,7 +138,11 @@ public class ErrorDialogFragment extends DialogFragment {
         reference.setValue( item );
 
         if(noteAdapter != null){
-            noteAdapter.getList().add(item);
+            noteAdapter.getOriginList().add(item);
+            if(noteAdapter.isMatched(item) && noteAdapter.getOriginList() != noteAdapter.getList()){
+                System.out.println("origin == list");
+                noteAdapter.getList().add(item);
+            }
         }
         if (mIsNeedDismissAfterOnclick) {
             dismiss();
@@ -156,7 +160,10 @@ public class ErrorDialogFragment extends DialogFragment {
 
         if(noteAdapter != null) {
             NotedWord item = new NotedWord(idInsert, edtContent.getText().toString(), edtMeaning.getText().toString(), NotedWord.Type.parseType(spinner.getSelectedItem().toString()));
-            noteAdapter.getList().add(item);
+            noteAdapter.getOriginList().add(item);
+            if(noteAdapter.isMatched(item) && noteAdapter.getOriginList() != noteAdapter.getList()){
+                noteAdapter.getList().add(item);
+            }
         }
         if (mIsNeedDismissAfterOnclick) {
             dismiss();

@@ -8,6 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -25,23 +27,47 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
+public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> implements Filterable {
     private List<NotedWord> list;
     private Context context;
 
+    private List<NotedWord> originList;
+
     private DatabaseReference reference;
     private ValueEventListener listener;
+
+    private String query = "";
+    private String type = "All";
+    private String contentMeaning = "Content";
 
     public NoteAdapter(Context context, DatabaseReference reference, ValueEventListener listener){
         this.context = context;
         this.reference = reference;
         this.listener = listener;
         list = new ArrayList<>();
+        originList = new ArrayList<>();
     }
 
     public NoteAdapter(Context context){
         this.context = context;
         list = new ArrayList<>();
+        originList = new ArrayList<>();
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getContentMeaning() {
+        return contentMeaning;
+    }
+
+    public void setContentMeaning(String contentMeaning) {
+        this.contentMeaning = contentMeaning;
     }
 
     public List<NotedWord> getListItem(){
@@ -54,6 +80,14 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
 
     public void setList(List<NotedWord> list) {
         this.list = list;
+    }
+
+    public List<NotedWord> getOriginList() {
+        return originList;
+    }
+
+    public void setOriginList(List<NotedWord> originList) {
+        this.originList = originList;
     }
 
     @NonNull
@@ -100,7 +134,10 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
         reference = FirebaseDatabase.getInstance().getReference("note_word/"+login);
         reference.removeEventListener(listener);
         reference.child(String.valueOf(item.getId())).removeValue();
+
         list.remove(holder.getAdapterPosition());
+        originList.remove(item);
+
         notifyItemRemoved(holder.getAdapterPosition());
     }
 
@@ -112,7 +149,10 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
         // The values for the WHERE clause
         String[] selectionArgs = {String.valueOf(item.getId())};
         int id = database.delete("note_word", selection, selectionArgs);
+
+
         list.remove(holder.getAdapterPosition());
+        originList.remove(item);
         notifyItemRemoved(holder.getAdapterPosition());
     }
 
@@ -121,6 +161,51 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
         return list.size();
     }
 
+    @Override
+    public Filter getFilter() {
+        return new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence charSequence) {
+                query = charSequence.toString();
+                if(query.isEmpty() && type.equals("All")){
+                    list = originList;
+                }else{
+                    List<NotedWord> tmpList = new ArrayList<>();
+                    for(NotedWord word: originList){
+                        if(isMatched(word)){
+                            tmpList.add(word);
+                        }
+                    }
+                    list = tmpList;
+                }
+
+                FilterResults filterResults = new FilterResults();
+                filterResults.values = list;
+                return filterResults;
+            }
+
+            @Override
+            protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
+                list = (List<NotedWord>) filterResults.values;
+                notifyDataSetChanged();
+            }
+        };
+    }
+
+    public boolean isMatched(NotedWord word){
+        if(!type.equals("All")){
+            if(!word.getType().equals( NotedWord.Type.parseType(type) ))
+                return false;
+        }
+        if(contentMeaning.equals("Content")){
+            if(word.getContent().toLowerCase().contains(query))
+                return true;
+        }else{
+            if(word.getMeaning().toLowerCase().contains(query))
+                return true;
+        }
+        return false;
+    }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         private long id;

@@ -2,16 +2,21 @@ package com.example.englishlearning.Activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.FragmentManager;
+import android.app.SearchManager;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -39,6 +44,11 @@ public class NoteActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private Button btnAdd;
 
+    SearchView searchView;
+    Spinner spinnerType;
+    Spinner spinnerContentMeaning;
+
+
     ValueEventListener listener;
     DatabaseReference reference;
 
@@ -54,8 +64,66 @@ public class NoteActivity extends AppCompatActivity {
         //Binding view
         recyclerView = findViewById(R.id.recycler_item);
         btnAdd = findViewById(R.id.btn_add);
+        searchView = findViewById(R.id.search_view);
+        spinnerType = findViewById(R.id.spinner_type);
+        spinnerContentMeaning = findViewById(R.id.spinner_content_meaning);
 
+        ArrayAdapter<String> adapterType = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, new ArrayList<String>());
+        adapterType.add("All");
+        for(NotedWord.Type type: NotedWord.Type.values()){
+            adapterType.add(type.toString());
+        }
+        spinnerType.setAdapter(adapterType);
+        spinnerType.setSelection(0);
 
+        ArrayAdapter<String> adapterContentMeaning = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, new String[]{"Content", "Meaning"});
+        spinnerContentMeaning.setAdapter(adapterContentMeaning);
+
+        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+
+        spinnerType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                adapter.setType( spinnerType.getSelectedItem().toString() );
+                adapter.setContentMeaning( spinnerContentMeaning.getSelectedItem().toString() );
+                adapter.getFilter().filter(searchView.getQuery().toString());
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+        spinnerContentMeaning.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                adapter.setType( spinnerType.getSelectedItem().toString() );
+                adapter.setContentMeaning( spinnerContentMeaning.getSelectedItem().toString() );
+                adapter.getFilter().filter(searchView.getQuery().toString());
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                adapter.setType( spinnerType.getSelectedItem().toString() );
+                adapter.setContentMeaning( spinnerContentMeaning.getSelectedItem().toString() );
+                adapter.getFilter().filter(query);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
 
         String[] data = null;
 
@@ -69,8 +137,9 @@ public class NoteActivity extends AppCompatActivity {
                                 data.child("content").getValue(String.class),
                                 data.child("meaning").getValue(String.class),
                                 NotedWord.Type.parseType( data.child("type").getValue(String.class)) );
-                        adapter.getList().add(word);
+                        adapter.getOriginList().add(word);
                     }
+                    adapter.setList( adapter.getOriginList() );
                     recyclerView.setAdapter(adapter);
                 }
 
@@ -105,6 +174,9 @@ public class NoteActivity extends AppCompatActivity {
                 ).show(fragmentManager, ErrorDialogFragment.class.getSimpleName());
             }
         });
+
+        RecyclerView.ItemDecoration itemDecoration = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
+        recyclerView.addItemDecoration(itemDecoration);
     }
 
     private void getData() {
@@ -114,9 +186,11 @@ public class NoteActivity extends AppCompatActivity {
         Cursor cursor = database.rawQuery(selectQuery, null);
         if (cursor.moveToFirst()) {
             do {
-                adapter.getList().add( new NotedWord(cursor.getInt(0), cursor.getString(1), cursor.getString(2), NotedWord.Type.parseType(cursor.getString(3))));
+                adapter.getOriginList().add( new NotedWord(cursor.getInt(0), cursor.getString(1), cursor.getString(2), NotedWord.Type.parseType(cursor.getString(3))));
             } while (cursor.moveToNext());
         }
+
+        adapter.setList( adapter.getOriginList() );
         database.close();
     }
 
@@ -125,5 +199,14 @@ public class NoteActivity extends AppCompatActivity {
 
         reference.addValueEventListener( listener );
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        if(!searchView.isIconified()){
+            searchView.setIconified(true);
+            return;
+        }
+        super.onBackPressed();
     }
 }
