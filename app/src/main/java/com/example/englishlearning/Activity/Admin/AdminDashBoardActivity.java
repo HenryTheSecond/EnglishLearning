@@ -20,7 +20,7 @@ public class AdminDashBoardActivity extends AppCompatActivity {
     public static final String FILL_BLANK = "filling_blank";
     public static final String READ = "reading";
     public static final String SINGLE_QUESTION = "single_question";
-    private Button btnFill, btnRead, btnWrite, btnSingle;
+    private Button btnFill, btnRead, btnWrite, btnSingle, btnUserTestReview;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +30,7 @@ public class AdminDashBoardActivity extends AppCompatActivity {
         btnSingle = findViewById(R.id.btn_single_question);
         btnRead = findViewById(R.id.btn_reading);
         btnWrite = findViewById(R.id.btn_writing);
+        btnUserTestReview = findViewById(R.id.btn_user);
 
         btnFill.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -57,6 +58,14 @@ public class AdminDashBoardActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 moveToActivity(WRITE);
+            }
+        });
+
+        btnUserTestReview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(AdminDashBoardActivity.this, ListUserActivity.class);
+                startActivity(intent);
             }
         });
 

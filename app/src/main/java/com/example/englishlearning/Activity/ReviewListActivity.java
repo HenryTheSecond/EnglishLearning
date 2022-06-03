@@ -34,6 +34,7 @@ public class ReviewListActivity extends AppCompatActivity {
     String tableName;
     ListView lvItem;
     ReviewAdapter adapter;
+    String user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,11 +44,16 @@ public class ReviewListActivity extends AppCompatActivity {
 
         tableName = getIntent().getStringExtra("callingType");
         lvItem = findViewById(R.id.lv_result);
+        user = getIntent().getStringExtra("name");
 
         adapter = new ReviewAdapter(this);
 
         if(Utils.isLoggedIn(this)){
-            getDataFromFirebase();
+            if (user != null){
+                getDataFromFirebase(user);
+            } else{
+                getDataFromFirebase();
+            }
         }else{
             getDataFromSqlite();
         }
@@ -114,6 +120,37 @@ public class ReviewListActivity extends AppCompatActivity {
 
     private void getDataFromFirebase(){
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference(tableName + "/" + Utils.getLogin(this));
+        reference.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                adapter.getList().add( getItem(snapshot) );
+                lvItem.setAdapter(adapter);
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
+    private void getDataFromFirebase(String user){
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference(tableName + "/" + user);
         reference.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
