@@ -114,6 +114,9 @@
             android:name=".Activity.Admin.AddWriteActivity"
             android:exported="false" />
         <activity
+            android:name=".Activity.Admin.ListUserActivity"
+            android:exported="false" />
+        <activity
             android:name=".Activity.LoginActivity"
             android:exported="true">
             <intent-filter>

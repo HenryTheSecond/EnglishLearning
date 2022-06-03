@@ -23,7 +23,7 @@ public class AdminDashBoardActivity extends AppCompatActivity {
     public static final String SINGLE_QUESTION = "single_question";
 
 
-    private Button btnFill, btnRead, btnWrite, btnSingle, btnEssaySubject;
+    private Button btnFill, btnRead, btnWrite, btnSingle, btnEssaySubject, btnUserTestReview;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +32,7 @@ public class AdminDashBoardActivity extends AppCompatActivity {
         btnFill = findViewById(R.id.btn_filling_blank);
         btnSingle = findViewById(R.id.btn_single_question);
         btnRead = findViewById(R.id.btn_reading);
+        btnUserTestReview = findViewById(R.id.btn_user);
         btnWrite = findViewById(R.id.btn_writing);
 
         btnEssaySubject = findViewById(R.id.btn_essay_subject);
@@ -68,6 +69,14 @@ public class AdminDashBoardActivity extends AppCompatActivity {
         btnEssaySubject.setOnClickListener(view -> {
             Intent intent = new Intent(AdminDashBoardActivity.this, AddEssaySubjectActivity.class);
             startActivity(intent);
+        });
+
+        btnUserTestReview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(AdminDashBoardActivity.this, ListUserActivity.class);
+                startActivity(intent);
+            }
         });
 
         Utils.createMenu(this);
