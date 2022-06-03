@@ -51,8 +51,10 @@ public class ChooseTypeActivity extends AppCompatActivity {
             startActivity(intent);
         }else{
             String type = reviewHash.get(viewId);
+            String user = getIntent().getStringExtra("name");
             Intent intent = new Intent(ChooseTypeActivity.this, ReviewListActivity.class);
             intent.putExtra("callingType", type);
+            intent.putExtra("name", user);
             startActivity(intent);
         }
     }
