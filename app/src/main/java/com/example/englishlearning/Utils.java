@@ -292,9 +292,22 @@ public class Utils {
         editor.commit();
     }
 
+    public static void saveLoginTeacher(Context context, String username){
+        SharedPreferences sharedPreferences = context.getSharedPreferences(FILE_NAME_SAVE_LOG_IN, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(USERNAME_KEY, username);
+        editor.putBoolean("isTeacher", true);
+        editor.commit();
+    }
+
     public static boolean isAdmin(Context context){
         SharedPreferences sharedPreferences = context.getSharedPreferences(FILE_NAME_SAVE_LOG_IN, Context.MODE_PRIVATE);
         return sharedPreferences.getBoolean("isAdmin", false);
+    }
+
+    public static boolean isTeacher(Context context){
+        SharedPreferences sharedPreferences = context.getSharedPreferences(FILE_NAME_SAVE_LOG_IN, Context.MODE_PRIVATE);
+        return sharedPreferences.getBoolean("isTeacher", false);
     }
 
     public static String getLogin(Context context){

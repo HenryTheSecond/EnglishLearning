@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".WritingEssayActivity">
+
+    <TextView
+        android:id="@+id/tv_essay_subject"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:maxLines="6"
+        android:scrollbars="vertical"
+        android:text="essay subject \n\n\n\n\n\n\\n\n\"
+        android:textSize="25sp"
+        android:background="@color/blue"/>
+
+    <EditText
+        android:id="@+id/et_writing"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/btn_submit"
+        android:layout_below="@id/tv_essay_subject"
+        android:textSize="20sp" />
+
+    <Button
+        android:id="@+id/btn_submit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Submtt"
+        android:layout_alignParentBottom="true"/>
+</RelativeLayout>

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".DetailWaitingEssayActivity">
+
+    <TextView
+        android:id="@+id/tv_essay_subject"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:maxLines="6"
+        android:scrollbars="vertical"
+        android:text="essay subject \n\n\n\n\n\n\\n\n\"
+        android:textSize="25sp"
+        android:background="@color/blue"/>
+
+    <TextView
+        android:id="@+id/tv_writing"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Content here"
+        android:scrollbars="vertical"
+        android:layout_below="@id/tv_essay_subject"
+        android:textSize="20sp"
+        android:layout_above="@id/et_point" />
+
+    <EditText
+        android:id="@+id/et_point"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="Point"
+        android:layout_above="@id/btn_done"/>
+
+    <EditText
+        android:id="@+id/et_comment"
+        android:maxLines="6"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Comment"
+        android:layout_toEndOf="@id/et_point"
+        android:layout_above="@id/btn_done"
+        android:layout_marginLeft="5dp" />
+
+    <Button
+        android:layout_alignParentBottom="true"
+        android:id="@+id/btn_done"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Done"/>
+
+
+</RelativeLayout>

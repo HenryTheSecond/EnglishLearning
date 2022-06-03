@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
@@ -13,6 +14,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.englishlearning.Activity.Admin.AdminDashBoardActivity;
+import com.example.englishlearning.EssayNotification.UtilsEssay;
+import com.example.englishlearning.ListWaitingEssayActivity;
 import com.example.englishlearning.R;
 import com.example.englishlearning.Utils;
 import com.google.firebase.database.DataSnapshot;
@@ -27,6 +30,8 @@ public class LoginActivity extends AppCompatActivity {
     private TextView tvGuest;
     private Button btnLogin;
     private Button btnRegister;
+
+    DatabaseReference database;
     public static final int REGISTER_REQUEST_CODE = 100;
 
 
@@ -48,7 +53,7 @@ public class LoginActivity extends AppCompatActivity {
         });
 
         tvGuest.setOnClickListener(view -> {
-            moveToDashBoard(false);
+            moveToDashBoard("Normal");
         });
 
         btnRegister.setOnClickListener(view -> {
@@ -61,7 +66,9 @@ public class LoginActivity extends AppCompatActivity {
 
     private void btnLoginClicked(){
         RadioButton radioUser = findViewById(R.id.radio_user);
-        DatabaseReference database = FirebaseDatabase.getInstance().getReference("user");
+        RadioButton radioAdmin = findViewById(R.id.radio_admin);
+
+        database = FirebaseDatabase.getInstance().getReference("user");
         if(radioUser.isChecked()){
             database.orderByChild("username").equalTo(etUsername.getText().toString()).addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
@@ -81,7 +88,7 @@ public class LoginActivity extends AppCompatActivity {
 
                 }
             });
-        }else{
+        }else if(radioAdmin.isChecked()){
             //Admin log in
             database.orderByChild("username").equalTo(etUsername.getText().toString()).addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
@@ -104,7 +111,37 @@ public class LoginActivity extends AppCompatActivity {
 
                 }
             });
+        }else {
+            database.orderByChild("username").equalTo(etUsername.getText().toString()).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    if(snapshot.exists() ){
+                        DataSnapshot user = snapshot.child(etUsername.getText().toString());
+                        System.out.println(user);
+                        if(Utils.HashPassword( etPassword.getText().toString().trim() ).equals( user.child("password").getValue() )
+                                && user.child("isTeacher").exists() && user.child("isTeacher").getValue(Boolean.class))
+                            loginTeacher();
+                        else
+                            Toast.makeText(LoginActivity.this, "Wrong password or username", Toast.LENGTH_SHORT).show();
+                    }else
+                        Toast.makeText(LoginActivity.this, "Wrong password or username", Toast.LENGTH_SHORT).show();
+
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
         }
+    }
+
+    private void loginTeacher(){
+        Utils.saveLoginTeacher(this, etUsername.getText().toString());
+        if(getIntent().getBooleanExtra("isSynchronize", false)){
+            Utils.synchronizeData(this);
+        }
+        moveToDashBoard("Teacher");
     }
 
     private void loginAdmin(){
@@ -112,7 +149,7 @@ public class LoginActivity extends AppCompatActivity {
         if(getIntent().getBooleanExtra("isSynchronize", false)){
             Utils.synchronizeData(this);
         }
-        moveToDashBoard(true);
+        moveToDashBoard("Admin");
     }
 
     private void login(){
@@ -120,8 +157,9 @@ public class LoginActivity extends AppCompatActivity {
         if(getIntent().getBooleanExtra("isSynchronize", false)){
             Utils.synchronizeData(this);
         }
+        database.child(etUsername.getText().toString()).child("token").setValue(UtilsEssay.getToken(this));
 
-        moveToDashBoard(false);
+        moveToDashBoard("Normal");
     }
 
     private boolean validate(){
@@ -130,20 +168,24 @@ public class LoginActivity extends AppCompatActivity {
 
     private void initMoveToDashBoard(){
         if(Utils.isLoggedIn(this)){
-            if(!Utils.isAdmin(this))
-                moveToDashBoard(false);
+            if(Utils.isAdmin(this))
+                moveToDashBoard("Admin");
+            else if(Utils.isTeacher(this))
+                moveToDashBoard("Teacher");
             else
-                moveToDashBoard(true);
+                moveToDashBoard("Normal");
         }
-
     }
 
-    private void moveToDashBoard(boolean isAdmin){
+    private void moveToDashBoard(String type){
         Intent intent;
-        if(!isAdmin)
+        if(type.equals("Normal"))
             intent = new Intent(LoginActivity.this, DashBoard.class);
-        else
+        else if(type.equals("Admin"))
             intent = new Intent(LoginActivity.this, AdminDashBoardActivity.class);
+        else{
+            intent = new Intent(LoginActivity.this, ListWaitingEssayActivity.class);
+        }
         startActivity(intent);
         finish();
     }

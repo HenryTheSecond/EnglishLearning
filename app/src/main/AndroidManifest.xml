@@ -7,7 +7,6 @@
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.VIBRATE" />
 
-
     <application
         android:name=".MyApplication"
         android:allowBackup="true"
@@ -17,57 +16,76 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.EnglishLearning">
         <activity
+            android:name=".DetailWritingActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ListWritingActivity"
+            android:exported="false" />
+        <activity
+            android:name=".DetailWaitingEssayActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ListWaitingEssayActivity"
+            android:exported="false" />
+        <activity
+            android:name=".WritingEssayActivity"
+            android:exported="false" />
+        <activity
+            android:name=".EssaySubjectListActivity"
+            android:exported="false" />
+        <activity
+            android:name=".AddEssaySubjectActivity"
+            android:exported="false" />
+        <activity
             android:name=".Activity.ChooseTypeActivity"
             android:exported="false" />
-         <activity
-         android:name=".Activity.RegisterActivity"
-         android:exported="false" />
-        <!-- <activity -->
+        <activity
+            android:name=".Activity.RegisterActivity"
+            android:exported="false" /> <!-- <activity -->
         <!-- android:name=".Activity.LoginActivity" -->
         <!-- android:exported="false" /> -->
         <activity
             android:name=".Activity.PracticeActivity.PracticeWritingReview"
             android:exported="false" />
-         <activity
-         android:name=".Activity.PracticeActivity.PracticeWritingActivity"
-         android:exported="false" />
+        <activity
+            android:name=".Activity.PracticeActivity.PracticeWritingActivity"
+            android:exported="false" />
         <activity
             android:name=".Activity.PracticeActivity.PracticeSingleQuestionReview"
             android:exported="false" />
-         <activity
-         android:name=".Activity.PracticeActivity.PracticeSingleQuestionActivity"
-         android:exported="false" />
+        <activity
+            android:name=".Activity.PracticeActivity.PracticeSingleQuestionActivity"
+            android:exported="false" />
         <activity
             android:name=".Activity.PracticeActivity.PracticeReadingReview"
             android:exported="false" />
-         <activity
-         android:name=".Activity.PracticeActivity.PracticeReadingActivity"
-         android:exported="false" />
+        <activity
+            android:name=".Activity.PracticeActivity.PracticeReadingActivity"
+            android:exported="false" />
         <activity
             android:name=".Activity.PracticeActivity.PracticeFillingBlankReview"
             android:exported="false" />
-         <activity
-         android:name=".Activity.PracticeActivity.PracticeFillingBlankActivity"
-         android:exported="false" />
-         <activity
-         android:name=".Activity.PracticeActivity.PracticeListeningActivity"
-         android:exported="false" />
-         <activity
-         android:name=".Activity.PickLevelActivity"
-         android:exported="false" />
+        <activity
+            android:name=".Activity.PracticeActivity.PracticeFillingBlankActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activity.PracticeActivity.PracticeListeningActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activity.PickLevelActivity"
+            android:exported="false" />
         <activity
             android:name=".Activity.ReviewResult"
             android:exported="false" />
         <activity
             android:name=".Activity.DashBoard"
             android:exported="false" />
-
         <activity
             android:name=".Activity.Admin.AdminDashBoardActivity"
             android:exported="false" />
-         <activity
-         android:name=".Activity.NoteActivity"
-         android:exported="false" />
+        <activity
+            android:name=".Activity.NoteActivity"
+            android:exported="false" />
         <activity
             android:name=".Activity.TestQuestionActivity"
             android:exported="false" />
@@ -77,18 +95,24 @@
         <activity
             android:name=".Activity.PracticeActivity.EditWordActivity"
             android:exported="false" />
-        <activity android:name=".Activity.ReviewListActivity"
-            android:exported="false"/>
-        <activity android:name=".Activity.Admin.QuestionListActivity"
-            android:exported="false"/>
-        <activity android:name=".Activity.Admin.AddFillBlankActivity"
-            android:exported="false"/>
-        <activity android:name=".Activity.Admin.AddSingleQuestionActivity"
-            android:exported="false"/>
-        <activity android:name=".Activity.Admin.AddEssayActivity"
-            android:exported="false"/>
-        <activity android:name=".Activity.Admin.AddWriteActivity"
-            android:exported="false"/>
+        <activity
+            android:name=".Activity.ReviewListActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activity.Admin.QuestionListActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activity.Admin.AddFillBlankActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activity.Admin.AddSingleQuestionActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activity.Admin.AddEssayActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activity.Admin.AddWriteActivity"
+            android:exported="false" />
         <activity
             android:name=".Activity.LoginActivity"
             android:exported="true">
@@ -98,9 +122,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        
-        
-        <receiver android:name=".NotificationReceiver"/>
+
+        <service
+            android:name=".EssayNotification.EssayNotiService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
+        <receiver android:name=".NotificationReceiver" />
     </application>
 
 </manifest>

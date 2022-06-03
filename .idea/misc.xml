@@ -28,6 +28,7 @@
         <entry key="..\:/lap trinh di dong/EnglishLearning/app/src/main/res/layout-w1240dp/content_scrolling.xml" value="0.16331994645247658" />
         <entry key="..\:/lap trinh di dong/EnglishLearning/app/src/main/res/layout-w936dp/content_scrolling.xml" value="0.190625" />
         <entry key="..\:/lap trinh di dong/EnglishLearning/app/src/main/res/layout/activity_add_essay.xml" value="0.25416666666666665" />
+        <entry key="..\:/lap trinh di dong/EnglishLearning/app/src/main/res/layout/activity_add_essay_subject.xml" value="0.25416666666666665" />
         <entry key="..\:/lap trinh di dong/EnglishLearning/app/src/main/res/layout/activity_add_fill_blank.xml" value="0.25416666666666665" />
         <entry key="..\:/lap trinh di dong/EnglishLearning/app/src/main/res/layout/activity_add_listen_file.xml" value="0.25416666666666665" />
         <entry key="..\:/lap trinh di dong/EnglishLearning/app/src/main/res/layout/activity_add_single_question.xml" value="0.25416666666666665" />
@@ -35,7 +36,12 @@
         <entry key="..\:/lap trinh di dong/EnglishLearning/app/src/main/res/layout/activity_admin_dash_board.xml" value="0.25416666666666665" />
         <entry key="..\:/lap trinh di dong/EnglishLearning/app/src/main/res/layout/activity_choose_type.xml" value="0.25416666666666665" />
         <entry key="..\:/lap trinh di dong/EnglishLearning/app/src/main/res/layout/activity_dash_board.xml" value="0.25416666666666665" />
+        <entry key="..\:/lap trinh di dong/EnglishLearning/app/src/main/res/layout/activity_detail_waiting_essay.xml" value="0.25416666666666665" />
+        <entry key="..\:/lap trinh di dong/EnglishLearning/app/src/main/res/layout/activity_detail_writing.xml" value="0.25416666666666665" />
         <entry key="..\:/lap trinh di dong/EnglishLearning/app/src/main/res/layout/activity_edit_word.xml" value="0.25416666666666665" />
+        <entry key="..\:/lap trinh di dong/EnglishLearning/app/src/main/res/layout/activity_essay_subject_list.xml" value="0.25416666666666665" />
+        <entry key="..\:/lap trinh di dong/EnglishLearning/app/src/main/res/layout/activity_list_waiting_essay.xml" value="0.25416666666666665" />
+        <entry key="..\:/lap trinh di dong/EnglishLearning/app/src/main/res/layout/activity_list_writing.xml" value="0.25416666666666665" />
         <entry key="..\:/lap trinh di dong/EnglishLearning/app/src/main/res/layout/activity_login.xml" value="0.25416666666666665" />
         <entry key="..\:/lap trinh di dong/EnglishLearning/app/src/main/res/layout/activity_main.xml" value="0.25416666666666665" />
         <entry key="..\:/lap trinh di dong/EnglishLearning/app/src/main/res/layout/activity_note.xml" value="0.2" />
@@ -56,6 +62,7 @@
         <entry key="..\:/lap trinh di dong/EnglishLearning/app/src/main/res/layout/activity_review_or_test.xml" value="0.19021739130434784" />
         <entry key="..\:/lap trinh di dong/EnglishLearning/app/src/main/res/layout/activity_review_result.xml" value="0.2" />
         <entry key="..\:/lap trinh di dong/EnglishLearning/app/src/main/res/layout/activity_test_question.xml" value="0.25416666666666665" />
+        <entry key="..\:/lap trinh di dong/EnglishLearning/app/src/main/res/layout/activity_writing_essay.xml" value="0.264" />
         <entry key="..\:/lap trinh di dong/EnglishLearning/app/src/main/res/layout/back_header.xml" value="0.25416666666666665" />
         <entry key="..\:/lap trinh di dong/EnglishLearning/app/src/main/res/layout/blank_fragment.xml" value="0.25416666666666665" />
         <entry key="..\:/lap trinh di dong/EnglishLearning/app/src/main/res/layout/content_scrolling.xml" value="0.25416666666666665" />
@@ -68,8 +75,11 @@
         <entry key="..\:/lap trinh di dong/EnglishLearning/app/src/main/res/layout/fragment_single_question.xml" value="0.25416666666666665" />
         <entry key="..\:/lap trinh di dong/EnglishLearning/app/src/main/res/layout/fragment_writing.xml" value="0.25416666666666665" />
         <entry key="..\:/lap trinh di dong/EnglishLearning/app/src/main/res/layout/header.xml" value="0.25416666666666665" />
+        <entry key="..\:/lap trinh di dong/EnglishLearning/app/src/main/res/layout/item_essay_subject.xml" value="0.25416666666666665" />
         <entry key="..\:/lap trinh di dong/EnglishLearning/app/src/main/res/layout/item_multiple_choice_answer.xml" value="0.25416666666666665" />
         <entry key="..\:/lap trinh di dong/EnglishLearning/app/src/main/res/layout/item_note.xml" value="0.25416666666666665" />
+        <entry key="..\:/lap trinh di dong/EnglishLearning/app/src/main/res/layout/item_waiting_essay.xml" value="0.25416666666666665" />
+        <entry key="..\:/lap trinh di dong/EnglishLearning/app/src/main/res/layout/item_writing_essay.xml" value="0.25" />
         <entry key="..\:/lap trinh di dong/EnglishLearning/app/src/main/res/layout/result_item.xml" value="0.25416666666666665" />
         <entry key="..\:/lap trinh di dong/EnglishLearning/app/src/main/res/layout/single_question.xml" value="0.25" />
         <entry key="..\:/lap trinh di dong/EnglishLearning/app/src/main/res/menu/menu_header.xml" value="0.25416666666666665" />

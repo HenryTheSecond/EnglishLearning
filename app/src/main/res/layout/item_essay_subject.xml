@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/tv_essay_subject"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:maxLines="6"
+        android:scrollbars="vertical"
+        android:text="Essay Subject\n\n\n"
+        android:layout_toLeftOf="@id/btn_write"
+        android:textSize="20dp"
+        />
+
+    <Button
+        android:layout_alignParentRight="true"
+        android:id="@+id/btn_write"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="write"
+        />
+    <Button
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/btn_write"
+        android:id="@+id/btn_review"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="review"/>
+</RelativeLayout>

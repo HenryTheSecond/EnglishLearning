@@ -10,6 +10,7 @@ import android.widget.Button;
 import com.example.englishlearning.Activity.ChooseTypeActivity;
 import com.example.englishlearning.Activity.DashBoard;
 import com.example.englishlearning.Activity.NoteActivity;
+import com.example.englishlearning.AddEssaySubjectActivity;
 import com.example.englishlearning.R;
 import com.example.englishlearning.Utils;
 
@@ -20,7 +21,9 @@ public class AdminDashBoardActivity extends AppCompatActivity {
     public static final String FILL_BLANK = "filling_blank";
     public static final String READ = "reading";
     public static final String SINGLE_QUESTION = "single_question";
-    private Button btnFill, btnRead, btnWrite, btnSingle;
+
+
+    private Button btnFill, btnRead, btnWrite, btnSingle, btnEssaySubject;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +33,8 @@ public class AdminDashBoardActivity extends AppCompatActivity {
         btnSingle = findViewById(R.id.btn_single_question);
         btnRead = findViewById(R.id.btn_reading);
         btnWrite = findViewById(R.id.btn_writing);
+
+        btnEssaySubject = findViewById(R.id.btn_essay_subject);
 
         btnFill.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,6 +63,11 @@ public class AdminDashBoardActivity extends AppCompatActivity {
             public void onClick(View view) {
                 moveToActivity(WRITE);
             }
+        });
+
+        btnEssaySubject.setOnClickListener(view -> {
+            Intent intent = new Intent(AdminDashBoardActivity.this, AddEssaySubjectActivity.class);
+            startActivity(intent);
         });
 
         Utils.createMenu(this);

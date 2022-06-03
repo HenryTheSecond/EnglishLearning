@@ -58,8 +58,7 @@
             android:backgroundTint="@color/blue"
             android:text="single question"
             android:textSize="20sp"
-            android:textStyle="bold"
-           />
+            android:textStyle="bold" />
 
         <Button
             android:id="@+id/btn_writing"
@@ -69,7 +68,17 @@
             android:text="Writing"
             android:layout_marginTop="20dp"
             android:textSize="20sp"
-            android:textStyle="bold"
-            />
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/btn_essay_subject"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:backgroundTint="@color/blue"
+            android:text="Essay Subject"
+            android:layout_marginTop="20dp"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
     </LinearLayout>
 </LinearLayout>

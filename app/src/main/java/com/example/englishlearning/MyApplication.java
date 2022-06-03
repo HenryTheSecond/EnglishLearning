@@ -6,10 +6,17 @@ import android.app.NotificationManager;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Build;
+import android.util.Log;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 
+import com.example.englishlearning.Activity.DashBoard;
 import com.example.englishlearning.Databases.UserDataHelper;
+import com.example.englishlearning.EssayNotification.UtilsEssay;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 public class MyApplication extends Application {
     private static Context context;
@@ -23,7 +30,40 @@ public class MyApplication extends Application {
         createNotedDatabase();
         createPraticeRecordDatabase();
 
+        createWritingEssay();
+
         createNotificationChannel();
+
+        getToken();
+    }
+
+    private void getToken(){
+        //Get Token
+        FirebaseMessaging.getInstance().getToken()
+                .addOnCompleteListener(new OnCompleteListener<String>() {
+                    @Override
+                    public void onComplete(@NonNull Task<String> task) {
+                        if (!task.isSuccessful()) {
+                            Log.w("BBBBBBB", "Fetching FCM registration token failed", task.getException());
+                            return;
+                        }
+
+                        // Get new FCM registration token
+                        UtilsEssay.saveToken(getAppContext(), task.getResult());
+
+                        // Log and toast
+                        Log.e("BBBBBB", task.getResult());
+                    }
+                });
+    }
+
+    private void createWritingEssay(){
+        UserDataHelper helper = new UserDataHelper(context);
+        SQLiteDatabase database = helper.getWritableDatabase();
+
+        database.execSQL("CREATE TABLE IF NOT EXISTS writing_essay(" +
+                "id LONG PRIMARY KEY," +
+                "content TEXT)");
     }
 
     private void createPraticeRecordDatabase(){
@@ -95,11 +135,18 @@ public class MyApplication extends Application {
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void createNotificationChannel(){
         NotificationManager notificationManager = getSystemService(NotificationManager.class);
+
         NotificationChannel channel = new NotificationChannel(getResources().getString(R.string.id_channel),
                 getResources().getString(R.string.channel_name),
                 NotificationManager.IMPORTANCE_DEFAULT);
         channel.setDescription(getResources().getString(R.string.channel_description));
         notificationManager.createNotificationChannel(channel);
+
+        NotificationChannel channelEssay = new NotificationChannel(getResources().getString(R.string.id_channel_essay),
+                getResources().getString(R.string.channel_name_essay),
+                NotificationManager.IMPORTANCE_DEFAULT);
+        channelEssay.setDescription(getResources().getString(R.string.channel_description_essay));
+        notificationManager.createNotificationChannel(channelEssay);
     }
 
 

@@ -68,6 +68,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Admin"/>
+
+                <RadioButton
+                    android:id="@+id/radio_teacher"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Teacher"/>
             </RadioGroup>
         </LinearLayout>
 
